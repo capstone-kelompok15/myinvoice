@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:myinvoice/view/styles/styles.dart';
+
+class CustomTextField extends StatelessWidget {
+  final String? title;
+  final String? hint;
+  final TextEditingController? controller;
+  final bool isPassword;
+
+  const CustomTextField({
+    Key? key,
+    this.title,
+    this.hint,
+    this.controller,
+    this.isPassword = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title ?? "Title",
+            style: body3,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          TextField(
+            obscureText: isPassword,
+            controller: controller,
+            decoration: InputDecoration(
+                hintText: hint,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12))),
+          ),
+        ],
+      ),
+    );
+  }
+}
