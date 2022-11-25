@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myinvoice/view/config/config.dart';
+import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
@@ -13,18 +13,17 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<ProfileProvider>(context);
-    SizeConfig().init(context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: getPropertionateScreenHeight(150),
+            height: (150),
             decoration: BoxDecoration(
               color: primaryBackground,
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(
-                  getPropertionateScreenWidht(50),
+                  (50),
                 ),
               ),
             ),
@@ -32,38 +31,38 @@ class ProfilePage extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                    top: getPropertionateScreenHeight(66),
-                    bottom: getPropertionateScreenHeight(24),
-                    left: getPropertionateScreenWidht(30),
+                    top: (66),
+                    bottom: (24),
+                    left: (30),
                   ),
                   child: CircleAvatar(
                     backgroundColor: backgroundProfileColor,
-                    radius: getPropertionateScreenWidht(30),
+                    radius: (30),
                   ),
                 ),
                 Column(
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        top: getPropertionateScreenHeight(69),
-                        left: getPropertionateScreenWidht(12),
-                        right: getPropertionateScreenWidht(86),
+                        top: (69),
+                        left: (12),
+                        right: (86),
                       ),
                       child: Text(
                         'Clarissa Maharani',
                         style: heading3.copyWith(
                           color: whiteTextColor,
-                          fontSize: getPropertionateScreenWidht(18),
+                          fontSize: (18),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: getPropertionateScreenHeight(6),
+                      height: (6),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        left: getPropertionateScreenWidht(12),
-                        right: getPropertionateScreenWidht(31),
+                        left: (12),
+                        right: (31),
                       ),
                       child: Text(
                         'Clarissa Maharani@gmail.com',
@@ -76,16 +75,16 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: getPropertionateScreenHeight(20),
+            height: (20),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: getPropertionateScreenWidht(30),
+              horizontal: (30),
             ),
             child: Container(
               padding: EdgeInsets.only(
-                left: getPropertionateScreenWidht(15),
-                top: getPropertionateScreenHeight(12),
+                left: (15),
+                top: (12),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,11 +93,11 @@ class ProfilePage extends StatelessWidget {
                     'Account',
                     style: heading4.copyWith(
                       color: blachTextColor,
-                      fontSize: getPropertionateScreenWidht(16),
+                      fontSize: (16),
                     ),
                   ),
                   SizedBox(
-                    height: getPropertionateScreenHeight(10),
+                    height: (10),
                   ),
                   Column(
                     children: profileProvider.dataAccount
@@ -110,7 +109,7 @@ class ProfilePage extends StatelessWidget {
                     style: heading4.copyWith(color: blachTextColor),
                   ),
                   SizedBox(
-                    height: getPropertionateScreenHeight(10),
+                    height: (10),
                   ),
                   Column(
                     children: profileProvider.dataMore
@@ -118,7 +117,7 @@ class ProfilePage extends StatelessWidget {
                         .toList(),
                   ),
                   SizedBox(
-                    height: getPropertionateScreenHeight(24),
+                    height: (24),
                   ),
                 ],
               ),
@@ -126,7 +125,7 @@ class ProfilePage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: getPropertionateScreenWidht(30),
+              horizontal: (30),
             ),
             child: SizedBox(
               width: double.infinity,
@@ -137,11 +136,11 @@ class ProfilePage extends StatelessWidget {
                   backgroundColor: whiteTextColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
-                      getPropertionateScreenWidht(10),
+                      (10),
                     ),
                   ),
                   padding: EdgeInsets.symmetric(
-                    vertical: getPropertionateScreenHeight(13),
+                    vertical: (13),
                   ),
                 ),
                 onPressed: () {},
@@ -160,25 +159,23 @@ class ProfilePage extends StatelessWidget {
   Widget _buildCardSetting(Map<String, dynamic> data) {
     return Padding(
       padding: EdgeInsets.only(
-        left: getPropertionateScreenWidht(5),
-        bottom: getPropertionateScreenWidht(15),
+        left: (5),
+        bottom: (15),
       ),
       child: Row(
         children: [
           SvgPicture.asset(data['icon']),
           SizedBox(
-            width: getPropertionateScreenWidht(5),
+            width: (5),
           ),
           Text(
             data['title'],
             style: paragraph4.copyWith(color: blachTextColor),
           ),
           Spacer(),
-          data['isToogle']
-              ? SvgPicture.asset('assets/icons/Toggle.svg')
-              : SvgPicture.asset('assets/icons/arrow.svg'),
+          data['isToogle'] ? SvgPicture.asset(toggle) : SvgPicture.asset(arrow),
           SizedBox(
-            width: getPropertionateScreenWidht(21),
+            width: (21),
           ),
         ],
       ),

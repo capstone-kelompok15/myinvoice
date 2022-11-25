@@ -1,41 +1,42 @@
 import 'package:flutter/cupertino.dart';
+import 'package:myinvoice/view/constant/constant.dart';
 
 class ProfileProvider extends ChangeNotifier {
   List<Map<String, dynamic>> dataAccount = [
     {
-      'icon': 'assets/icons/fi-rr-pencil.svg',
+      'icon': edit,
       'title': 'Edit Profile',
       'isToogle': false,
     },
     {
-      'icon': 'assets/icons/fi-rr-lock.svg',
+      'icon': lock,
       'title': 'Password',
       'isToogle': false,
     },
   ];
   List<Map<String, dynamic>> dataMore = [
     {
-      'icon': 'assets/icons/fi-rr-bell.svg',
+      'icon': bell,
       'title': 'Notification',
       'isToogle': true,
     },
     {
-      'icon': 'assets/icons/fi-rr-credit-card.svg',
+      'icon': creditCard,
       'title': 'Payment',
       'isToogle': false,
     },
     {
-      'icon': 'assets/icons/heroicons_language.svg',
+      'icon': language,
       'title': 'Language',
       'isToogle': false,
     },
     {
-      'icon': 'assets/icons/fi-rr-bell.svg',
+      'icon': bell,
       'title': 'Privacy Policy',
       'isToogle': false,
     },
     {
-      'icon': 'assets/icons/fi-rr-interrogation.svg',
+      'icon': help,
       'title': 'Help & Support',
       'isToogle': false,
     },
