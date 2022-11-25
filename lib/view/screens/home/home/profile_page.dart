@@ -85,6 +85,7 @@ class ProfilePage extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.only(
                 left: getPropertionateScreenWidht(15),
+                top: getPropertionateScreenHeight(12),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,30 +120,35 @@ class ProfilePage extends StatelessWidget {
                   SizedBox(
                     height: getPropertionateScreenHeight(24),
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: TextButton.styleFrom(
-                        elevation: 0,
-                        side: BorderSide(width: 2, color: redColor),
-                        backgroundColor: whiteTextColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            getPropertionateScreenWidht(10),
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          vertical: getPropertionateScreenHeight(13),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        'Logout',
-                        style: heading4.copyWith(color: redColor),
-                      ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: getPropertionateScreenWidht(30),
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: TextButton.styleFrom(
+                  elevation: 0,
+                  side: BorderSide(width: 2, color: redColor),
+                  backgroundColor: whiteTextColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      getPropertionateScreenWidht(10),
                     ),
                   ),
-                ],
+                  padding: EdgeInsets.symmetric(
+                    vertical: getPropertionateScreenHeight(13),
+                  ),
+                ),
+                onPressed: () {},
+                child: Text(
+                  'Logout',
+                  style: heading4.copyWith(color: redColor),
+                ),
               ),
             ),
           ),
@@ -171,6 +177,9 @@ class ProfilePage extends StatelessWidget {
           data['isToogle']
               ? SvgPicture.asset('assets/icons/Toggle.svg')
               : SvgPicture.asset('assets/icons/arrow.svg'),
+          SizedBox(
+            width: getPropertionateScreenWidht(21),
+          ),
         ],
       ),
     );
