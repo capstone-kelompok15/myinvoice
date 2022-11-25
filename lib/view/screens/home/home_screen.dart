@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myinvoice/view/screens/home/home/home_page.dart';
+import 'package:myinvoice/view/screens/home/home/profile_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,9 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Center(
       child: Text("Report"),
     ),
-    Center(
-      child: Text("Profile"),
-    ),
+    ProfilePage(),
   ];
 
   @override
