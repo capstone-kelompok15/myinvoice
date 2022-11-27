@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => const SignupScreen(),
+              builder: (context) =>  SignupScreen(),
             ));
       },
     );
