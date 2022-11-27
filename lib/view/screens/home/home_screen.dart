@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myinvoice/view/screens/home/home/home_page.dart';
 import 'package:myinvoice/view/screens/home/home/profile_page.dart';
+import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,9 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _pages = const [
     HomePage(),
-    Center(
-      child: Text("Invoice"),
-    ),
+    InvoicePage(),
+    // Center(
+    //   child: Text("Report"),
+    // ),
     Center(
       child: Text("Report"),
     ),

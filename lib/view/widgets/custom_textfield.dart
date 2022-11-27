@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
 class CustomTextField extends StatelessWidget {
   final String? title;
   final String? hint;
+  final String? icon;
   final TextEditingController? controller;
   final bool isPassword;
 
@@ -13,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     this.hint,
     this.controller,
     this.isPassword = false,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -30,13 +33,24 @@ class CustomTextField extends StatelessWidget {
             height: 8,
           ),
           TextField(
-            obscureText: isPassword,
-            controller: controller,
-            decoration: InputDecoration(
-                hintText: hint,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12))),
-          ),
+              obscureText: isPassword,
+              controller: controller,
+              decoration: icon != null
+                  ? InputDecoration(
+                      prefixIcon: SvgPicture.asset(
+                        icon!,
+                        height: 20,
+                        width: 20,
+                        fit: BoxFit.scaleDown,
+                      ),
+                      hintText: hint,
+                      hintStyle: paragraph4.copyWith(color: netralDisableColor),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)))
+                  : InputDecoration(
+                      hintText: hint,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)))),
         ],
       ),
     );

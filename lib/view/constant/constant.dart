@@ -16,3 +16,21 @@ const language = "${icon}heroicons_language.svg";
 const help = "${icon}fi-rr-interrogation.svg";
 const arrow = "${icon}arrow.svg";
 const toggle = "${icon}Toggle.svg";
+const homeSmall = "${icon}fi-sr-home.svg";
+const copy = "${icon}fi-rr-copy-alt.svg";
+
+// icon untuk bank
+const bca = "${icon}bca.svg";
+const bni = "${icon}bni.svg";
+const mandiri = "${icon}mandiri.svg";
+
+//icon yg ada pada textfield di confrim pembayaran
+const calender = "${icon}fi-rr-calendar.svg";
+const invoice1 = "${icon}fi-rr-invoice.svg";
+const potrait = "${icon}fi-rr-portrait.svg";
+const money = "${icon}fi-rr-money.svg";
+const clip = "${icon}fi-rr-clip.svg";
+const cross = "${icon}fi-rr-cross.svg";
+
+const waitingConfirm = "${icon}Work time-pana 1.svg";
+const suksespayment = "${icon}Successful purchase-pana (1) 1.svg";

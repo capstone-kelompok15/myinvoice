@@ -92,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                   Text(
                     'Account',
                     style: heading4.copyWith(
-                      color: blachTextColor,
+                      color: blackTextColor,
                       fontSize: (16),
                     ),
                   ),
@@ -106,7 +106,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   Text(
                     'More',
-                    style: heading4.copyWith(color: blachTextColor),
+                    style: heading4.copyWith(color: blackTextColor),
                   ),
                   SizedBox(
                     height: (10),
@@ -170,7 +170,7 @@ class ProfilePage extends StatelessWidget {
           ),
           Text(
             data['title'],
-            style: paragraph4.copyWith(color: blachTextColor),
+            style: paragraph4.copyWith(color: blackTextColor),
           ),
           Spacer(),
           data['isToogle'] ? SvgPicture.asset(toggle) : SvgPicture.asset(arrow),
