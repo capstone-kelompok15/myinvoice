@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final String? title;
   final String? hint;
   final TextEditingController? controller;
   final bool isPassword;
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     Key? key,
@@ -13,8 +14,15 @@ class CustomTextField extends StatelessWidget {
     this.hint,
     this.controller,
     this.isPassword = false,
+    this.validator,
   }) : super(key: key);
 
+  @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  bool showPassword = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,17 +31,30 @@ class CustomTextField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title ?? "Title",
+            widget.title ?? "Title",
             style: body3,
           ),
           const SizedBox(
             height: 8,
           ),
-          TextField(
-            obscureText: isPassword,
-            controller: controller,
+          TextFormField(
+            validator: widget.validator,
+            obscureText: showPassword && widget.isPassword,
+            controller: widget.controller,
             decoration: InputDecoration(
-                hintText: hint,
+                suffixIcon: widget.isPassword
+                    ? GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            showPassword = !showPassword;
+                          });
+                        },
+                        child: Icon(showPassword
+                            ? Icons.remove_red_eye
+                            : Icons.remove_red_eye_outlined),
+                      )
+                    : null,
+                hintText: widget.hint,
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12))),
           ),

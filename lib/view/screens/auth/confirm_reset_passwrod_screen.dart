@@ -8,21 +8,18 @@ import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 
-class SignInScreen extends StatelessWidget {
-  SignInScreen({super.key});
+
+
+
+
+class ConfirmResetPasswordScreen extends StatelessWidget {
+  ConfirmResetPasswordScreen({super.key});
   final _formKey = GlobalKey<FormState>();
-  final _email = TextEditingController();
   final _password = TextEditingController();
+  final _confirmPassword = TextEditingController();
 
   _submit(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          CupertinoPageRoute(
-            builder: (context) => HomeScreen(),
-          ),
-          (route) => false);
-    }
+    if (_formKey.currentState!.validate()) {}
   }
 
   @override
@@ -42,19 +39,20 @@ class SignInScreen extends StatelessWidget {
                   child: SizedBox(
                     height: 300,
                     width: 250,
-                    child: SvgPicture.asset(imageSignIn),
+                    child: SvgPicture.asset(imageSignUp),
                   ),
                 ),
                 Text(
-                  "Sign In",
+                  "Forget Password",
                   style: heading1,
                 ),
                 const SizedBox(
                   height: 18,
                 ),
                 CustomTextField(
-                  title: "Email",
-                  hint: "example@gmail.com",
+                  controller: _password,
+                  title: "Password",
+                  hint: "********",
                   validator: (text) {
                     if (text == null || text.isEmpty) {
                       return 'Can\'t be empty';
@@ -62,23 +60,25 @@ class SignInScreen extends StatelessWidget {
                     if (text.length < 4) {
                       return 'Too short';
                     }
-                    if (!RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(text)) {
-                      return 'Invalid Email';
-                    }
+
                     return null;
                   },
                 ),
                 CustomTextField(
+                  controller: _confirmPassword,
                   isPassword: true,
-                  title: "Password",
+                  title: "Confirm Password",
                   hint: "********",
                   validator: (text) {
                     if (text == null || text.isEmpty) {
                       return 'Can\'t be empty';
                     }
-
+                    if (text.length < 8 || text.length > 16) {
+                      return 'Password must be 8-16 characters';
+                    }
+                    if (text != _password.text) {
+                      return 'Password doesnt match';
+                    }
                     return null;
                   },
                 ),
