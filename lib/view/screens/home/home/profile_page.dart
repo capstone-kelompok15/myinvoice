@@ -12,7 +12,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profileProvider = Provider.of<ProfileProvider>(context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,9 +81,9 @@ class ProfilePage extends StatelessWidget {
               horizontal: (30),
             ),
             child: Container(
+              height: MediaQuery.of(context).size.height * 2 / 4.65,
               padding: EdgeInsets.only(
                 left: (15),
-                top: (12),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,86 +98,103 @@ class ProfilePage extends StatelessWidget {
                   SizedBox(
                     height: (10),
                   ),
-                  Column(
-                    children: profileProvider.dataAccount
-                        .map((e) => _buildCardSetting(e))
-                        .toList(),
+                  _buildCardSetting(edit, 'Edit Profile'),
+                  _buildCardSetting(lock, 'Password'),
+                  SizedBox(
+                    height: (10),
                   ),
                   Text(
                     'More',
                     style: heading4.copyWith(color: blachTextColor),
                   ),
                   SizedBox(
-                    height: (10),
+                    height: (15),
                   ),
-                  Column(
-                    children: profileProvider.dataMore
-                        .map((e) => _buildCardSetting(e))
-                        .toList(),
-                  ),
-                  SizedBox(
-                    height: (24),
-                  ),
+                  _buildCardSetting(bell, 'Notification', isToggle: true),
+                  _buildCardSetting(creditCard, 'Payment'),
+                  _buildCardSetting(language, 'Language'),
+                  _buildCardSetting(lock, 'Privacy Policy'),
+                  _buildCardSetting(help, 'Help & Support'),
                 ],
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: (30),
-            ),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: TextButton.styleFrom(
-                  elevation: 0,
-                  side: BorderSide(width: 2, color: redColor),
-                  backgroundColor: whiteTextColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      (10),
-                    ),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    vertical: (13),
+          Spacer(),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            width: double.infinity,
+            child: ElevatedButton(
+              style: TextButton.styleFrom(
+                elevation: 0,
+                side: BorderSide(width: 2, color: redColor),
+                backgroundColor: whiteTextColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    (10),
                   ),
                 ),
-                onPressed: () {},
-                child: Text(
-                  'Logout',
-                  style: heading4.copyWith(color: redColor),
+                padding: EdgeInsets.symmetric(
+                  vertical: (12),
                 ),
+              ),
+              onPressed: () {},
+              child: Text(
+                'Logout',
+                style: heading4.copyWith(color: redColor),
               ),
             ),
           ),
+          Container(
+            height: MediaQuery.of(context).size.height * 1 / 4.4,
+          )
         ],
       ),
     );
   }
 
-  Widget _buildCardSetting(Map<String, dynamic> data) {
+  Widget _buildCardSetting(String icon, String title, {bool isToggle = false}) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: (5),
-        bottom: (15),
-      ),
+      padding: const EdgeInsets.only(left: 5, bottom: 10, right: 20),
       child: Row(
         children: [
-          SvgPicture.asset(data['icon']),
+          SvgPicture.asset(icon),
           SizedBox(
             width: (5),
           ),
           Text(
-            data['title'],
+            title,
             style: paragraph4.copyWith(color: blachTextColor),
           ),
           Spacer(),
-          data['isToogle'] ? SvgPicture.asset(toggle) : SvgPicture.asset(arrow),
-          SizedBox(
-            width: (21),
-          ),
+          isToggle
+              ? SvgPicture.asset('assets/icons/Toggle.svg')
+              : SvgPicture.asset('assets/icons/arrow.svg'),
         ],
       ),
     );
   }
 }
+
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: ElevatedButton(
+                  //     style: TextButton.styleFrom(
+                  //       elevation: 0,
+                  //       side: BorderSide(width: 2, color: redColor),
+                  //       backgroundColor: whiteTextColor,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(
+                  //           (10),
+                  //         ),
+                  //       ),
+                  //       padding: EdgeInsets.symmetric(
+                  //         vertical: (13),
+                  //       ),
+                  //     ),
+                  //     onPressed: () {},
+                  //     child: Text(
+                  //       'Logout',
+                  //       style: heading4.copyWith(color: redColor),
+                  //     ),
+                  //   ),
+                  // ),
