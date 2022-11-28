@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
@@ -20,7 +18,7 @@ class ProfilePage extends StatelessWidget {
             height: (150),
             decoration: BoxDecoration(
               color: primaryBackground,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(
                   (50),
                 ),
@@ -29,7 +27,7 @@ class ProfilePage extends StatelessWidget {
             child: Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     top: (66),
                     bottom: (24),
                     left: (30),
@@ -42,7 +40,7 @@ class ProfilePage extends StatelessWidget {
                 Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         top: (69),
                         left: (12),
                         right: (86),
@@ -55,11 +53,11 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: (6),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         left: (12),
                         right: (31),
                       ),
@@ -73,11 +71,11 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: (20),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: (30),
             ),
             child: Container(
@@ -91,11 +89,11 @@ class ProfilePage extends StatelessWidget {
                   Text(
                     'Account',
                     style: heading4.copyWith(
-                      color: blachTextColor,
+                      color: blackTextColor,
                       fontSize: (16),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: (10),
                   ),
                   _buildCardSetting(edit, 'Edit Profile'),
@@ -105,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   Text(
                     'More',
-                    style: heading4.copyWith(color: blachTextColor),
+                    style: heading4.copyWith(color: blackTextColor),
                   ),
                   SizedBox(
                     height: (15),
@@ -163,7 +161,7 @@ class ProfilePage extends StatelessWidget {
           ),
           Text(
             title,
-            style: paragraph4.copyWith(color: blachTextColor),
+            style: paragraph4.copyWith(color: blackTextColor),
           ),
           Spacer(),
           isToggle

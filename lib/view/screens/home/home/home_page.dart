@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,7 +25,7 @@ class HomePage extends StatelessWidget {
                       "My Invoice",
                       style: heading1.copyWith(color: Colors.white),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.notifications,
                       color: Colors.white,
                     )
