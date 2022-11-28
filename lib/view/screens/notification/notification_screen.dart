@@ -14,14 +14,28 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  notifIcon() {}
+  final bool isInfo = true;
+  final bool isPayment = true;
+  final bool isInvoice = true;
+
+  notifIcon(bool status) {
+    if (status == isInfo) {
+      return SvgPicture.asset(
+        iconChatFilled,
+      );
+    } else if (status == isPayment) {
+      return SvgPicture.asset(
+        iconReportFilled,
+      );
+    } else if (status == isInvoice) {
+      return SvgPicture.asset(
+        iconInvoiceFilled,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bool isInfo = true;
-    final bool isPayment = true;
-    final bool isInvoice = true;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -75,22 +89,42 @@ class _NotificationScreenState extends State<NotificationScreen> {
             itemBuilder: (context, index) {
               return ListTile(
                 isThreeLine: true,
-                leading: SvgPicture.asset(iconChatFilled),
-                title: Text(
-                  "Payment Success",
-                  style: heading3.copyWith(
-                      color: primaryBackground, letterSpacing: 0.16),
+                leading: Container(
+                  transform: Matrix4.translationValues(0, -20, 0),
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  child: SvgPicture.asset(
+                    iconInvoiceFilled,
+                    width: 24,
+                    color: primaryBackground,
+                  ),
                 ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Text("Subtitle"),
-                    ),
-                    Text(
-                        "${DateFormat('d MMM y, HH:m').format(DateTime.now())}"),
-                  ],
+                title: Container(
+                  transform: Matrix4.translationValues(0, -10, 0),
+                  padding: EdgeInsets.fromLTRB(0, 10, 42, 0),
+                  child: Text(
+                    "Payment Success",
+                    style: heading3.copyWith(
+                        color: primaryBackground, letterSpacing: 0.16),
+                  ),
+                ),
+                subtitle: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 42, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        style: notifContent.copyWith(color: primaryBackground),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "${DateFormat('d MMM y, HH:mm').format(DateTime.now())}",
+                        style: notifContent,
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

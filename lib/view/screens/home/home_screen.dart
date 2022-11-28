@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/home/home/home_page.dart';
 import 'package:myinvoice/view/screens/home/home/profile_page.dart';
@@ -38,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        extendBody: true,
+        extendBody: false,
         bottomNavigationBar: ClipRRect(
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(25.0),
@@ -47,51 +46,38 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SizedBox(
             height: 84,
             child: BottomNavigationBar(
-              backgroundColor: Theme.of(context).primaryColor,
-              type: BottomNavigationBarType.fixed,
-              selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.white,
-              iconSize: 26,
-              elevation: 0,
-              currentIndex: _index,
-              onTap: _changeTab,
-              items: [
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    iconHome,
-                    color: Colors.white,
-                    width: 26,
-                    height: 26,
+                backgroundColor: Theme.of(context).primaryColor,
+                type: BottomNavigationBarType.fixed,
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Colors.white,
+                unselectedFontSize: 12,
+                selectedFontSize: 12,
+                elevation: 0,
+                currentIndex: _index,
+                onTap: _changeTab,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset(
+                        _index == 0 ? iconHomeFilled : iconHome,
+                        height: 26),
+                    // activeIcon: SvgPicture.asset(iconHomeFilled, width: 26),
+                    label: "Home",
                   ),
-                  activeIcon: SvgPicture.asset(
-                    iconHomeFilled,
-                    color: Colors.white,
-                    width: 26,
-                    height: 26,
-                  ),
-                  label: "Home",
-                ),
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    iconInvoice,
-                    color: Colors.white,
-                    width: 26,
-                    height: 26,
-                  ),
-                  activeIcon: SvgPicture.asset(iconInvoiceFilled),
-                  label: "Invoice",
-                ),
-                BottomNavigationBarItem(
-                    icon: SvgPicture.asset(iconReport),
-                    activeIcon: SvgPicture.asset(iconReportFilled),
-                    label: "Report"),
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset(iconProfile),
-                  activeIcon: SvgPicture.asset(iconProfileFilled),
-                  label: "Profile",
-                ),
-              ],
-            ),
+                  BottomNavigationBarItem(
+                      icon: SvgPicture.asset(iconInvoice, width: 26),
+                      activeIcon:
+                          SvgPicture.asset(iconInvoiceFilled, width: 26),
+                      label: "Invoice"),
+                  BottomNavigationBarItem(
+                      icon: SvgPicture.asset(iconReport, width: 26),
+                      activeIcon: SvgPicture.asset(iconReportFilled, width: 26),
+                      label: "Report"),
+                  BottomNavigationBarItem(
+                      icon: SvgPicture.asset(iconProfile, width: 26),
+                      activeIcon:
+                          SvgPicture.asset(iconProfileFilled, width: 26),
+                      label: "Profile"),
+                ]),
           ),
         ),
         body: IndexedStack(

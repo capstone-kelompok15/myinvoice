@@ -7,6 +7,7 @@ Color get primaryMain => const Color(0Xff234F9D);
 Color get primaryBackground => const Color(0Xff173468);
 Color get backgroundProfileColor => const Color(0XffD9D9D9);
 Color get redColor => const Color(0xffD62D33);
+Color get greenColor => const Color(0xff329059);
 Color get primaryText => const Color(0Xff404040);
 
 // Netral Color
@@ -15,7 +16,7 @@ Color get netralDisableColor => const Color(0xff999999);
 
 //TextColor
 Color get whiteTextColor => const Color(0xffFFFFFF);
-Color get blachTextColor => const Color(0xff404040);
+Color get blackTextColor => const Color(0xff404040);
 
 TextStyle get title =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 30);
@@ -46,3 +47,6 @@ TextStyle get sectionHead => const TextStyle(
     fontWeight: FontWeight.bold, color: Color(0xff404040), fontSize: 14);
 TextStyle get sectionSubHead => const TextStyle(
     fontWeight: FontWeight.w400, color: Color(0xff404040), fontSize: 12);
+
+TextStyle get notifContent =>
+    TextStyle(fontWeight: FontWeight.w400, fontSize: 10);

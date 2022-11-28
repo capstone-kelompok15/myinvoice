@@ -12,9 +12,20 @@ class HomeSummary extends StatelessWidget {
       width: double.infinity,
       height: 97,
       decoration: BoxDecoration(
-        color: netralCardColor,
-        borderRadius: BorderRadius.circular(8),
-      ),
+          color: netralCardColor,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xff0E1F35).withOpacity(0.08),
+              offset: Offset(0, 4),
+              blurRadius: 8,
+            ),
+            BoxShadow(
+              color: Color(0xff0E1F35).withOpacity(0.12),
+              offset: Offset(0, 1),
+              blurRadius: 4,
+            ),
+          ]),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 7),
         child: Column(

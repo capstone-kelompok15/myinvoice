@@ -92,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                   Text(
                     'Account',
                     style: heading4.copyWith(
-                      color: blachTextColor,
+                      color: blackTextColor,
                       fontSize: getPropertionateScreenWidht(16),
                     ),
                   ),
@@ -106,7 +106,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   Text(
                     'More',
-                    style: heading4.copyWith(color: blachTextColor),
+                    style: heading4.copyWith(color: blackTextColor),
                   ),
                   SizedBox(
                     height: getPropertionateScreenHeight(10),
@@ -165,7 +165,7 @@ class ProfilePage extends StatelessWidget {
           ),
           Text(
             data['title'],
-            style: paragraph4.copyWith(color: blachTextColor),
+            style: paragraph4.copyWith(color: blackTextColor),
           ),
           Spacer(),
           data['isToogle']
