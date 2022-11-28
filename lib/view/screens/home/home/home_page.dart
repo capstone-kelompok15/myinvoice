@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
-
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -41,6 +39,10 @@ class HomePage extends StatelessWidget {
                         )
                       ],
                     ),
+                    const Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                    )
                   ],
                 ),
               ),

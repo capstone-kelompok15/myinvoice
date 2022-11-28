@@ -15,7 +15,12 @@ Color get netralDisableColor => const Color(0xff999999);
 
 //TextColor
 Color get whiteTextColor => const Color(0xffFFFFFF);
-Color get blachTextColor => const Color(0xff404040);
+Color get blackTextColor => const Color(0xff404040);
+Color get noteTextColor => const Color(0xff5C5C5C);
+Color get buttonDisable => const Color(0xff5C5C5C);
+
+//Color untuk itemcard diinvoice detail
+Color get backgroundCard => const Color(0xffededed);
 
 TextStyle get title =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 30);
@@ -32,6 +37,12 @@ TextStyle get heading5 =>
     const TextStyle(fontWeight: FontWeight.w600, fontSize: 14);
 TextStyle get paragraph4 =>
     const TextStyle(fontWeight: FontWeight.w400, fontSize: 12);
+TextStyle get subhead2 =>
+    const TextStyle(fontWeight: FontWeight.w400, fontSize: 14);
+TextStyle get heading7 =>
+    const TextStyle(fontWeight: FontWeight.w600, fontSize: 12);
+TextStyle get subhead1 =>
+    const TextStyle(fontWeight: FontWeight.w400, fontSize: 16);
 
 TextStyle get body1 =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
@@ -46,3 +57,5 @@ TextStyle get sectionHead => const TextStyle(
     fontWeight: FontWeight.bold, color: Color(0xff404040), fontSize: 14);
 TextStyle get sectionSubHead => const TextStyle(
     fontWeight: FontWeight.w400, color: Color(0xff404040), fontSize: 12);
+TextStyle get body4 =>
+    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12);
