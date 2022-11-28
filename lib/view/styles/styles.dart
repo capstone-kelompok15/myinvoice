@@ -17,9 +17,6 @@ Color get netralDisableColor => const Color(0xff999999);
 Color get whiteTextColor => const Color(0xffFFFFFF);
 Color get blachTextColor => const Color(0xff404040);
 
-TextStyle get title =>
-    const TextStyle(fontWeight: FontWeight.bold, fontSize: 30);
-
 TextStyle get heading1 =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 24);
 TextStyle get heading2 =>
@@ -32,6 +29,12 @@ TextStyle get heading5 =>
     const TextStyle(fontWeight: FontWeight.w600, fontSize: 14);
 TextStyle get paragraph4 =>
     const TextStyle(fontWeight: FontWeight.w400, fontSize: 12);
+TextStyle get subhead2 =>
+    const TextStyle(fontWeight: FontWeight.w400, fontSize: 14);
+TextStyle get heading7 =>
+    const TextStyle(fontWeight: FontWeight.w600, fontSize: 12);
+TextStyle get subhead1 =>
+    const TextStyle(fontWeight: FontWeight.w400, fontSize: 16);
 
 TextStyle get body1 =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
@@ -46,3 +49,5 @@ TextStyle get sectionHead => const TextStyle(
     fontWeight: FontWeight.bold, color: Color(0xff404040), fontSize: 14);
 TextStyle get sectionSubHead => const TextStyle(
     fontWeight: FontWeight.w400, color: Color(0xff404040), fontSize: 12);
+TextStyle get body4 =>
+    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12);

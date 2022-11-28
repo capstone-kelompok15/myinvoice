@@ -41,6 +41,10 @@ class HomePage extends StatelessWidget {
                         )
                       ],
                     ),
+                    const Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                    )
                   ],
                 ),
               ),
