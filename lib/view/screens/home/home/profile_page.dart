@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myinvoice/view/config/config.dart';
+import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,19 +12,17 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profileProvider = Provider.of<ProfileProvider>(context);
-    SizeConfig().init(context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: getPropertionateScreenHeight(150),
+            height: (150),
             decoration: BoxDecoration(
               color: primaryBackground,
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(
-                  getPropertionateScreenWidht(50),
+                  (50),
                 ),
               ),
             ),
@@ -32,38 +30,38 @@ class ProfilePage extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                    top: getPropertionateScreenHeight(66),
-                    bottom: getPropertionateScreenHeight(24),
-                    left: getPropertionateScreenWidht(30),
+                    top: (66),
+                    bottom: (24),
+                    left: (30),
                   ),
                   child: CircleAvatar(
                     backgroundColor: backgroundProfileColor,
-                    radius: getPropertionateScreenWidht(30),
+                    radius: (30),
                   ),
                 ),
                 Column(
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        top: getPropertionateScreenHeight(69),
-                        left: getPropertionateScreenWidht(12),
-                        right: getPropertionateScreenWidht(86),
+                        top: (69),
+                        left: (12),
+                        right: (86),
                       ),
                       child: Text(
                         'Clarissa Maharani',
                         style: heading3.copyWith(
                           color: whiteTextColor,
-                          fontSize: getPropertionateScreenWidht(18),
+                          fontSize: (18),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: getPropertionateScreenHeight(6),
+                      height: (6),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        left: getPropertionateScreenWidht(12),
-                        right: getPropertionateScreenWidht(31),
+                        left: (12),
+                        right: (31),
                       ),
                       child: Text(
                         'Clarissa Maharani@gmail.com',
@@ -76,15 +74,16 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: getPropertionateScreenHeight(20),
+            height: (20),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: getPropertionateScreenWidht(30),
+              horizontal: (30),
             ),
             child: Container(
+              height: MediaQuery.of(context).size.height * 2 / 4.65,
               padding: EdgeInsets.only(
-                left: getPropertionateScreenWidht(15),
+                left: (15),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,82 +92,81 @@ class ProfilePage extends StatelessWidget {
                     'Account',
                     style: heading4.copyWith(
                       color: blachTextColor,
-                      fontSize: getPropertionateScreenWidht(16),
+                      fontSize: (16),
                     ),
                   ),
                   SizedBox(
-                    height: getPropertionateScreenHeight(10),
+                    height: 13,
                   ),
-                  Column(
-                    children: profileProvider.dataAccount
-                        .map((e) => _buildCardSetting(e))
-                        .toList(),
+                  _buildCardSetting(edit, 'Edit Profile'),
+                  _buildCardSetting(lock, 'Password'),
+                  SizedBox(
+                    height: (10),
                   ),
                   Text(
                     'More',
                     style: heading4.copyWith(color: blachTextColor),
                   ),
                   SizedBox(
-                    height: getPropertionateScreenHeight(10),
+                    height: (15),
                   ),
-                  Column(
-                    children: profileProvider.dataMore
-                        .map((e) => _buildCardSetting(e))
-                        .toList(),
-                  ),
-                  SizedBox(
-                    height: getPropertionateScreenHeight(24),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: TextButton.styleFrom(
-                        elevation: 0,
-                        side: BorderSide(width: 2, color: redColor),
-                        backgroundColor: whiteTextColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            getPropertionateScreenWidht(10),
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          vertical: getPropertionateScreenHeight(13),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        'Logout',
-                        style: heading4.copyWith(color: redColor),
-                      ),
-                    ),
-                  ),
+                  _buildCardSetting(bell, 'Notification', isToggle: true),
+                  _buildCardSetting(creditCard, 'Payment'),
+                  _buildCardSetting(language, 'Language'),
+                  _buildCardSetting(lock, 'Privacy Policy'),
+                  _buildCardSetting(help, 'Help & Support'),
                 ],
               ),
             ),
           ),
+          Spacer(),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            width: double.infinity,
+            child: ElevatedButton(
+              style: TextButton.styleFrom(
+                elevation: 0,
+                side: BorderSide(width: 2, color: redColor),
+                backgroundColor: whiteTextColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    (10),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(
+                  vertical: (12),
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                'Logout',
+                style: heading4.copyWith(color: redColor),
+              ),
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 1 / 4.4,
+          )
         ],
       ),
     );
   }
 
-  Widget _buildCardSetting(Map<String, dynamic> data) {
+  Widget _buildCardSetting(String icon, String title, {bool isToggle = false}) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: getPropertionateScreenWidht(5),
-        bottom: getPropertionateScreenWidht(15),
-      ),
+      padding: const EdgeInsets.only(left: 5, bottom: 10, right: 20),
       child: Row(
         children: [
-          SvgPicture.asset(data['icon']),
+          SvgPicture.asset(icon),
           SizedBox(
-            width: getPropertionateScreenWidht(5),
+            width: (5),
           ),
           Text(
-            data['title'],
+            title,
             style: paragraph4.copyWith(color: blachTextColor),
           ),
           Spacer(),
-          data['isToogle']
+          isToggle
               ? SvgPicture.asset('assets/icons/Toggle.svg')
               : SvgPicture.asset('assets/icons/arrow.svg'),
         ],
@@ -176,3 +174,27 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: ElevatedButton(
+                  //     style: TextButton.styleFrom(
+                  //       elevation: 0,
+                  //       side: BorderSide(width: 2, color: redColor),
+                  //       backgroundColor: whiteTextColor,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(
+                  //           (10),
+                  //         ),
+                  //       ),
+                  //       padding: EdgeInsets.symmetric(
+                  //         vertical: (13),
+                  //       ),
+                  //     ),
+                  //     onPressed: () {},
+                  //     child: Text(
+                  //       'Logout',
+                  //       style: heading4.copyWith(color: redColor),
+                  //     ),
+                  //   ),
+                  // ),
