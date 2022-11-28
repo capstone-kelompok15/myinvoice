@@ -13,9 +13,9 @@ class MethodHelper {
           Navigator.pop(context);
         },
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 8),
           child: Row(
-            children: [
+            children: const [
               Icon(
                 Icons.arrow_back_ios_new_sharp,
               ),

@@ -65,7 +65,7 @@ class ChooseBankCard extends StatelessWidget {
           Row(
             children: [
               SvgPicture.asset(icon),
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               Text(

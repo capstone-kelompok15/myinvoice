@@ -37,7 +37,7 @@ class PaymentScreen extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Column(
-                children: [
+                children: const [
                   ChooseBankCard(namaBank: 'Mandiri', icon: mandiri),
                   SizedBox(
                     height: 20,
@@ -59,8 +59,9 @@ class PaymentScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -99,7 +100,7 @@ class PaymentScreen extends StatelessWidget {
                             'ATM BERSAMA / MANDIRI / PRIMA',
                             style: paragraph4.copyWith(color: blackTextColor),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 12,
                           ),
                           ListView.builder(
@@ -114,7 +115,7 @@ class PaymentScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     RoundedButton(
                         title: 'Confirm Payment',
                         press: () {
@@ -195,7 +196,7 @@ class CardCopiable extends StatelessWidget {
               'Copy',
               style: heading7.copyWith(color: primaryMain),
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             SvgPicture.asset(copy),

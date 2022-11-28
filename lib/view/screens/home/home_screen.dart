@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  List<Widget> _pages = const [
+  final List<Widget> _pages = const [
     HomePage(),
     InvoicePage(),
     // Center(

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
@@ -13,7 +11,7 @@ class StatusPembayaranScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isSukses = false;
+    bool isSukses = true;
     return Scaffold(
       appBar: MethodHelper.buildAppBar(context, ''),
       body: isSukses == true
@@ -47,14 +45,14 @@ class StatusPembayaranScreen extends StatelessWidget {
                   const SizedBox(
                     height: 60,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   RoundedButton(
                       title: 'Back to Home',
                       press: () {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomeScreen(),
+                              builder: (context) => const HomeScreen(),
                             ),
                             (route) => false);
                       }),
@@ -102,14 +100,14 @@ class StatusPembayaranScreen extends StatelessWidget {
                     "Call center My Invoice",
                     style: subhead1.copyWith(color: blackTextColor),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   RoundedButton(
                       title: 'Back to Home',
                       press: () {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomeScreen(),
+                              builder: (context) => const HomeScreen(),
                             ),
                             (route) => false);
                       }),

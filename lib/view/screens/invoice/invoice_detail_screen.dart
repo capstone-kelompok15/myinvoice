@@ -5,10 +5,11 @@ import 'package:myinvoice/view/screens/invoice/choose_payment_method_screen.dart
 import 'package:myinvoice/view/screens/invoice/payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
+import 'package:myinvoice/view/widgets/rounded_button.dart';
 
 class InvoiceDetailScreen extends StatelessWidget {
-  const InvoiceDetailScreen({super.key});
-
+  const InvoiceDetailScreen({super.key, required this.isPaid});
+  final bool isPaid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,27 +32,44 @@ class InvoiceDetailScreen extends StatelessWidget {
                     const ItemDescriptionCard(),
                     const ItemDescriptionCard(),
                     const ItemDescriptionCard(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    MethodPaymentCard(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    const TotalProduckCard(),
                     const SizedBox(
                       height: 16,
                     ),
-                    const NoteCard(),
+                    isPaid ? const SizedBox() : const MethodPaymentCard(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TotalProduckCard(
+                      isPaid: isPaid,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    isPaid ? const SizedBox() : const NoteCard(),
                   ],
                 ),
               ),
             ),
           ),
-          const Expanded(
-            flex: 2,
-            child: PayNowCard(),
-          ),
+          isPaid
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      RoundedButton(title: 'Download', press: () {}),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
+                  ),
+                )
+              : const Expanded(
+                  flex: 2,
+                  child: PayNowCard(),
+                ),
         ],
       ),
     );
@@ -243,7 +261,10 @@ class NoteCard extends StatelessWidget {
 class TotalProduckCard extends StatelessWidget {
   const TotalProduckCard({
     Key? key,
+    required this.isPaid,
   }) : super(key: key);
+
+  final bool isPaid;
 
   @override
   Widget build(BuildContext context) {
@@ -252,6 +273,29 @@ class TotalProduckCard extends StatelessWidget {
       decoration: BoxDecoration(color: netralCardColor),
       child: Column(
         children: [
+          isPaid
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Method Payment',
+                          style: body4.copyWith(color: netralDisableColor),
+                        ),
+                        const Spacer(),
+                        Text(
+                          'Text',
+                          style: paragraph4.copyWith(color: netralDisableColor),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                  ],
+                )
+              : const SizedBox(),
           Row(
             children: [
               Text(
@@ -296,6 +340,15 @@ class MethodPaymentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        // showDialog(
+        //   context: context,
+        //   builder: (ctx) => AlertDialog(
+        //     title: Text(
+        //       'Chosse Payment Method',
+        //       style: heading3.copyWith(color: blackTextColor),
+        //     ),
+        //   ),
+        // );
         Navigator.push(
             context,
             MaterialPageRoute(

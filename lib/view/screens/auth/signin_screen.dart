@@ -72,7 +72,7 @@ class SignInScreen extends StatelessWidget {
                     onPressed: () => Navigator.pushAndRemoveUntil(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => HomeScreen(),
+                          builder: (context) => const HomeScreen(),
                         ),
                         (route) => false),
                     child: Text(

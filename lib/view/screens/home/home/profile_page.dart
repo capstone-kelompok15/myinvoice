@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
@@ -21,7 +19,7 @@ class ProfilePage extends StatelessWidget {
             height: (150),
             decoration: BoxDecoration(
               color: primaryBackground,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(
                   (50),
                 ),
@@ -30,7 +28,7 @@ class ProfilePage extends StatelessWidget {
             child: Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     top: (66),
                     bottom: (24),
                     left: (30),
@@ -43,7 +41,7 @@ class ProfilePage extends StatelessWidget {
                 Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         top: (69),
                         left: (12),
                         right: (86),
@@ -56,11 +54,11 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: (6),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         left: (12),
                         right: (31),
                       ),
@@ -74,15 +72,15 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: (20),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: (30),
             ),
             child: Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: (15),
                 top: (12),
               ),
@@ -96,7 +94,7 @@ class ProfilePage extends StatelessWidget {
                       fontSize: (16),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: (10),
                   ),
                   Column(
@@ -108,7 +106,7 @@ class ProfilePage extends StatelessWidget {
                     'More',
                     style: heading4.copyWith(color: blackTextColor),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: (10),
                   ),
                   Column(
@@ -116,7 +114,7 @@ class ProfilePage extends StatelessWidget {
                         .map((e) => _buildCardSetting(e))
                         .toList(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: (24),
                   ),
                 ],
@@ -124,7 +122,7 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: (30),
             ),
             child: SizedBox(
@@ -139,7 +137,7 @@ class ProfilePage extends StatelessWidget {
                       (10),
                     ),
                   ),
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     vertical: (13),
                   ),
                 ),
@@ -158,23 +156,23 @@ class ProfilePage extends StatelessWidget {
 
   Widget _buildCardSetting(Map<String, dynamic> data) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: (5),
         bottom: (15),
       ),
       child: Row(
         children: [
           SvgPicture.asset(data['icon']),
-          SizedBox(
+          const SizedBox(
             width: (5),
           ),
           Text(
             data['title'],
             style: paragraph4.copyWith(color: blackTextColor),
           ),
-          Spacer(),
+          const Spacer(),
           data['isToogle'] ? SvgPicture.asset(toggle) : SvgPicture.asset(arrow),
-          SizedBox(
+          const SizedBox(
             width: (21),
           ),
         ],

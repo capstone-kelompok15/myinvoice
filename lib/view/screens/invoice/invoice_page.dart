@@ -142,7 +142,7 @@ class InvoiceCard extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const InvoiceDetailScreen(),
+              builder: (context) => InvoiceDetailScreen(isPaid: paid),
             ));
       },
       child: Container(
@@ -153,9 +153,9 @@ class InvoiceCard extends StatelessWidget {
             color: netralCardColor,
             boxShadow: [
               BoxShadow(
-                  color: const Color(0xff0E1F351F).withOpacity(0.12),
+                  color: const Color(0xff0e1f351f).withOpacity(0.12),
                   blurRadius: 3,
-                  offset: Offset(0, 3)),
+                  offset: const Offset(0, 3)),
             ]),
         child: Row(
           children: [
