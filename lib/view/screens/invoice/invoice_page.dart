@@ -90,23 +90,47 @@ class InvoicePage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 4.5 / 8,
+            Container(
+              height: MediaQuery.of(context).size.height * 5 / 8,
               child: PageView(
                 controller: invoiceProvider.pageController,
                 onPageChanged: (value) {
                   invoiceProvider.changePage(value);
                 },
                 children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: buildInvoiceCard(false),
-                    ),
+                  ListView.builder(
+                    itemCount: invoiceProvider.allInvoice.length,
+                    itemBuilder: (context, index) {
+                      return invoiceProvider.allInvoice[index].isPaid == false
+                          ? InvoiceCard(
+                              paid: invoiceProvider.allInvoice[index].isPaid,
+                              date: invoiceProvider
+                                  .allInvoice[index].dateInvoice
+                                  .toString(),
+                              nameStore: invoiceProvider
+                                  .allInvoice[index].storeName
+                                  .toString(),
+                              price: invoiceProvider.allInvoice[index].subtotal,
+                            )
+                          : SizedBox();
+                    },
                   ),
-                  SingleChildScrollView(
-                    child: Column(
-                      children: buildInvoiceCard(true),
-                    ),
+                  ListView.builder(
+                    itemCount: invoiceProvider.allInvoice.length,
+                    itemBuilder: (context, index) {
+                      return invoiceProvider.allInvoice[index].isPaid == true
+                          ? InvoiceCard(
+                              paid: invoiceProvider.allInvoice[index].isPaid,
+                              date: invoiceProvider
+                                  .allInvoice[index].dateInvoice
+                                  .toString(),
+                              nameStore: invoiceProvider
+                                  .allInvoice[index].storeName
+                                  .toString(),
+                              price: invoiceProvider.allInvoice[index].subtotal,
+                            )
+                          : SizedBox();
+                    },
                   ),
                 ],
               ),
@@ -117,24 +141,29 @@ class InvoicePage extends StatelessWidget {
     );
   }
 
-  List<Widget> buildInvoiceCard(bool isPaid) {
-    List<Widget> data = [];
-    for (var i = 0; i < 8; i++) {
-      data.add(InvoiceCard(paid: isPaid));
-    }
+  // List<Widget> buildInvoiceCard(bool isPaid) {
+  //   List<Widget> data = [];
+  //   for (var i = 0; i < 8; i++) {
+  //     data.add(InvoiceCard(paid: isPaid));
+  //   }
 
-    return data;
-  }
+  //   return data;
+  // }
 }
 
 class InvoiceCard extends StatelessWidget {
   const InvoiceCard({
     Key? key,
     required this.paid,
+    this.nameStore,
+    this.date,
+    this.price,
   }) : super(key: key);
 
   final bool paid;
-
+  final String? nameStore;
+  final String? date;
+  final String? price;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -169,26 +198,24 @@ class InvoiceCard extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  'Seven Store',
+                  nameStore ?? '',
                   style: heading5.copyWith(color: blackTextColor),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 Text(
-                  'Nov 22, 2022',
+                  date ?? '',
                   style: paragraph4.copyWith(color: netralDisableColor),
                 ),
               ],
             ),
-            const SizedBox(
-              width: 39,
-            ),
+            Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'IDR. 1.120.000,-',
+                  price ?? '',
                   style: subhead2.copyWith(color: blackTextColor),
                 ),
                 const SizedBox(
