@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
@@ -90,8 +91,7 @@ class InvoicePage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 4.5 / 8,
+            Expanded(
               child: PageView(
                 controller: invoiceProvider.pageController,
                 onPageChanged: (value) {
@@ -100,12 +100,26 @@ class InvoicePage extends StatelessWidget {
                 children: [
                   SingleChildScrollView(
                     child: Column(
-                      children: buildInvoiceCard(false),
+                      children: invoiceProvider.dataUnPaid
+                          .map(
+                            (e) => InvoiceCard(
+                              paid: e.isPaid,
+                              invoice: e,
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
                   SingleChildScrollView(
                     child: Column(
-                      children: buildInvoiceCard(true),
+                      children: invoiceProvider.dataPaid
+                          .map(
+                            (e) => InvoiceCard(
+                              paid: e.isPaid,
+                              invoice: e,
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
                 ],
@@ -116,25 +130,17 @@ class InvoicePage extends StatelessWidget {
       ),
     );
   }
-
-  List<Widget> buildInvoiceCard(bool isPaid) {
-    List<Widget> data = [];
-    for (var i = 0; i < 8; i++) {
-      data.add(InvoiceCard(paid: isPaid));
-    }
-
-    return data;
-  }
 }
 
 class InvoiceCard extends StatelessWidget {
   const InvoiceCard({
     Key? key,
     required this.paid,
+    required this.invoice,
   }) : super(key: key);
 
   final bool paid;
-
+  final Invoice invoice;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -142,7 +148,8 @@ class InvoiceCard extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InvoiceDetailScreen(isPaid: paid),
+              builder: (context) =>
+                  InvoiceDetailScreen(isPaid: paid, invoice: invoice),
             ));
       },
       child: Container(
@@ -167,28 +174,27 @@ class InvoiceCard extends StatelessWidget {
               width: 20,
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Seven Store',
+                  invoice.storeName ?? '',
                   style: heading5.copyWith(color: blackTextColor),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 Text(
-                  'Nov 22, 2022',
+                  invoice.dateInvoice ?? '',
                   style: paragraph4.copyWith(color: netralDisableColor),
                 ),
               ],
             ),
-            const SizedBox(
-              width: 39,
-            ),
+            Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'IDR. 1.120.000,-',
+                  invoice.subtotal ?? '',
                   style: subhead2.copyWith(color: blackTextColor),
                 ),
                 const SizedBox(
@@ -196,8 +202,8 @@ class InvoiceCard extends StatelessWidget {
                 ),
                 Text(
                   paid ? 'Paid' : 'Unpaid',
-                  style: heading7.copyWith(
-                      color: paid ? Colors.greenAccent : redColor),
+                  style:
+                      heading7.copyWith(color: paid ? Colors.green : redColor),
                 ),
               ],
             ),

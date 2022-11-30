@@ -4,6 +4,8 @@ import 'package:myinvoice/view/screens/home/home/home_page.dart';
 import 'package:myinvoice/view/screens/home/home/profile_page.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
   void _changeTab(int value) {
     setState(() {
+      if (value == 1) {
+        Provider.of<InvoiceProvider>(context, listen: false).filterInvoice();
+      }
       _index = value;
     });
   }
