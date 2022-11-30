@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
@@ -19,8 +22,11 @@ class ConfirmPaymentScreen extends StatefulWidget {
   State<ConfirmPaymentScreen> createState() => _ConfirmPaymentScreenState();
 }
 
+String nameImage = 'Invoice.jpg';
+
 class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
   TextEditingController dateinput = TextEditingController();
+  TextEditingController imageInput = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -28,6 +34,17 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Future<XFile?> getImage() async {
+      ImagePicker _picker = ImagePicker();
+      XFile? selectImage = await _picker.pickImage(
+          source: ImageSource.gallery, imageQuality: 30);
+
+      setState(() {
+        nameImage = selectImage!.name;
+      });
+      return XFile(selectImage!.path);
+    }
+
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
     return Scaffold(
       appBar: MethodHelper.buildAppBar(context, 'Confirm Payment'),
@@ -116,16 +133,26 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                       width: 4,
                     ),
                     Expanded(
-                      child: TextField(
+                      child: TextFormField(
+                        // controller: imageInput,
+                        // onChanged: (value) async {
+                        //   final file = await getImage();
+                        //   value = file!.name;
+                        // },
                         readOnly: true,
+                        onTap: () async {
+                          await getImage();
+                          print('sukses');
+                        },
                         decoration: InputDecoration(
                           suffix: SvgPicture.asset(cross),
                           fillColor: const Color(0xffcdcdcd),
                           filled: true,
-                          hintText: 'Invoice.jpg',
+                          hintText: nameImage,
                           hintStyle:
                               paragraph4.copyWith(color: netralDisableColor),
                           border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
