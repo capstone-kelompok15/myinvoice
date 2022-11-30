@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 const assets = "assets/";
 const icon = 'assets/icons/';
 const appLogo = "${assets}app-logo.svg";

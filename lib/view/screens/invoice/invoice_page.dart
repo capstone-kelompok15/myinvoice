@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
@@ -90,47 +91,36 @@ class InvoicePage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 5 / 8,
+            Expanded(
               child: PageView(
                 controller: invoiceProvider.pageController,
                 onPageChanged: (value) {
                   invoiceProvider.changePage(value);
                 },
                 children: [
-                  ListView.builder(
-                    itemCount: invoiceProvider.allInvoice.length,
-                    itemBuilder: (context, index) {
-                      return invoiceProvider.allInvoice[index].isPaid == false
-                          ? InvoiceCard(
-                              paid: invoiceProvider.allInvoice[index].isPaid,
-                              date: invoiceProvider
-                                  .allInvoice[index].dateInvoice
-                                  .toString(),
-                              nameStore: invoiceProvider
-                                  .allInvoice[index].storeName
-                                  .toString(),
-                              price: invoiceProvider.allInvoice[index].subtotal,
-                            )
-                          : SizedBox();
-                    },
+                  SingleChildScrollView(
+                    child: Column(
+                      children: invoiceProvider.dataUnPaid
+                          .map(
+                            (e) => InvoiceCard(
+                              paid: e.isPaid,
+                              invoice: e,
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
-                  ListView.builder(
-                    itemCount: invoiceProvider.allInvoice.length,
-                    itemBuilder: (context, index) {
-                      return invoiceProvider.allInvoice[index].isPaid == true
-                          ? InvoiceCard(
-                              paid: invoiceProvider.allInvoice[index].isPaid,
-                              date: invoiceProvider
-                                  .allInvoice[index].dateInvoice
-                                  .toString(),
-                              nameStore: invoiceProvider
-                                  .allInvoice[index].storeName
-                                  .toString(),
-                              price: invoiceProvider.allInvoice[index].subtotal,
-                            )
-                          : SizedBox();
-                    },
+                  SingleChildScrollView(
+                    child: Column(
+                      children: invoiceProvider.dataPaid
+                          .map(
+                            (e) => InvoiceCard(
+                              paid: e.isPaid,
+                              invoice: e,
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
                 ],
               ),
@@ -140,30 +130,17 @@ class InvoicePage extends StatelessWidget {
       ),
     );
   }
-
-  // List<Widget> buildInvoiceCard(bool isPaid) {
-  //   List<Widget> data = [];
-  //   for (var i = 0; i < 8; i++) {
-  //     data.add(InvoiceCard(paid: isPaid));
-  //   }
-
-  //   return data;
-  // }
 }
 
 class InvoiceCard extends StatelessWidget {
   const InvoiceCard({
     Key? key,
     required this.paid,
-    this.nameStore,
-    this.date,
-    this.price,
+    required this.invoice,
   }) : super(key: key);
 
   final bool paid;
-  final String? nameStore;
-  final String? date;
-  final String? price;
+  final Invoice invoice;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -171,7 +148,8 @@ class InvoiceCard extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InvoiceDetailScreen(isPaid: paid),
+              builder: (context) =>
+                  InvoiceDetailScreen(isPaid: paid, invoice: invoice),
             ));
       },
       child: Container(
@@ -196,16 +174,17 @@ class InvoiceCard extends StatelessWidget {
               width: 20,
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  nameStore ?? '',
+                  invoice.storeName ?? '',
                   style: heading5.copyWith(color: blackTextColor),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 Text(
-                  date ?? '',
+                  invoice.dateInvoice ?? '',
                   style: paragraph4.copyWith(color: netralDisableColor),
                 ),
               ],
@@ -215,7 +194,7 @@ class InvoiceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  price ?? '',
+                  invoice.subtotal ?? '',
                   style: subhead2.copyWith(color: blackTextColor),
                 ),
                 const SizedBox(
@@ -223,8 +202,8 @@ class InvoiceCard extends StatelessWidget {
                 ),
                 Text(
                   paid ? 'Paid' : 'Unpaid',
-                  style: heading7.copyWith(
-                      color: paid ? Colors.greenAccent : redColor),
+                  style:
+                      heading7.copyWith(color: paid ? Colors.green : redColor),
                 ),
               ],
             ),

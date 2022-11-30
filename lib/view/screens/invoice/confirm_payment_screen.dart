@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/status_pembayaran_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:provider/provider.dart';
 
 class ConfirmPaymentScreen extends StatefulWidget {
-  const ConfirmPaymentScreen({super.key});
+  const ConfirmPaymentScreen({super.key, required this.data});
+  final Invoice data;
 
   @override
   State<ConfirmPaymentScreen> createState() => _ConfirmPaymentScreenState();
@@ -24,6 +28,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final invoiceProvider = Provider.of<InvoiceProvider>(context);
     return Scaffold(
       appBar: MethodHelper.buildAppBar(context, 'Confirm Payment'),
       body: Padding(
@@ -135,6 +140,9 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
               RoundedButton(
                 title: 'Confirm',
                 press: () {
+                  print('${widget.data.invoiceID}');
+                  invoiceProvider
+                      .changeStatus(widget.data.invoiceID.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(

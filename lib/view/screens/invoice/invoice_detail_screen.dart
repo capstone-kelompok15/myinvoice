@@ -1,84 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/choose_payment_method_screen.dart';
 import 'package:myinvoice/view/screens/invoice/payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
+import 'package:provider/provider.dart';
+
+import '../../../viewmodel/invoice_provider.dart';
 
 class InvoiceDetailScreen extends StatelessWidget {
-  const InvoiceDetailScreen({super.key, required this.isPaid});
+  const InvoiceDetailScreen(
+      {super.key, required this.isPaid, required this.invoice});
   final bool isPaid;
+  final Invoice invoice;
   @override
   Widget build(BuildContext context) {
+    final invoiceProvider = Provider.of<InvoiceProvider>(context);
+
     return Scaffold(
       appBar: MethodHelper.buildAppBar(
         context,
         'Invoice Details',
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 10,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const StoreAndNameDetailsCard(),
-                    const ItemDescriptionCard(),
-                    const ItemDescriptionCard(),
-                    const ItemDescriptionCard(),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    isPaid ? const SizedBox() : const MethodPaymentCard(),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    TotalProduckCard(
-                      isPaid: isPaid,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    isPaid ? const SizedBox() : const NoteCard(),
-                  ],
-                ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              StoreAndNameDetailsCard(invoice: invoice),
+              Column(
+                children: invoice.items!
+                    .map((e) => ItemDescriptionCard(itemInvoice: e))
+                    .toList(),
               ),
-            ),
+              isPaid ? SizedBox() : MethodPaymentCard(),
+              SizedBox(
+                height: 16,
+              ),
+              TotalProduckCard(invoice: invoice, isPaid: isPaid),
+              SizedBox(
+                height: 16,
+              ),
+              isPaid ? SizedBox() : NoteCard(),
+              SizedBox(
+                height: 80,
+              ),
+            ],
           ),
-          isPaid
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      RoundedButton(title: 'Download', press: () {}),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                    ],
-                  ),
-                )
-              : const Expanded(
-                  flex: 2,
-                  child: PayNowCard(),
-                ),
-        ],
+        ),
       ),
+      bottomNavigationBar: buildBottom(isPaid),
+      extendBody: true,
     );
+  }
+
+  Widget buildBottom(bool isPaid) {
+    if (isPaid) {
+      return Container(
+        color: Colors.white,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 30.0,
+          vertical: 14,
+        ),
+        child: RoundedButton(title: 'Download', press: () {}),
+      );
+    } else {
+      return PayNowCard(
+        data: invoice,
+      );
+    }
   }
 }
 
 class StoreAndNameDetailsCard extends StatelessWidget {
+  final Invoice invoice;
   const StoreAndNameDetailsCard({
     Key? key,
+    required this.invoice,
   }) : super(key: key);
 
   @override
@@ -87,14 +89,14 @@ class StoreAndNameDetailsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Store Name',
+          invoice.storeName ?? '',
           style: body3.copyWith(color: blackTextColor),
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'Jl. merpati bandung jawa barat ',
+          invoice.alamatStore ?? '',
           style: paragraph4.copyWith(color: blackTextColor),
         ),
         const Divider(
@@ -104,7 +106,7 @@ class StoreAndNameDetailsCard extends StatelessWidget {
           height: 25,
         ),
         Text(
-          'Invoice #44335',
+          'Invoice #{$invoice.invoiceId}',
           style: paragraph4.copyWith(color: netralDisableColor),
         ),
         const SizedBox(
@@ -113,12 +115,12 @@ class StoreAndNameDetailsCard extends StatelessWidget {
         Row(
           children: [
             Text(
-              'User Name',
+              invoice.userName ?? '',
               style: body3.copyWith(color: blackTextColor),
             ),
             const Spacer(),
             Text(
-              'Date Invoice:',
+              'Date Invoice: ${invoice.dateInvoice}',
               style: paragraph4.copyWith(color: blackTextColor),
             ),
           ],
@@ -127,7 +129,7 @@ class StoreAndNameDetailsCard extends StatelessWidget {
           height: 5,
         ),
         Text(
-          'Email User',
+          invoice.emailUser ?? '',
           style: paragraph4.copyWith(color: blackTextColor),
         ),
         const SizedBox(
@@ -136,12 +138,12 @@ class StoreAndNameDetailsCard extends StatelessWidget {
         Row(
           children: [
             Text(
-              'Jl. merpati bandung jawa barat',
+              invoice.alamatUser ?? '',
               style: paragraph4.copyWith(color: blackTextColor),
             ),
             const Spacer(),
             Text(
-              'Date Overdue:',
+              'Date Invoice: ${invoice.dateOverdue}',
               style: paragraph4.copyWith(color: blackTextColor),
             ),
           ],
@@ -160,11 +162,14 @@ class StoreAndNameDetailsCard extends StatelessWidget {
 class PayNowCard extends StatelessWidget {
   const PayNowCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
-
+  final Invoice data;
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      height: 80,
+      color: Colors.white,
       padding: const EdgeInsets.only(left: 38, bottom: 8, right: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -198,7 +203,9 @@ class PayNowCard extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PaymentScreen(),
+                    builder: (context) => PaymentScreen(
+                      data: data,
+                    ),
                   ),
                 );
               },
@@ -262,9 +269,11 @@ class TotalProduckCard extends StatelessWidget {
   const TotalProduckCard({
     Key? key,
     required this.isPaid,
+    required this.invoice,
   }) : super(key: key);
 
   final bool isPaid;
+  final Invoice invoice;
 
   @override
   Widget build(BuildContext context) {
@@ -304,7 +313,7 @@ class TotalProduckCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                'Text',
+                invoice.totalProduct ?? '',
                 style: paragraph4.copyWith(color: netralDisableColor),
               ),
             ],
@@ -320,7 +329,7 @@ class TotalProduckCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                'Text',
+                invoice.subtotal ?? '',
                 style: paragraph4.copyWith(color: netralDisableColor),
               ),
             ],
@@ -340,20 +349,47 @@ class MethodPaymentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // showDialog(
-        //   context: context,
-        //   builder: (ctx) => AlertDialog(
-        //     title: Text(
-        //       'Chosse Payment Method',
-        //       style: heading3.copyWith(color: blackTextColor),
-        //     ),
-        //   ),
-        // );
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ChoosePaymentMethodScreen(),
-            ));
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text(
+              'Chosse Payment Method',
+              style: heading3.copyWith(color: blackTextColor),
+            ),
+            content: Container(
+              width: MediaQuery.of(context).size.width,
+            ),
+            actions: [
+              Text(
+                'Bank Transfer (Manual Verification)',
+                style: heading7.copyWith(color: blackTextColor),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const ChooseBankCard(icon: bni, namaBank: 'Bank BNI'),
+              const ChooseBankCard(icon: bca, namaBank: 'Bank BCA'),
+              const ChooseBankCard(icon: mandiri, namaBank: 'Bank Mandiri'),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Payment Gateway (Automatic Verification)',
+                style: heading7.copyWith(color: blackTextColor),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const ChooseBankCard(namaBank: 'Bank BNI', icon: bni)
+            ],
+          ),
+        );
+        // // );
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => const ChoosePaymentMethodScreen(),
+        //     ));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -384,8 +420,10 @@ class MethodPaymentCard extends StatelessWidget {
 }
 
 class ItemDescriptionCard extends StatelessWidget {
+  final Item itemInvoice;
   const ItemDescriptionCard({
     Key? key,
+    required this.itemInvoice,
   }) : super(key: key);
 
   @override
@@ -414,7 +452,7 @@ class ItemDescriptionCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      'Text',
+                      "${itemInvoice.itemDescription}",
                       style: paragraph4.copyWith(color: netralDisableColor),
                     ),
                   ],
@@ -430,7 +468,7 @@ class ItemDescriptionCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      'Text',
+                      "${itemInvoice.quantity}",
                       style: paragraph4.copyWith(color: netralDisableColor),
                     ),
                   ],
@@ -446,7 +484,7 @@ class ItemDescriptionCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      'Text',
+                      "${itemInvoice.price}",
                       style: paragraph4.copyWith(color: netralDisableColor),
                     ),
                   ],
@@ -473,7 +511,7 @@ class ItemDescriptionCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      'Text',
+                      "${itemInvoice.total}",
                       style: paragraph4.copyWith(color: netralDisableColor),
                     ),
                   ],

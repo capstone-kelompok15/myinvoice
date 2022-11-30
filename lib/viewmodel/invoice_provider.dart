@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:myinvoice/models/invoice.dart';
 
 class InvoiceProvider extends ChangeNotifier {
+  // page controller untuk unpaid ama paid
   int currendIndex = 0;
 
   PageController pageController = PageController();
@@ -9,7 +10,16 @@ class InvoiceProvider extends ChangeNotifier {
   void changePage(int currendIndex) {
     this.currendIndex = currendIndex;
 
-    print('val $currendIndex');
+    notifyListeners();
+  }
+
+  int currentIndexPembayaran = 0;
+
+  PageController pageControllerPembayaran = PageController();
+
+  void changePagePembayaran(int currentIndexPembayaran) {
+    this.currentIndexPembayaran = currentIndexPembayaran;
+
     notifyListeners();
   }
 
@@ -107,5 +117,46 @@ class InvoiceProvider extends ChangeNotifier {
     ),
   ];
 
+  List<Invoice> _dataPaid = [];
+  List<Invoice> _dataUnPaid = [];
+
   List<Invoice> get allInvoice => _allInvoice;
+  List<Invoice> get dataPaid => _dataPaid;
+  List<Invoice> get dataUnPaid => _dataUnPaid;
+
+  filterInvoice() {
+    _dataPaid = [];
+    _dataUnPaid = [];
+    for (var item in _allInvoice) {
+      if (item.isPaid) {
+        _dataPaid.add(item);
+      } else {
+        _dataUnPaid.add(item);
+      }
+    }
+    notifyListeners();
+  }
+
+  changeStatus(String invoiceId) {
+    for (var item in _allInvoice) {
+      if (item.invoiceID == invoiceId) {
+        _allInvoice.remove(item);
+        _allInvoice.add(Invoice(
+          alamatStore: item.alamatStore,
+          alamatUser: item.alamatUser,
+          dateInvoice: item.dateInvoice,
+          dateOverdue: item.dateOverdue,
+          emailUser: item.emailUser,
+          invoiceID: item.invoiceID,
+          storeName: item.storeName,
+          subtotal: item.subtotal,
+          totalProduct: item.totalProduct,
+          userName: item.userName,
+          isPaid: true,
+          items: item.items,
+        ));
+      }
+    }
+    notifyListeners();
+  }
 }
