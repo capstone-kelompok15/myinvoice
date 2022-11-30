@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
+import 'package:myinvoice/view/screens/profile_page/help_center_screen.dart';
+import 'package:myinvoice/view/screens/profile_page/personal_data_screen.dart';
+import 'package:myinvoice/view/screens/profile_page/privacy_policy_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
@@ -15,184 +20,183 @@ class ProfilePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: (150),
-            decoration: BoxDecoration(
-              color: primaryBackground,
-              borderRadius: const BorderRadius.only(
-                bottomRight: Radius.circular(
-                  (50),
-                ),
-              ),
-            ),
-            child: Row(
+            height: 44,
+            color: primaryBackground,
+          ),
+          Container(
+            width: double.infinity,
+            padding:
+                const EdgeInsets.only(left: 30, right: 30, top: 12, bottom: 24),
+            decoration: BoxDecoration(color: primaryBackground),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: (66),
-                    bottom: (24),
-                    left: (30),
-                  ),
-                  child: CircleAvatar(
-                    backgroundColor: backgroundProfileColor,
-                    radius: (30),
-                  ),
+                CircleAvatar(
+                  radius: 35,
                 ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: (69),
-                        left: (12),
-                        right: (86),
-                      ),
-                      child: Text(
-                        'Clarissa Maharani',
-                        style: heading3.copyWith(
-                          color: whiteTextColor,
-                          fontSize: (18),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: (6),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: (12),
-                        right: (31),
-                      ),
-                      child: Text(
-                        'Clarissa Maharani@gmail.com',
-                        style: heading5.copyWith(color: whiteTextColor),
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'Clarissa Maharani',
+                  style: heading5.copyWith(color: Colors.white),
+                ),
+                SizedBox(
+                  height: 6,
+                ),
+                Text(
+                  'ClarissaMaharani@gmail.com',
+                  style: paragraph4.copyWith(color: Colors.white),
                 ),
               ],
             ),
           ),
-          const SizedBox(
-            height: (20),
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: (30),
-            ),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 2 / 4.65,
-              padding: EdgeInsets.only(
-                left: (15),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Account',
-                    style: heading4.copyWith(
-                      color: blackTextColor,
-                      fontSize: (16),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: (10),
-                  ),
-                  _buildCardSetting(edit, 'Edit Profile'),
-                  _buildCardSetting(lock, 'Password'),
-                  SizedBox(
-                    height: (10),
-                  ),
-                  Text(
-                    'More',
-                    style: heading4.copyWith(color: blackTextColor),
-                  ),
-                  SizedBox(
-                    height: (15),
-                  ),
-                  _buildCardSetting(bell, 'Notification', isToggle: true),
-                  _buildCardSetting(creditCard, 'Payment'),
-                  _buildCardSetting(language, 'Language'),
-                  _buildCardSetting(lock, 'Privacy Policy'),
-                  _buildCardSetting(help, 'Help & Support'),
-                ],
-              ),
-            ),
-          ),
-          Spacer(),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 30),
-            width: double.infinity,
-            child: ElevatedButton(
-              style: TextButton.styleFrom(
-                elevation: 0,
-                side: BorderSide(width: 2, color: redColor),
-                backgroundColor: whiteTextColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    (10),
-                  ),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Personal Details',
+                  style: heading4.copyWith(color: blackTextColor),
                 ),
-                padding: EdgeInsets.symmetric(
-                  vertical: (12),
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              onPressed: () {},
-              child: Text(
-                'Logout',
-                style: heading4.copyWith(color: redColor),
-              ),
+                _buildCardSetting(
+                    'assets/icons/fi-rr-user (1).svg',
+                    'Personal Data',
+                    () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PersonalDataScreen(),
+                        ))),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'More',
+                  style: heading4.copyWith(color: blackTextColor),
+                ),
+                _buildCardSetting(
+                    lock,
+                    'Privacy Policy',
+                    () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PrivacyPolicyScreen(),
+                        ))),
+                _buildCardSetting(
+                  help,
+                  'Help Center',
+                  () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HelpCenterScreen(),
+                      )),
+                ),
+                _buildCardSetting('assets/icons/fi-rr-info.svg', 'About', () {},
+                    isArrow: false, isTwoText: true, text2: 'Versi 1.1'),
+                _buildCardSetting(
+                  'assets/icons/logout.svg',
+                  'Logout',
+                  isArrow: false,
+                  isRed: true,
+                  () => _dialogBuilder(context),
+                ),
+              ],
             ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 1 / 4.4,
           )
         ],
       ),
     );
   }
 
-  Widget _buildCardSetting(String icon, String title, {bool isToggle = false}) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5, bottom: 10, right: 20),
-      child: Row(
-        children: [
-          SvgPicture.asset(icon),
-          SizedBox(
-            width: (5),
-          ),
-          Text(
-            title,
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(child: const Text('Logging Out')),
+          content: Text(
+            'Are you sure want to sign out from your myinvoice account?',
             style: paragraph4.copyWith(color: blackTextColor),
+            textAlign: TextAlign.center,
           ),
-          Spacer(),
-          isToggle
-              ? SvgPicture.asset('assets/icons/Toggle.svg')
-              : SvgPicture.asset('assets/icons/arrow.svg'),
-        ],
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Disable'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Enable'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildCardSetting(String icon, String title, Function() press,
+      {bool isArrow = true,
+      bool isTwoText = false,
+      String text2 = '',
+      bool isRed = false}) {
+    return GestureDetector(
+      onTap: press,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 7),
+        child: Row(
+          children: [
+            SvgPicture.asset(
+              icon,
+              width: 16,
+              height: 16,
+              fit: BoxFit.scaleDown,
+            ),
+            SizedBox(
+              width: (8),
+            ),
+            isTwoText
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: paragraph4.copyWith(color: blackTextColor),
+                      ),
+                      Text(
+                        text2,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10,
+                            color: netralDisableColor),
+                      )
+                    ],
+                  )
+                : Text(
+                    title,
+                    style: paragraph4.copyWith(
+                        color: isRed ? Colors.red : blackTextColor),
+                  ),
+            Spacer(),
+            isArrow
+                ? SvgPicture.asset('assets/icons/arrow.svg')
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }
 }
-
-                  // SizedBox(
-                  //   width: double.infinity,
-                  //   child: ElevatedButton(
-                  //     style: TextButton.styleFrom(
-                  //       elevation: 0,
-                  //       side: BorderSide(width: 2, color: redColor),
-                  //       backgroundColor: whiteTextColor,
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(
-                  //           (10),
-                  //         ),
-                  //       ),
-                  //       padding: EdgeInsets.symmetric(
-                  //         vertical: (13),
-                  //       ),
-                  //     ),
-                  //     onPressed: () {},
-                  //     child: Text(
-                  //       'Logout',
-                  //       style: heading4.copyWith(color: redColor),
-                  //     ),
-                  //   ),
-                  // ),

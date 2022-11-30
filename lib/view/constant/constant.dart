@@ -20,6 +20,10 @@ const arrow = "${icon}arrow.svg";
 const toggle = "${icon}Toggle.svg";
 const homeSmall = "${icon}fi-sr-home.svg";
 const copy = "${icon}fi-rr-copy-alt.svg";
+const info = "${icon}fi-rr-info.svg";
+const user = "${icon}fi-rr-user (1).svg";
+const logout = "${icon}logout.svg";
+const contackUs = 'assets/icons/Contact us-pana 1.svg';
 
 // icon untuk bank
 const bca = "${icon}bca.svg";
