@@ -29,17 +29,17 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  badges: ^2.0.3
   cupertino_icons: ^1.0.2
+  fl_chart: ^0.55.2
   flutter:
     sdk: flutter
   flutter_otp_text_field: ^1.1.1
-  
-  google_fonts: ^3.0.1
   flutter_svg: ^1.1.6
-  provider: ^6.0.4
-  badges: ^2.0.3
+  google_fonts: ^3.0.1
   intl: ^0.17.0
-  image_picker: ^0.8.6
+  provider: ^6.0.4
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -58,13 +58,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - app-logo.svg
-    - checkbox.svg
-    - Image-Forgot-Password.svg
-    - Image-Login.svg
-    - Image-Signup.svg
+    - assets/
     - assets/icons/
-    - success_signup.svg
+
     #   - images/a_dot_ham.jpeg
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware
