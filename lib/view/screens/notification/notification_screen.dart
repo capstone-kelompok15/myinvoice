@@ -14,25 +14,7 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  final bool isInfo = true;
-  final bool isPayment = true;
-  final bool isInvoice = true;
-
-  notifIcon(bool status) {
-    if (status == isInfo) {
-      return SvgPicture.asset(
-        iconChatFilled,
-      );
-    } else if (status == isPayment) {
-      return SvgPicture.asset(
-        iconReportFilled,
-      );
-    } else if (status == isInvoice) {
-      return SvgPicture.asset(
-        iconInvoiceFilled,
-      );
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {

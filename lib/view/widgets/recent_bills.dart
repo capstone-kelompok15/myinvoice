@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 class RecentBills extends StatelessWidget {
   final String? merchantName;
@@ -20,70 +22,87 @@ class RecentBills extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: netralCardColor,
-            borderRadius: BorderRadius.circular(6),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromRGBO(14, 31, 53, 0.12),
-                offset: Offset.fromDirection(1.5, 4),
-                blurRadius: 7,
-              ),
-            ],
-          ),
-          child: ListTile(
-            leading: SizedBox(
-              width: 40,
-              height: 40,
-              child: CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.white,
-                child: SvgPicture.asset(
-                  iconHomeFilled,
-                  color: Color(0xff404040),
-                  width: 20,
-                ),
-              ),
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  merchantName ?? "Merchant Name",
-                  style: sectionHead.copyWith(color: primaryText),
-                ),
-                Text(
-                  bill ?? "Bills",
-                  style: sectionHead.copyWith(
-                      color: primaryText, fontWeight: FontWeight.w400),
+    final modelView = Provider.of<HomeViewModel>(context);
+    return ListView.separated(
+      shrinkWrap: true,
+      primary: false,
+      separatorBuilder: (context, index) {
+        return const SizedBox(
+          height: 5,
+        );
+      },
+      itemCount: modelView.recentList.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Container(
+            decoration: BoxDecoration(
+              color: netralCardColor,
+              borderRadius: BorderRadius.circular(6),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromRGBO(14, 31, 53, 0.12),
+                  offset: Offset.fromDirection(1.5, 4),
+                  blurRadius: 7,
                 ),
               ],
             ),
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  dueDate ?? "Due Date",
-                  style: sectionSubHead.copyWith(
-                    color: Color(0xff999999),
+            child: ListTile(
+              leading: SizedBox(
+                width: 40,
+                height: 40,
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.white,
+                  child: SvgPicture.asset(
+                    modelView.recentList[index].avatar!,
+                    color: Color(0xff404040),
+                    width: 20,
                   ),
                 ),
-                Text(
-                  isPaid ? 'Paid' : 'Unpaid',
-                  style: sectionSubHead.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: isPaid ? greenColor : redColor,
+              ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    modelView.recentList[index].merchantName!,
+                    style: sectionHead.copyWith(color: primaryText),
                   ),
-                ),
-              ],
+                  Text(
+                    "${modelView.recentList[index].bill}",
+                    style: sectionHead.copyWith(
+                        color: primaryText, fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    modelView.recentList[index].date!,
+                    style: sectionSubHead.copyWith(
+                      color: Color(0xff999999),
+                    ),
+                  ),
+                  Text(
+                    modelView.recentList[index].isPaid ? "Paid" : "Unpaid",
+                    style: sectionSubHead.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: modelView.recentList[index].isPaid
+                          ? greenColor
+                          : redColor,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 10),
-      ],
+        );
+      },
+      //       children: [
+      //
+      //         SizedBox(height: 10),
+      // ],
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/screens/splash/splash_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,14 +17,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ProfileProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ProfileProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => InvoiceProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HomeViewModel(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primaryColor: primaryBackground,
-            scaffoldBackgroundColor: Colors.white,
-            textTheme: GoogleFonts.poppinsTextTheme()),
+          primaryColor: primaryBackground,
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: GoogleFonts.poppinsTextTheme(),
+        ),
         home: const HomeScreen(),
       ),
     );

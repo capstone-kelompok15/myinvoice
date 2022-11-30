@@ -8,6 +8,8 @@ import 'package:myinvoice/view/screens/notification/notification_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/recent_bills.dart';
+import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,20 +18,21 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textButtonColor = Color(0xff131089);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 195,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: const BorderRadius.only(
-                  bottomRight: Radius.circular(70),
+      body: ListView(
+        shrinkWrap: false,
+        children: [
+          Column(
+            children: [
+              Container(
+                height: 195,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: const BorderRadius.only(
+                    bottomRight: Radius.circular(70),
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 23),
-                child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 23),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,113 +91,85 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 30),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Summary",
-                        style: sectionTitle,
-                      ),
-                      TextButton(
-                        child: Text(
-                          'Details',
-                          style: TextStyle(
-                              color: textButtonColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 22, horizontal: 30),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Summary",
+                          style: sectionTitle,
                         ),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Flexible(
-                        flex: 1,
-                        child: HomeSummary(
-                          amount: 'IDR 200',
-                          status: 'Total Paid',
+                        TextButton(
+                          child: Text(
+                            'Details',
+                            style: TextStyle(
+                                color: textButtonColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          onPressed: () {},
                         ),
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: HomeSummary(
-                          amount: 'IDR 200',
-                          status: 'Unpaid',
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Flexible(
+                          flex: 1,
+                          child: HomeSummary(
+                            amount: 'IDR 200',
+                            status: 'Total Paid',
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: HomeSummary(
+                            amount: 'IDR 200',
+                            status: 'Unpaid',
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Recent Bills",
-                        style: sectionTitle,
-                      ),
-                      TextButton(
-                        child: Text(
-                          'See All',
-                          style: TextStyle(
-                              color: textButtonColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Recent Bills",
+                          style: sectionTitle,
                         ),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  RecentBills(
-                    merchantName: 'Merchant Name',
-                    bill: 'IDR. 500.000',
-                    dueDate: 'November 20, 2021',
-                    isPaid: false,
-                  ),
-                  RecentBills(
-                    merchantName: 'Merchant Name',
-                    bill: 'IDR. 500.000',
-                    dueDate: 'November 20, 2021',
-                    isPaid: false,
-                  ),
-                  RecentBills(
-                    merchantName: 'Merchant Name',
-                    bill: 'IDR. 500.000',
-                    dueDate: 'November 20, 2021',
-                    isPaid: true,
-                  ),
-                  RecentBills(
-                    merchantName: 'Merchant Name',
-                    bill: 'IDR. 500.000',
-                    dueDate: 'November 20, 2021',
-                    isPaid: true,
-                  ),
-                  RecentBills(
-                    merchantName: 'Merchant Name',
-                    bill: 'IDR. 500.000',
-                    dueDate: 'November 20, 2021',
-                    isPaid: true,
-                  ),
-                ],
+                        TextButton(
+                          child: Text(
+                            'See All',
+                            style: TextStyle(
+                                color: textButtonColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+          const RecentBills(),
+        ],
       ),
     );
   }
