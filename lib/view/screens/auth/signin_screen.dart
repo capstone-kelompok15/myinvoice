@@ -6,10 +6,7 @@ import 'package:myinvoice/view/screens/auth/reset_password_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/view/widgets/circular_loading.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
-import 'package:myinvoice/viewmodel/auth_provider.dart';
-import 'package:provider/provider.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -17,22 +14,14 @@ class SignInScreen extends StatelessWidget {
   final _email = TextEditingController();
   final _password = TextEditingController();
 
-  _submit(BuildContext context, String email, String password) async {
+  _submit(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      final res = await context.read<AuthProvider>().signIn(email, password);
-
-      if (res!.success!) {
-        // ignore: use_build_context_synchronously
-        Navigator.pushAndRemoveUntil(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => const HomeScreen(),
-            ),
-            (route) => false);
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(res.message ?? "")));
-      }
+      Navigator.pushAndRemoveUntil(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
+          (route) => false);
     }
   }
 
@@ -64,7 +53,6 @@ class SignInScreen extends StatelessWidget {
                   height: 18,
                 ),
                 CustomTextField(
-                  controller: _email,
                   title: "Email",
                   hint: "example@gmail.com",
                   validator: (text) {
@@ -83,7 +71,6 @@ class SignInScreen extends StatelessWidget {
                   },
                 ),
                 CustomTextField(
-                  controller: _password,
                   isPassword: true,
                   title: "Password",
                   hint: "********",
@@ -112,24 +99,19 @@ class SignInScreen extends StatelessWidget {
                 const SizedBox(
                   height: 50,
                 ),
-                Consumer<AuthProvider>(builder: (context, state, _) {
-                  return Container(
-                    height: 50,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: primaryMain,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextButton(
-                        onPressed: () =>
-                            _submit(context, _email.text, _password.text),
-                        child: state.isLoading
-                            ? const CicularLoading()
-                            : Text(
-                                "Sign In",
-                                style: body1.copyWith(color: Colors.white),
-                              )),
-                  );
-                }),
+                Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: primaryMain,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: TextButton(
+                      onPressed: () => _submit(context),
+                      child: Text(
+                        "Sign In",
+                        style: body1.copyWith(color: Colors.white),
+                      )),
+                ),
                 const SizedBox(
                   height: 12,
                 ),

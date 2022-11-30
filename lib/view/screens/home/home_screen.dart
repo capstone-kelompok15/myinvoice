@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/home/home/home_page.dart';
-import 'package:myinvoice/view/screens/profile/profile_page.dart';
+import 'package:myinvoice/view/screens/home/home/profile_page.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
-import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,13 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  final List<Widget> _pages = [
+  final List<Widget> _pages = const [
     HomePage(),
     InvoicePage(),
     // Center(
     //   child: Text("Report"),
     // ),
-    ReportPage(),
+    Center(
+      child: Text("Report"),
+    ),
     ProfilePage(),
   ];
 
@@ -45,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             topRight: Radius.circular(25.0),
           ),
           child: SizedBox(
-            height: 110,
+            height: 84,
             child: BottomNavigationBar(
                 backgroundColor: Theme.of(context).primaryColor,
                 type: BottomNavigationBarType.fixed,
