@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             topRight: Radius.circular(25.0),
           ),
           child: SizedBox(
-            height: 110,
+            height: 84,
             child: BottomNavigationBar(
                 backgroundColor: Theme.of(context).primaryColor,
                 type: BottomNavigationBarType.fixed,
