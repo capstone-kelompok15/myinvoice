@@ -58,7 +58,7 @@ class InvoicePage extends StatelessWidget {
                         ),
                 ),
                 const SizedBox(
-                  width: 26.5,
+                  width: 11,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -86,6 +86,35 @@ class InvoicePage extends StatelessWidget {
                           style: heading5.copyWith(color: netralDisableColor),
                         ),
                 ),
+                const SizedBox(
+                  width: 11,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    invoiceProvider.pageController.animateToPage(2,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut);
+                  },
+                  child: invoiceProvider.currendIndex == 2
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4, horizontal: 2),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: primaryBackground, width: 3),
+                            ),
+                          ),
+                          child: Text(
+                            'Pending',
+                            style: heading4.copyWith(color: primaryBackground),
+                          ),
+                        )
+                      : Text(
+                          'Pending',
+                          style: heading5.copyWith(color: netralDisableColor),
+                        ),
+                ),
               ],
             ),
             const SizedBox(
@@ -101,6 +130,18 @@ class InvoicePage extends StatelessWidget {
                   SingleChildScrollView(
                     child: Column(
                       children: invoiceProvider.dataUnPaid
+                          .map(
+                            (e) => InvoiceCard(
+                              paid: e.isPaid,
+                              invoice: e,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    child: Column(
+                      children: invoiceProvider.dataPaid
                           .map(
                             (e) => InvoiceCard(
                               paid: e.isPaid,
