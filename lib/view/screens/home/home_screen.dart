@@ -1,81 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/home/home/home_page.dart';
-import 'package:myinvoice/view/screens/home/home/profile_page.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
+import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+import '../../../viewmodel/invoice_provider.dart';
+import '../profile_page/profile_page.dart';
+
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int _index = 0;
-  void _changeTab(int value) {
-    setState(() {
-      if (value == 1) {
-        Provider.of<InvoiceProvider>(context, listen: false).filterInvoice();
-      }
-      _index = value;
-    });
-  }
-
-  final List<Widget> _pages = const [
-    HomePage(),
-    InvoicePage(),
-    // Center(
-    //   child: Text("Report"),
-    // ),
-    Center(
-      child: Text("Report"),
-    ),
-    ProfilePage(),
-  ];
-
-  @override
   Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<HomeViewModel>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        extendBody: true,
+        extendBody: false,
         bottomNavigationBar: ClipRRect(
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
           ),
           child: SizedBox(
-            height: 120,
+            height: 84,
             child: BottomNavigationBar(
                 backgroundColor: Theme.of(context).primaryColor,
                 type: BottomNavigationBarType.fixed,
                 selectedItemColor: Colors.white,
                 unselectedItemColor: Colors.white,
-                selectedLabelStyle: body1.copyWith(fontSize: 14),
+                unselectedFontSize: 12,
+                selectedFontSize: 12,
                 elevation: 0,
-                currentIndex: _index,
-                onTap: _changeTab,
-                items: const [
+                currentIndex: homeViewModel.currentIndex,
+                onTap: (value) {
+                  homeViewModel.ontap(value);
+                },
+                items: [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
+                    icon: SvgPicture.asset(
+                        homeViewModel.currentIndex == 0
+                            ? iconHomeFilled
+                            : iconHome,
+                        height: 26),
+                    // activeIcon: SvgPicture.asset(iconHomeFilled, width: 26),
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.inventory_outlined), label: "Invoice"),
+                      icon: SvgPicture.asset(iconInvoice, width: 26),
+                      activeIcon:
+                          SvgPicture.asset(iconInvoiceFilled, width: 26),
+                      label: "Invoice"),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.list_alt), label: "Report"),
+                      icon: SvgPicture.asset(iconReport, width: 26),
+                      activeIcon: SvgPicture.asset(iconReportFilled, width: 26),
+                      label: "Report"),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.person), label: "Profile"),
+                      icon: SvgPicture.asset(iconProfile, width: 26),
+                      activeIcon:
+                          SvgPicture.asset(iconProfileFilled, width: 26),
+                      label: "Profile"),
                 ]),
           ),
         ),
         body: IndexedStack(
-          index: _index,
-          children: _pages,
+          index: homeViewModel.currentIndex,
+          children: [
+            HomePage(),
+            InvoicePage(),
+            ReportPage(),
+            ProfilePage(),
+          ],
         ),
       ),
     );

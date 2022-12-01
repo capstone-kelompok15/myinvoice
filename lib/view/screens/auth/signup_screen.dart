@@ -2,12 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
+import 'package:myinvoice/view/screens/auth/otp_screen.dart';
 import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+  SignupScreen({super.key});
+
+  final _formKey = GlobalKey<FormState>();
+
+  final _fullname = TextEditingController();
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  final _confirmPassword = TextEditingController();
+
+  _submit(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => const OtpScreen(),
+          ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,23 +52,78 @@ class SignupScreen extends StatelessWidget {
               const SizedBox(
                 height: 18,
               ),
-              const CustomTextField(
-                title: "Full Name",
-                hint: "e.g Darryl Martine",
-              ),
-              const CustomTextField(
-                title: "Email",
-                hint: "example@gmail.com",
-              ),
-              const CustomTextField(
-                isPassword: true,
-                title: "Password",
-                hint: "********",
-              ),
-              const CustomTextField(
-                title: "Full Name",
-                isPassword: true,
-                hint: "********",
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      controller: _fullname,
+                      title: "Full Name",
+                      hint: "e.g Darryl Martine",
+                      validator: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'Can\'t be empty';
+                        }
+                        if (text.length < 4) {
+                          return 'Too short';
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomTextField(
+                      controller: _email,
+                      title: "Email",
+                      hint: "example@gmail.com",
+                      validator: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'Can\'t be empty';
+                        }
+                        if (text.length < 4) {
+                          return 'Too short';
+                        }
+                        if (!RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(text)) {
+                          return 'Invalid Email';
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomTextField(
+                      controller: _password,
+                      isPassword: true,
+                      title: "Password",
+                      hint: "********",
+                      validator: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'Can\'t be empty';
+                        }
+                        if (text.length < 8 || text.length > 16) {
+                          return 'Password must be 8-16 characters';
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomTextField(
+                      controller: _confirmPassword,
+                      title: "Confirm Password",
+                      isPassword: true,
+                      hint: "********",
+                      validator: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'Can\'t be empty';
+                        }
+                        if (text.length < 8 || text.length > 16) {
+                          return 'Password must be 8-16 characters';
+                        }
+                        if (text != _password.text) {
+                          return 'Password doesnt match';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 30,
@@ -62,7 +135,7 @@ class SignupScreen extends StatelessWidget {
                     color: primaryMain,
                     borderRadius: BorderRadius.circular(12)),
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () => _submit(context),
                     child: Text(
                       "Create Account",
                       style: body1.copyWith(color: Colors.white),
@@ -85,7 +158,7 @@ class SignupScreen extends StatelessWidget {
                     onTap: () => Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => const SignInScreen(),
+                          builder: (context) =>  SignInScreen(),
                         )),
                     child: Text(
                       "Sign In",

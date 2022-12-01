@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final String? title;
   final String? hint;
   final String? icon;
   final TextEditingController? controller;
   final bool isPassword;
+  final String? Function(String?)? validator;
   final Function()? press;
   final bool isRead;
 
@@ -17,11 +18,18 @@ class CustomTextField extends StatelessWidget {
     this.hint,
     this.controller,
     this.isPassword = false,
+    this.validator,
     this.isRead = false,
     this.icon,
     this.press,
   }) : super(key: key);
 
+  @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  bool showPassword = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,33 +38,46 @@ class CustomTextField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title ?? "Title",
+            widget.title ?? "Title",
             style: body3,
           ),
           const SizedBox(
             height: 8,
           ),
-          TextField(
-              onTap: press,
-              obscureText: isPassword,
-              readOnly: isRead,
-              controller: controller,
-              decoration: icon != null
-                  ? InputDecoration(
-                      prefixIcon: SvgPicture.asset(
-                        icon!,
-                        height: 20,
-                        width: 20,
-                        fit: BoxFit.scaleDown,
-                      ),
-                      hintText: hint,
-                      hintStyle: paragraph4.copyWith(color: netralDisableColor),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)))
-                  : InputDecoration(
-                      hintText: hint,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)))),
+          TextFormField(
+            onTap: widget.press,
+            validator: widget.validator,
+            obscureText: showPassword && widget.isPassword,
+            controller: widget.controller,
+            decoration: widget.icon != null
+                ? InputDecoration(
+                    prefixIcon: SvgPicture.asset(
+                      widget.icon!,
+                      height: 20,
+                      width: 20,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    hintText: widget.hint,
+                    hintStyle: paragraph4.copyWith(color: netralDisableColor),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12)))
+                : InputDecoration(
+                    suffixIcon: widget.isPassword
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            },
+                            child: Icon(showPassword
+                                ? Icons.remove_red_eye
+                                : Icons.remove_red_eye_outlined),
+                          )
+                        : null,
+                    hintText: widget.hint,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12))),
+          ),
         ],
       ),
     );

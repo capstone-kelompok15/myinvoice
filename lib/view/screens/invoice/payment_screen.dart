@@ -383,7 +383,7 @@ class CardCopiable extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            SvgPicture.asset(copy),
+            SvgPicture.asset('assets/icons/fi-rr-copy-alt.svg'),
           ],
         )
       ],
