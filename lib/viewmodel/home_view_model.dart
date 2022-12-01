@@ -34,4 +34,14 @@ class HomeViewModel extends ChangeNotifier {
   ];
 
   List<RecentItem> get recentList => _recentList;
+
+  int _currentIndex = 0;
+  int get currentIndex => _currentIndex;
+
+  void ontap(int index) {
+    _currentIndex = index;
+    print('succes 1 $index');
+    print('succes 2 $_currentIndex');
+    notifyListeners();
+  }
 }

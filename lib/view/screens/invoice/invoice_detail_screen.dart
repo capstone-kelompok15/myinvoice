@@ -347,49 +347,67 @@ class MethodPaymentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final invoiceProvider = Provider.of<InvoiceProvider>(context);
     return GestureDetector(
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text(
-              'Chosse Payment Method',
-              style: heading3.copyWith(color: blackTextColor),
+        showModalBottomSheet(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20),
+              topLeft: Radius.circular(20),
             ),
-            content: Container(
-              width: MediaQuery.of(context).size.width,
-            ),
-            actions: [
-              Text(
-                'Bank Transfer (Manual Verification)',
-                style: heading7.copyWith(color: blackTextColor),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const ChooseBankCard(icon: bni, namaBank: 'Bank BNI'),
-              const ChooseBankCard(icon: bca, namaBank: 'Bank BCA'),
-              const ChooseBankCard(icon: mandiri, namaBank: 'Bank Mandiri'),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Payment Gateway (Automatic Verification)',
-                style: heading7.copyWith(color: blackTextColor),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const ChooseBankCard(namaBank: 'Bank BNI', icon: bni)
-            ],
           ),
+          context: context,
+          builder: (context) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 11),
+                      height: 3,
+                      width: 85,
+                      decoration: BoxDecoration(
+                        color: blackTextColor,
+                        borderRadius: BorderRadius.circular(48),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Choose Payment Method',
+                    style: heading3.copyWith(color: blackTextColor),
+                  ),
+                  SizedBox(
+                    height: 18,
+                  ),
+                  Text(
+                    'Bank Transfer (Manual Verification)',
+                    style: heading7.copyWith(color: blackTextColor),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const ChooseBankCard(icon: bni, namaBank: 'Bank BNI'),
+                  const ChooseBankCard(icon: bca, namaBank: 'Bank BCA'),
+                  const ChooseBankCard(icon: mandiri, namaBank: 'Bank Mandiri'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Payment Gateway (Automatic Verification)',
+                    style: heading7.copyWith(color: blackTextColor),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const ChooseBankCard(namaBank: 'Bank BNI', icon: bni)
+                ],
+              ),
+            );
+          },
         );
-        // // );
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => const ChoosePaymentMethodScreen(),
-        //     ));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

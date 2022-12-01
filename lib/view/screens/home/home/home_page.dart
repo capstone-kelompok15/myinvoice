@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<HomeViewModel>(context);
     final textButtonColor = Color(0xff131089);
     return Scaffold(
       body: ListView(
@@ -111,7 +112,7 @@ class HomePage extends StatelessWidget {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400),
                           ),
-                          onPressed: () {},
+                          onPressed: () => homeViewModel.ontap(2),
                         ),
                       ],
                     ),
@@ -159,7 +160,7 @@ class HomePage extends StatelessWidget {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400),
                           ),
-                          onPressed: () {},
+                          onPressed: () => homeViewModel.ontap(1),
                         ),
                       ],
                     ),

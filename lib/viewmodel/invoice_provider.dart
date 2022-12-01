@@ -2,6 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:myinvoice/models/invoice.dart';
 
 class InvoiceProvider extends ChangeNotifier {
+  bool isShow = false;
+  void onClick() {
+    isShow = !isShow;
+    print(isShow);
+    notifyListeners();
+  }
+
   // page controller untuk unpaid ama paid
   int currendIndex = 0;
 
