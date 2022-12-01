@@ -1,28 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/choose_payment_method_screen.dart';
 import 'package:myinvoice/view/screens/invoice/confirm_payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/rounded_button.dart';
 
 class PaymentScreen extends StatelessWidget {
-  const PaymentScreen({super.key});
-
+  const PaymentScreen({super.key, required this.data});
+  final Invoice data;
   @override
   Widget build(BuildContext context) {
-    List data = [
-      'Catat kode pembayaran dan tagihan Anda, kemudian pergi ke mesin ATM Bersama/Mandiri/Prima yang terdekat.',
-      'Masukkan kartu ke mesin ATM Bersama',
-      'Pilih "Transaksi Lainnya"',
-      'Pilih menu "Transfer"',
-      'Pilih "Transfer ke Bank Lain"',
-      'Masukkan kode Bank Mandiri (008) dan kode pembayaran Anda : 8335441937924',
-      'Masukkan jumlah pembayaran',
-      'Konfirmasi rincian anda akan tampil di layar, cek dan tekan "Ya" untuk melanjutkan.',
-      'Transaksi selesai'
+    final invoiceProvider = Provider.of<InvoiceProvider>(context);
+    final List atmData = [
+      'Please note down your independent VA (Virtual Account) code or number first.',
+      'Then go to the nearest Mandiri ATM.',
+      'Insert the ATM card and type in the PIN.',
+      'Please select the Pay / Buy menu.',
+      'Select the Multi Payment menu and enter the company code.',
+      'After that, enter the customer code.',
+      'Enter the payment amount.',
+      'Select Billing, if the bill is difficult to match, please select YES.',
+      'Make sure once again that the bill is appropriate, then click YES.',
+      'Done, save proof of payment.',
+    ];
+
+    final List mobileBanking = [
+      'After logging in, please enter the Payment menu.',
+      'Then select the New Payment option – Multi Payment.',
+      'The next step, select No. Virtual or enter the VA code/number of the company you got.',
+      'Select the Add As New Number option.',
+      'Please enter the nominal bill to be paid, then click Confirm.',
+      'A confirmation page appears for the VA number, nominal, and service provider.',
+      'If it is correct, please click Confirm and enter your m-Banking PIN.',
+      'Done.',
+    ];
+
+    final List iBanking = [
+      'Please login to your Mandiri Online account using your username and password.',
+      'Then open the Payment menu, select Multi Payment.',
+      'After that, choose a service provider, for example Shopee, Tokopedia, and so on.',
+      'If so, enter the VA number and click Continue.',
+      'Please wait until your bill appears, if it is appropriate, please click Confirm.',
+      'Enter your PIN, or you can use the challenge code token.',
+      "Finally, don't forget to save the proof of the transaction.",
     ];
     return Scaffold(
       appBar: MethodHelper.buildAppBar(
@@ -71,51 +97,201 @@ class PaymentScreen extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    RichText(
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'ATM    ',
-                            style: heading4.copyWith(color: primaryBackground),
-                          ),
-                          TextSpan(
-                            text: 'Mobile Banking    i-Banking',
-                            style: heading4.copyWith(color: buttonDisable),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 9),
-                      decoration: BoxDecoration(
-                        color: netralCardColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'ATM BERSAMA / MANDIRI / PRIMA',
-                            style: paragraph4.copyWith(color: blackTextColor),
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              return CaraPembayaranCard(
-                                  count: (index + 1).toString(),
-                                  title: data[index]);
+                          GestureDetector(
+                            onTap: () {
+                              invoiceProvider.pageControllerPembayaran
+                                  .animateToPage(0,
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut);
                             },
+                            child: invoiceProvider.currentIndexPembayaran == 0
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 2),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            color: primaryBackground, width: 3),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'ATM',
+                                      style: heading4.copyWith(
+                                          color: primaryBackground),
+                                    ),
+                                  )
+                                : Text(
+                                    'ATM',
+                                    style: heading5.copyWith(
+                                        color: netralDisableColor),
+                                  ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              invoiceProvider.pageControllerPembayaran
+                                  .animateToPage(1,
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut);
+                            },
+                            child: invoiceProvider.currentIndexPembayaran == 1
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 2),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            color: primaryBackground, width: 3),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Mobile Banking',
+                                      style: heading4.copyWith(
+                                          color: primaryBackground),
+                                    ),
+                                  )
+                                : Text(
+                                    'Mobile Banking',
+                                    style: heading5.copyWith(
+                                        color: netralDisableColor),
+                                  ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              invoiceProvider.pageControllerPembayaran
+                                  .animateToPage(2,
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut);
+                            },
+                            child: invoiceProvider.currentIndexPembayaran == 2
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 2),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            color: primaryBackground, width: 3),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'i-Banking',
+                                      style: heading4.copyWith(
+                                          color: primaryBackground),
+                                    ),
+                                  )
+                                : Text(
+                                    'i-Banking',
+                                    style: heading5.copyWith(
+                                        color: netralDisableColor),
+                                  ),
                           ),
                         ],
                       ),
                     ),
-                    const Spacer(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                      child: PageView(
+                        controller: invoiceProvider.pageControllerPembayaran,
+                        onPageChanged: (value) {
+                          invoiceProvider.changePagePembayaran(value);
+                        },
+                        children: [
+                          SingleChildScrollView(
+                              child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 9),
+                            decoration: BoxDecoration(
+                              color: netralCardColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('ATM BERSAMA / MANDIRI / PRIMA'),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: atmData.length,
+                                    itemBuilder: (context, index) {
+                                      return CaraPembayaranCard(
+                                          count: (index + 1).toString(),
+                                          title: atmData[index]);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                          SingleChildScrollView(
+                              child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 9),
+                            decoration: BoxDecoration(
+                              color: netralCardColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Mobile Banking'),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: mobileBanking.length,
+                                    itemBuilder: (context, index) {
+                                      return CaraPembayaranCard(
+                                          count: (index + 1).toString(),
+                                          title: mobileBanking[index]);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                          SingleChildScrollView(
+                              child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 9),
+                            decoration: BoxDecoration(
+                              color: netralCardColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Internet Banking'),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: iBanking.length,
+                                    itemBuilder: (context, index) {
+                                      return CaraPembayaranCard(
+                                          count: (index + 1).toString(),
+                                          title: iBanking[index]);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                        ],
+                      ),
+                    ),
                     RoundedButton(
                         title: 'Confirm Payment',
                         press: () {
@@ -123,10 +299,10 @@ class PaymentScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const ConfirmPaymentScreen(),
+                                  ConfirmPaymentScreen(data: data),
                             ),
                           );
-                        })
+                        }),
                   ],
                 ),
               ),
@@ -136,6 +312,14 @@ class PaymentScreen extends StatelessWidget {
       ),
     );
   }
+
+  // Widget buildBottom() {
+  //   return Container(
+  //     color: Colors.white,
+  //     padding: const EdgeInsets.symmetric(horizontal: 30),
+  //     child: RoundedButton(title: 'title', press: () {}),
+  //   );
+  // }
 }
 
 class CaraPembayaranCard extends StatelessWidget {

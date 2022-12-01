@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 const assets = "assets/";
 const icons = "assets/icons/";
 const appLogo = "${assets}app-logo.svg";
@@ -34,6 +36,13 @@ const iconChatFilled = "${icons}chat_filled.svg";
 // REGEX FOR EMAIL VALIDATION
 const emailRex =
     "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+
+const homeSmall = "${icons}fi-sr-home.svg";
+const copy = "${icons}fi-rr-copy-alt.svg";
+const info = "${icons}fi-rr-info.svg";
+const user = "${icons}fi-rr-user (1).svg";
+const logout = "${icons}logout.svg";
+const contackUs = 'assets/icons/Contact us-pana 1.svg';
 
 // icon untuk bank
 const bca = "${icons}bca.svg";

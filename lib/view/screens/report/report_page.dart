@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/chart.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:provider/provider.dart';
 
 class ChipItem {
   int? id;
@@ -30,6 +33,7 @@ class _ReportPageState extends State<ReportPage> {
 
   @override
   Widget build(BuildContext context) {
+    final invoiceProvider = Provider.of<InvoiceProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -139,24 +143,31 @@ class _ReportPageState extends State<ReportPage> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 8),
                             children: List.generate(
-                                    10, (index) => InvoiceCard(paid: true))
-                                .toList(),
+                                invoiceProvider.dataUnPaid.length,
+                                (index) => InvoiceCard(
+                                    paid: true,
+                                    invoice: invoiceProvider
+                                        .dataUnPaid[index])).toList(),
                           ),
                           ListView(
                             physics: NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 8),
                             children: List.generate(
-                                    10, (index) => InvoiceCard(paid: true))
-                                .toList(),
+                                invoiceProvider.dataPaid.length,
+                                (index) => InvoiceCard(
+                                    paid: true, invoice: Invoice())).toList(),
                           ),
                           ListView(
                             physics: NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 8),
                             children: List.generate(
-                                    10, (index) => InvoiceCard(paid: true))
-                                .toList(),
+                                invoiceProvider.dataPaid.length,
+                                (index) => InvoiceCard(
+                                      paid: true,
+                                      invoice: Invoice(),
+                                    )).toList(),
                           ),
                         ]),
                       )
