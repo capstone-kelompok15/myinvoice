@@ -18,6 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
+    final controller = Provider.of<InvoiceProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -39,6 +40,7 @@ class HomeScreen extends StatelessWidget {
                 elevation: 0,
                 currentIndex: homeViewModel.currentIndex,
                 onTap: (value) {
+                  controller.filterInvoice();
                   homeViewModel.ontap(value);
                 },
                 items: [

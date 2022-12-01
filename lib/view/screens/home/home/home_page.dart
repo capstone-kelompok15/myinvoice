@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myinvoice/view/constant/constant.dart';
+import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/recent_bills.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,6 +19,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
+    final conrtoller = Provider.of<InvoiceProvider>(context);
     final textButtonColor = Color(0xff131089);
     return Scaffold(
       body: ListView(
@@ -105,15 +108,17 @@ class HomePage extends StatelessWidget {
                           style: sectionTitle,
                         ),
                         TextButton(
-                          child: Text(
-                            'Details',
-                            style: TextStyle(
-                                color: textButtonColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          onPressed: () => homeViewModel.ontap(2),
-                        ),
+                            child: Text(
+                              'Details',
+                              style: TextStyle(
+                                  color: textButtonColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            onPressed: () {
+                              conrtoller.filterInvoice();
+                              homeViewModel.ontap(2);
+                            }),
                       ],
                     ),
                     Row(
