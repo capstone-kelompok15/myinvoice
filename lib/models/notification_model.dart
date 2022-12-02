@@ -4,10 +4,7 @@ class NotificationItem {
   final String? content;
   final String? datetime;
   final bool isRead;
-  final String? status;
-  final bool isPayment;
-  final bool isInvoice;
-  final bool isInfo;
+  final String? type;
 
   NotificationItem({
     this.avatar,
@@ -15,9 +12,6 @@ class NotificationItem {
     this.content,
     this.datetime,
     this.isRead = true,
-    this.status,
-    this.isPayment = false,
-    this.isInvoice = false,
-    this.isInfo = false,
+    this.type,
   });
 }

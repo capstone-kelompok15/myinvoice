@@ -20,6 +20,7 @@ const help = "${icons}fi-rr-interrogation.svg";
 const arrow = "${icons}arrow.svg";
 const toggle = "${icons}Toggle.svg";
 
+// BottomNavBar icon
 const iconHome = "${icons}home_outlined.svg";
 const iconHomeFilled = "${icons}home_filled.svg";
 const iconInvoice = "${icons}invoice_list_outlined.svg";
@@ -59,3 +60,12 @@ const cross = "${icons}fi-rr-cross.svg";
 
 const waitingConfirm = "${icons}Work time-pana 1.svg";
 const suksespayment = "${icons}Successful purchase-pana (1) 1.svg";
+
+//Notification Screen image
+const emptyNotif = "${assets}empty_notification.svg";
+
+NumberFormat idrFormat = NumberFormat.currency(
+  locale: 'id',
+  symbol: 'IDR ',
+  decimalDigits: 0,
+);

@@ -1,7 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:myinvoice/models/home_model/bill_model.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
-import 'package:provider/provider.dart';
 
 class HomeViewModel extends ChangeNotifier {
   List<RecentItem> _recentList = [
@@ -42,9 +40,6 @@ class HomeViewModel extends ChangeNotifier {
 
   void ontap(int index) {
     _currentIndex = index;
-
-    print('succes 1 $index');
-    print('succes 2 $_currentIndex');
     notifyListeners();
   }
 }

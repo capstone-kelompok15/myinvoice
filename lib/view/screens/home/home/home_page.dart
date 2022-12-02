@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
+import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/recent_bills.dart';
@@ -13,13 +14,19 @@ import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
-    final conrtoller = Provider.of<InvoiceProvider>(context);
+    final controller = Provider.of<InvoiceProvider>(context);
     final textButtonColor = Color(0xff131089);
     return Scaffold(
       body: ListView(
@@ -116,7 +123,7 @@ class HomePage extends StatelessWidget {
                                   fontWeight: FontWeight.w400),
                             ),
                             onPressed: () {
-                              conrtoller.filterInvoice();
+                              controller.filterInvoice();
                               homeViewModel.ontap(2);
                             }),
                       ],
@@ -127,7 +134,7 @@ class HomePage extends StatelessWidget {
                         Flexible(
                           flex: 1,
                           child: HomeSummary(
-                            amount: 'IDR 200',
+                            bill: 500,
                             status: 'Total Paid',
                           ),
                         ),
@@ -137,8 +144,8 @@ class HomePage extends StatelessWidget {
                         Flexible(
                           flex: 1,
                           child: HomeSummary(
-                            amount: 'IDR 200',
-                            status: 'Unpaid',
+                            bill: 1000,
+                            status: 'Total Unpaid',
                           ),
                         ),
                       ],
