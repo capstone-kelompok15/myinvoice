@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
@@ -69,7 +70,7 @@ class RecentBills extends StatelessWidget {
                     style: sectionHead.copyWith(color: primaryText),
                   ),
                   Text(
-                    "${modelView.recentList[index].bill}",
+                    idrFormat.format(modelView.recentList[index].bill),
                     style: sectionHead.copyWith(
                         color: primaryText, fontWeight: FontWeight.w400),
                   ),
@@ -95,6 +96,9 @@ class RecentBills extends StatelessWidget {
                   ),
                 ],
               ),
+              onTap: () {
+                
+              },
             ),
           ),
         );

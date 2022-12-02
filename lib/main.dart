@@ -6,6 +6,7 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/notification_view_model.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => HomeViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => NotificationViewModel(),
         ),
       ],
       child: MaterialApp(

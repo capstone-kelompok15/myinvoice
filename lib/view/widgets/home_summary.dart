@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
 class HomeSummary extends StatelessWidget {
-  final String? amount;
+  final int? bill;
   final String? status;
-  const HomeSummary({super.key, this.amount, this.status});
+  const HomeSummary({super.key, this.bill, this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +44,17 @@ class HomeSummary extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text(amount ?? "IDR 0",
+            Text(idrFormat.format(bill),
                 style: sectionHead, textAlign: TextAlign.left),
             Text(
               status ?? "Status",
-              style: sectionSubHead,
+              style: sectionSubHead.copyWith(
+                color: status!.contains("Paid")
+                    ? greenColor
+                    : status!.contains("Unpaid")
+                        ? redColor
+                        : Colors.black,
+              ),
               textAlign: TextAlign.left,
             ),
           ],

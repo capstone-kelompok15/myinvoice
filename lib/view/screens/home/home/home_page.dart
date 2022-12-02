@@ -4,15 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myinvoice/view/constant/constant.dart';
+import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
+import 'package:myinvoice/view/screens/profile/profile_page.dart';
+import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/recent_bills.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _index = 0;
+
+  void _changeTab(int value) {
+    setState(() {
+      _index = value;
+    });
+  }
+
+  final List<Widget> _pages = [
+    HomePage(),
+    InvoicePage(),
+    ReportPage(),
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +134,9 @@ class HomePage extends StatelessWidget {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            
+                          },
                         ),
                       ],
                     ),
@@ -121,7 +146,7 @@ class HomePage extends StatelessWidget {
                         Flexible(
                           flex: 1,
                           child: HomeSummary(
-                            amount: 'IDR 200',
+                            bill: 500,
                             status: 'Total Paid',
                           ),
                         ),
@@ -131,8 +156,8 @@ class HomePage extends StatelessWidget {
                         Flexible(
                           flex: 1,
                           child: HomeSummary(
-                            amount: 'IDR 200',
-                            status: 'Unpaid',
+                            bill: 1000,
+                            status: 'Total Unpaid',
                           ),
                         ),
                       ],
@@ -159,7 +184,12 @@ class HomePage extends StatelessWidget {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => InvoicePage()));
+                          },
                         ),
                       ],
                     ),

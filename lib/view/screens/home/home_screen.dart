@@ -7,6 +7,8 @@ import 'package:myinvoice/view/screens/profile/profile_page.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,18 +25,19 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  final List<Widget> _pages = [
-    HomePage(),
-    InvoicePage(),
-    // Center(
-    //   child: Text("Report"),
-    // ),
-    ReportPage(),
-    ProfilePage(),
-  ];
+  // final List<Widget> _pages = [
+  //   HomePage(),
+  //   InvoicePage(),
+  //   // Center(
+  //   //   child: Text("Report"),
+  //   // ),
+  //   ReportPage(),
+  //   ProfilePage(),
+  // ];
 
   @override
   Widget build(BuildContext context) {
+    final modelView = Provider.of<HomeViewModel>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -83,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: IndexedStack(
           index: _index,
-          children: _pages,
+          children: modelView.pages,
         ),
       ),
     );
