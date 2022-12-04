@@ -6,7 +6,7 @@ import 'package:myinvoice/view/screens/invoice/choose_payment_method_screen.dart
 import 'package:myinvoice/view/screens/invoice/confirm_payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/invoice_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/rounded_button.dart';
@@ -16,7 +16,7 @@ class PaymentScreen extends StatelessWidget {
   final Invoice data;
   @override
   Widget build(BuildContext context) {
-    final invoiceProvider = Provider.of<InvoiceProvider>(context);
+    final invoiceProvider = Provider.of<InvoiceViewModel>(context);
     final List atmData = [
       'Please note down your independent VA (Virtual Account) code or number first.',
       'Then go to the nearest Mandiri ATM.',

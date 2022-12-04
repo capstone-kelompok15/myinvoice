@@ -11,7 +11,7 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/invoice_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmPaymentScreen extends StatefulWidget {
@@ -45,7 +45,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
       return XFile(selectImage!.path);
     }
 
-    final invoiceProvider = Provider.of<InvoiceProvider>(context);
+    final invoiceProvider = Provider.of<InvoiceViewModel>(context);
     return Scaffold(
       appBar: MethodHelper.buildAppBar(context, 'Confirm Payment'),
       body: Padding(

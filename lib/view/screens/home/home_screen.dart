@@ -9,7 +9,7 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../../viewmodel/invoice_provider.dart';
+import '../../../viewmodel/invoice_view_model.dart';
 import '../profile_page/profile_page.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
-    final controller = Provider.of<InvoiceProvider>(context);
+    final controller = Provider.of<InvoiceViewModel>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(

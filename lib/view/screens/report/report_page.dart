@@ -5,7 +5,7 @@ import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/chart.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/invoice_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ChipItem {
@@ -33,7 +33,7 @@ class _ReportPageState extends State<ReportPage> {
 
   @override
   Widget build(BuildContext context) {
-    final invoiceProvider = Provider.of<InvoiceProvider>(context);
+    final invoiceProvider = Provider.of<InvoiceViewModel>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(

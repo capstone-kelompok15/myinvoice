@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:myinvoice/models/invoice.dart';
 
-class InvoiceProvider extends ChangeNotifier {
+class InvoiceViewModel extends ChangeNotifier {
   bool isShow = false;
   void onClick() {
     isShow = !isShow;

@@ -8,7 +8,7 @@ import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/circular_loading.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
-import 'package:myinvoice/viewmodel/auth_provider.dart';
+import 'package:myinvoice/viewmodel/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class SignInScreen extends StatelessWidget {
 
   _submit(BuildContext context, String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      final res = await context.read<AuthProvider>().signIn(email, password);
+      final res = await context.read<AuthViewModel>().signIn(email, password);
 
       if (res!.success!) {
         // ignore: use_build_context_synchronously
@@ -112,7 +112,7 @@ class SignInScreen extends StatelessWidget {
                 const SizedBox(
                   height: 50,
                 ),
-                Consumer<AuthProvider>(builder: (context, state, _) {
+                Consumer<AuthViewModel>(builder: (context, state, _) {
                   return Container(
                     height: 50,
                     width: double.infinity,
