@@ -4,10 +4,18 @@ import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/screens/splash/splash_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
+<<<<<<< HEAD
 import 'package:myinvoice/viewmodel/auth_view_model.dart';
 import 'package:myinvoice/viewmodel/invoice_view_model.dart';
 import 'package:myinvoice/viewmodel/notification_view_model.dart';
 import 'package:myinvoice/viewmodel/profile_view_model.dart';
+=======
+import 'package:myinvoice/viewmodel/auth_provider.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/notification_view_model.dart';
+import 'package:myinvoice/viewmodel/profile_provider.dart';
+import 'package:myinvoice/viewmodel/report_provider.dart';
+>>>>>>> brian/report
 import 'package:provider/provider.dart';
 
 void main(List<String> args) {
@@ -35,6 +43,15 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => NotificationViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HomeViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => NotificationViewModel(),
+        ),
+           ChangeNotifierProvider(
+          create: (context) => ReportProvider(),
         ),
       ],
       child: MaterialApp(

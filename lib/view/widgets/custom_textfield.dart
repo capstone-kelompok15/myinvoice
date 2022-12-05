@@ -29,7 +29,7 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  bool showPassword = false;
+  bool showPassword = true;
   @override
   Widget build(BuildContext context) {
     return Padding(

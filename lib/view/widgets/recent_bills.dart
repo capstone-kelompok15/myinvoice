@@ -26,7 +26,11 @@ class RecentBills extends StatelessWidget {
     final modelView = Provider.of<HomeViewModel>(context);
     return ListView.separated(
       shrinkWrap: true,
+<<<<<<< HEAD
       primary: false,
+=======
+      physics: const NeverScrollableScrollPhysics(),
+>>>>>>> brian/report
       separatorBuilder: (context, index) {
         return const SizedBox(
           height: 5,
@@ -96,9 +100,13 @@ class RecentBills extends StatelessWidget {
                   ),
                 ],
               ),
+<<<<<<< HEAD
               onTap: () {
                 
               },
+=======
+              onTap: () {},
+>>>>>>> brian/report
             ),
           ),
         );

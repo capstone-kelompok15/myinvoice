@@ -43,6 +43,23 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.16.0"
+<<<<<<< HEAD
+=======
+  community_charts_common:
+    dependency: transitive
+    description:
+      name: community_charts_common
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  community_charts_flutter:
+    dependency: transitive
+    description:
+      name: community_charts_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+>>>>>>> brian/report
   cross_file:
     dependency: transitive
     description:
@@ -64,6 +81,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  d_chart:
+    dependency: "direct main"
+    description:
+      name: d_chart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   equatable:
     dependency: transitive
     description:
@@ -219,6 +243,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   matcher:
     dependency: transitive
     description:
