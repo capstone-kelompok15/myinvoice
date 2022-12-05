@@ -30,7 +30,7 @@ class HelpCenterScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Center(child: SvgPicture.asset(suksespayment)),
+            Center(child: SvgPicture.asset(contackUs)),
             SizedBox(
               height: 40,
             ),

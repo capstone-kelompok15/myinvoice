@@ -1,22 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/status_pembayaran_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:provider/provider.dart';
 
 class ConfirmPaymentScreen extends StatefulWidget {
-  const ConfirmPaymentScreen({super.key});
+  const ConfirmPaymentScreen({super.key, required this.data});
+  final Invoice data;
 
   @override
   State<ConfirmPaymentScreen> createState() => _ConfirmPaymentScreenState();
 }
 
+String nameImage = 'Invoice.jpg';
+
 class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
   TextEditingController dateinput = TextEditingController();
+  TextEditingController imageInput = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -24,6 +34,18 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Future<XFile?> getImage() async {
+      ImagePicker _picker = ImagePicker();
+      XFile? selectImage = await _picker.pickImage(
+          source: ImageSource.gallery, imageQuality: 30);
+
+      setState(() {
+        nameImage = selectImage!.name;
+      });
+      return XFile(selectImage!.path);
+    }
+
+    final invoiceProvider = Provider.of<InvoiceProvider>(context);
     return Scaffold(
       appBar: MethodHelper.buildAppBar(context, 'Confirm Payment'),
       body: Padding(
@@ -111,16 +133,26 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                       width: 4,
                     ),
                     Expanded(
-                      child: TextField(
+                      child: TextFormField(
+                        // controller: imageInput,
+                        // onChanged: (value) async {
+                        //   final file = await getImage();
+                        //   value = file!.name;
+                        // },
                         readOnly: true,
+                        onTap: () async {
+                          await getImage();
+                          print('sukses');
+                        },
                         decoration: InputDecoration(
                           suffix: SvgPicture.asset(cross),
                           fillColor: const Color(0xffcdcdcd),
                           filled: true,
-                          hintText: 'Invoice.jpg',
+                          hintText: nameImage,
                           hintStyle:
                               paragraph4.copyWith(color: netralDisableColor),
                           border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
@@ -135,6 +167,9 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
               RoundedButton(
                 title: 'Confirm',
                 press: () {
+                  print('${widget.data.invoiceID}');
+                  invoiceProvider
+                      .changeStatus(widget.data.invoiceID.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(

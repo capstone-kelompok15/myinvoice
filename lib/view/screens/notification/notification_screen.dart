@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/notification_view_model.dart';
+import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -14,28 +15,9 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  final bool isInfo = true;
-  final bool isPayment = true;
-  final bool isInvoice = true;
-
-  notifIcon(bool status) {
-    if (status == isInfo) {
-      return SvgPicture.asset(
-        iconChatFilled,
-      );
-    } else if (status == isPayment) {
-      return SvgPicture.asset(
-        iconReportFilled,
-      );
-    } else if (status == isInvoice) {
-      return SvgPicture.asset(
-        iconInvoiceFilled,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final modelView = Provider.of<NotificationViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -84,58 +66,87 @@ class _NotificationScreenState extends State<NotificationScreen> {
           style: heading3.copyWith(color: primaryBackground),
         ),
       ),
-      body: SafeArea(
-        child: ListView.separated(
-            itemBuilder: (context, index) {
-              return ListTile(
-                isThreeLine: true,
-                leading: Container(
-                  transform: Matrix4.translationValues(0, -20, 0),
-                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  child: SvgPicture.asset(
-                    iconInvoiceFilled,
-                    width: 24,
-                    color: primaryBackground,
-                  ),
-                ),
-                title: Container(
-                  transform: Matrix4.translationValues(0, -10, 0),
-                  padding: EdgeInsets.fromLTRB(0, 10, 42, 0),
-                  child: Text(
-                    "Payment Success",
-                    style: heading3.copyWith(
-                        color: primaryBackground, letterSpacing: 0.16),
-                  ),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 42, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                        style: notifContent.copyWith(color: primaryBackground),
+      body: modelView.notifItems.isNotEmpty
+          ? SafeArea(
+              child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      isThreeLine: true,
+                      leading: Container(
+                        transform: Matrix4.translationValues(0, -20, 0),
+                        padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                        child: SvgPicture.asset(
+                          modelView.notifItems[index].avatar!,
+                          width: 24,
+                          color: primaryBackground,
+                        ),
                       ),
-                      SizedBox(
-                        height: 5,
+                      title: Container(
+                        transform: Matrix4.translationValues(0, -10, 0),
+                        padding: EdgeInsets.fromLTRB(0, 10, 42, 0),
+                        child: Text(
+                          modelView.notifItems[index].title!,
+                          style: heading3.copyWith(
+                              color: primaryBackground, letterSpacing: 0.16),
+                        ),
                       ),
-                      Text(
-                        "${DateFormat('d MMM y, HH:mm').format(DateTime.now())}",
-                        style: notifContent,
+                      subtitle: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 42, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              modelView.notifItems[index].content!,
+                              style: notifContent.copyWith(
+                                  color: primaryBackground),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "${DateFormat('d MMM y, HH:mm').format(DateTime.now())}",
+                              style: notifContent,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      thickness: 1,
+                      color: Colors.black.withOpacity(.1),
+                    );
+                  },
+                  itemCount: modelView.notifItems.length),
+            )
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/empty_notification.svg",
                   ),
-                ),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return Divider(
-                thickness: 1,
-                color: Colors.black.withOpacity(.1),
-              );
-            },
-            itemCount: 10),
-      ),
+                  SizedBox(
+                    height: 64,
+                  ),
+                  Text(
+                    "No Notification",
+                    style: title.copyWith(color: primaryText),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    "when you get notification, they'll show up here",
+                    style: TextStyle(
+                      color: primaryText,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

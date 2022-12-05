@@ -1,4 +1,4 @@
-import 'package:myinvoice/models/signin_response.dart';
+import 'package:myinvoice/models/auth_response.dart';
 
 class ApiRepository {
   static Future<SignInResponse?> signIn(String email, String password) async {
@@ -13,7 +13,7 @@ class ApiRepository {
     await Future.delayed(const Duration(seconds: 1));
     print(initialUser['email']);
     print(email);
-    print(initialUser['email'] == email); 
+    print(initialUser['email'] == email);
 
     // jika valid
     if (email == initialUser['email'] && password == initialUser['password']) {
@@ -27,5 +27,18 @@ class ApiRepository {
         success: false,
         token: null,
         message: "Failed to SignIn, please check email or password");
+  }
+
+  static Future<SignUpResponse?> signUp(
+      String name, String email, String password) async {
+    final url = "https://example.com/api/signup";
+
+    /// Ceritanya validasi user dari api
+    await Future.delayed(const Duration(seconds: 1));
+
+    // jika invalid
+    return SignUpResponse(
+        success: true,
+        message: "please verify otp");
   }
 }

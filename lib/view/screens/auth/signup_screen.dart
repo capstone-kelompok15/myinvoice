@@ -5,7 +5,10 @@ import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/auth/otp_screen.dart';
 import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/view/widgets/circular_loading.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
+import 'package:myinvoice/viewmodel/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
@@ -17,13 +20,18 @@ class SignupScreen extends StatelessWidget {
   final _password = TextEditingController();
   final _confirmPassword = TextEditingController();
 
-  _submit(BuildContext context) {
+  _submit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      Navigator.push(
-          context,
-          CupertinoPageRoute(
-            builder: (context) => const OtpScreen(),
-          ));
+      final res = await context
+          .read<AuthProvider>()
+          .signUp(_fullname.text, _email.text, _password.text);
+      if (res!.success ?? false) {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => const OtpScreen(),
+            ));
+      }
     }
   }
 
@@ -128,19 +136,23 @@ class SignupScreen extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              Container(
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: primaryMain,
-                    borderRadius: BorderRadius.circular(12)),
-                child: TextButton(
-                    onPressed: () => _submit(context),
-                    child: Text(
-                      "Create Account",
-                      style: body1.copyWith(color: Colors.white),
-                    )),
-              ),
+              Consumer<AuthProvider>(builder: (context, state, _) {
+                return Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: primaryMain,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: TextButton(
+                      onPressed: () => _submit(context),
+                      child: state.isLoading
+                          ? const CicularLoading()
+                          : Text(
+                              "Create Account",
+                              style: body1.copyWith(color: Colors.white),
+                            )),
+                );
+              }),
               const SizedBox(
                 height: 12,
               ),
@@ -158,7 +170,7 @@ class SignupScreen extends StatelessWidget {
                     onTap: () => Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) =>  SignInScreen(),
+                          builder: (context) => SignInScreen(),
                         )),
                     child: Text(
                       "Sign In",

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 const assets = "assets/";
 const icons = "assets/icons/";
 const appLogo = "${assets}app-logo.svg";
@@ -18,6 +20,7 @@ const help = "${icons}fi-rr-interrogation.svg";
 const arrow = "${icons}arrow.svg";
 const toggle = "${icons}Toggle.svg";
 
+// BottomNavBar icon
 const iconHome = "${icons}home_outlined.svg";
 const iconHomeFilled = "${icons}home_filled.svg";
 const iconInvoice = "${icons}invoice_list_outlined.svg";
@@ -35,6 +38,13 @@ const iconChatFilled = "${icons}chat_filled.svg";
 const emailRex =
     "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 
+const homeSmall = "${icons}fi-sr-home.svg";
+const copy = "${icons}fi-rr-copy-alt.svg";
+const info = "${icons}fi-rr-info.svg";
+const user = "${icons}fi-rr-user (1).svg";
+const logout = "${icons}logout.svg";
+const contackUs = 'assets/icons/Contact us-pana 1.svg';
+
 // icon untuk bank
 const bca = "${icons}bca.svg";
 const bni = "${icons}bni.svg";
@@ -50,3 +60,15 @@ const cross = "${icons}fi-rr-cross.svg";
 
 const waitingConfirm = "${icons}Work time-pana 1.svg";
 const suksespayment = "${icons}Successful purchase-pana (1) 1.svg";
+
+//Notification Screen image
+const emptyNotif = "${assets}empty_notification.svg";
+
+// icon yg ada di report page
+const filterIcon = "${icons}filter.svg";
+
+NumberFormat idrFormat = NumberFormat.currency(
+  locale: 'id',
+  symbol: 'IDR ',
+  decimalDigits: 0,
+);
