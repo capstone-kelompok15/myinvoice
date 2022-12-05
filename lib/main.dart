@@ -8,6 +8,7 @@ import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/notification_view_model.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
+import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
 
 void main(List<String> args) {
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => NotificationViewModel(),
         ),
+           ChangeNotifierProvider(
+          create: (context) => ReportProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -44,7 +48,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           textTheme: GoogleFonts.poppinsTextTheme(),
         ),
-        home: const HomeScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

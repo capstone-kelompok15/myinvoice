@@ -5,3 +5,10 @@ class SignInResponse {
 
   SignInResponse({this.success, this.token, this.message});
 }
+
+class SignUpResponse {
+  bool? success;
+
+  String? message;
+  SignUpResponse({this.success, this.message});
+}

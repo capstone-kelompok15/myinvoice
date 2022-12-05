@@ -38,6 +38,13 @@ const iconChatFilled = "${icons}chat_filled.svg";
 const emailRex =
     "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 
+const homeSmall = "${icons}fi-sr-home.svg";
+const copy = "${icons}fi-rr-copy-alt.svg";
+const info = "${icons}fi-rr-info.svg";
+const user = "${icons}fi-rr-user (1).svg";
+const logout = "${icons}logout.svg";
+const contackUs = 'assets/icons/Contact us-pana 1.svg';
+
 // icon untuk bank
 const bca = "${icons}bca.svg";
 const bni = "${icons}bni.svg";
@@ -61,6 +68,9 @@ const emptyNotif = "${assets}empty_notification.svg";
 const payment = "${icons}payment.svg";
 const invoice = "${icons}invoice.svg";
 const information = "${icons}info.svg";
+
+// icon yg ada di report page
+const filterIcon = "${icons}filter.svg";
 
 NumberFormat idrFormat = NumberFormat.currency(
   locale: 'id',

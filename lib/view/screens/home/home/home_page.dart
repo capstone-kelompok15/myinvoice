@@ -5,12 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
-import 'package:myinvoice/view/screens/profile/profile_page.dart';
 import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,23 +21,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _index = 0;
-
-  void _changeTab(int value) {
-    setState(() {
-      _index = value;
-    });
-  }
-
-  final List<Widget> _pages = [
-    HomePage(),
-    InvoicePage(),
-    ReportPage(),
-    ProfilePage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<HomeViewModel>(context);
+    final controller = Provider.of<InvoiceProvider>(context);
     final textButtonColor = Color(0xff131089);
     return Scaffold(
       body: ListView(
@@ -126,17 +113,17 @@ class _HomePageState extends State<HomePage> {
                           style: sectionTitle,
                         ),
                         TextButton(
-                          child: Text(
-                            'Details',
-                            style: TextStyle(
-                                color: textButtonColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          onPressed: () {
-                            
-                          },
-                        ),
+                            child: Text(
+                              'Details',
+                              style: TextStyle(
+                                  color: textButtonColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            onPressed: () {
+                              controller.filterInvoice();
+                              homeViewModel.ontap(2);
+                            }),
                       ],
                     ),
                     Row(
@@ -183,12 +170,7 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) => InvoicePage()));
-                          },
+                          onPressed: () => homeViewModel.ontap(1),
                         ),
                       ],
                     ),
