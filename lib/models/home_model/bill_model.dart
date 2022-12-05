@@ -6,13 +6,13 @@ class RecentItem {
   final String? merchantName;
   final String? date;
   final int? bill;
-  final bool isPaid;
+  final String? status;
 
   RecentItem({
     this.avatar,
     this.merchantName,
     this.date,
     this.bill,
-    this.isPaid = false,
+    this.status,
   });
 }

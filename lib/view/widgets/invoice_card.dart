@@ -7,18 +7,18 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-class RecentBills extends StatelessWidget {
+class InvoiceCard extends StatelessWidget {
   final String? merchantName;
   final String? dueDate;
   final String? bill;
-  final bool isPaid;
+  final String? status;
 
-  const RecentBills({
+  const InvoiceCard({
     Key? key,
     this.merchantName,
     this.dueDate,
     this.bill,
-    this.isPaid = true,
+    this.status,
   }) : super(key: key);
 
   @override
@@ -36,19 +36,14 @@ class RecentBills extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Container(
-            decoration: BoxDecoration(
-              color: netralCardColor,
+          child: Card(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(6),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromRGBO(14, 31, 53, 0.12),
-                  offset: Offset.fromDirection(1.5, 4),
-                  blurRadius: 7,
-                ),
-              ],
             ),
+            elevation: 4,
+            shadowColor: Colors.black.withOpacity(0.5),
             child: ListTile(
+              tileColor: netralCardColor,
               leading: SizedBox(
                 width: 40,
                 height: 40,
@@ -85,20 +80,33 @@ class RecentBills extends StatelessWidget {
                       color: Color(0xff999999),
                     ),
                   ),
-                  Text(
-                    modelView.recentList[index].isPaid ? "Paid" : "Unpaid",
-                    style: sectionSubHead.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: modelView.recentList[index].isPaid
-                          ? greenColor
-                          : redColor,
+                  if (modelView.recentList[index].status == 'Paid') ...[
+                    Text(
+                      modelView.recentList[index].status!,
+                      style: body4.copyWith(
+                        color: greenColor,
+                      ),
                     ),
-                  ),
+                  ] else if (modelView.recentList[index].status ==
+                      'Unpaid') ...[
+                    Text(
+                      modelView.recentList[index].status!,
+                      style: body4.copyWith(
+                        color: redColor,
+                      ),
+                    ),
+                  ] else if (modelView.recentList[index].status ==
+                      'Pending') ...[
+                    Text(
+                      modelView.recentList[index].status!,
+                      style: body4.copyWith(
+                        color: orangeColor,
+                      ),
+                    ),
+                  ],
                 ],
               ),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
           ),
         );

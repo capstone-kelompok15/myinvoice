@@ -6,9 +6,12 @@ Color get primaryBorder => const Color(0Xff5887DA);
 Color get primaryMain => const Color(0Xff234F9D);
 Color get primaryBackground => const Color(0Xff173468);
 Color get backgroundProfileColor => const Color(0XffD9D9D9);
+Color get primaryText => const Color(0Xff404040);
+
+// Status Color
 Color get redColor => const Color(0xffD62D33);
 Color get greenColor => const Color(0xff329059);
-Color get primaryText => const Color(0Xff404040);
+Color get orangeColor => const Color(0xffF57D15);
 
 // Netral Color
 Color get netralCardColor => const Color(0xffF7F7F7);

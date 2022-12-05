@@ -23,28 +23,28 @@ class HomeViewModel extends ChangeNotifier {
       merchantName: 'Amazon',
       date: 'Nov 30, 2022',
       bill: 500000,
-      isPaid: true,
+      status: 'Paid',
     ),
     RecentItem(
       avatar: 'assets/icons/home_filled.svg',
       merchantName: 'Amazon',
       date: 'Nov 30, 2022',
       bill: 500000,
-      isPaid: true,
+      status: 'Paid',
     ),
     RecentItem(
       avatar: 'assets/icons/home_filled.svg',
       merchantName: 'Amazon',
       date: 'Nov 30, 2022',
       bill: 500000,
-      isPaid: false,
+      status: 'Unpaid',
     ),
     RecentItem(
       avatar: 'assets/icons/home_filled.svg',
       merchantName: 'Amazon',
       date: 'Nov 30, 2022',
       bill: 500000,
-      isPaid: false,
+      status: 'Pending',
     ),
   ];
 

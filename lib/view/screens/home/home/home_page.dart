@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myinvoice/view/constant/constant.dart';
-import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
 import 'package:myinvoice/view/screens/profile/profile_page.dart';
 import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
-import 'package:myinvoice/view/widgets/recent_bills.dart';
+import 'package:myinvoice/view/widgets/invoice_card.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -198,7 +197,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          const RecentBills(),
+          InvoiceCard(),
         ],
       ),
     );
