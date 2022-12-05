@@ -7,10 +7,11 @@ import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/chart.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
+import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter/cupertino.dart';
 import 'components/filter_inital_page.dart';
 import 'components/filter_rangetime_page.dart';
 import 'components/filter_typebiils_page.dart';
@@ -31,6 +32,9 @@ class _ReportPageState extends State<ReportPage> {
 
   @override
   Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<HomeViewModel>(context);
+    final controller = Provider.of<InvoiceProvider>(context);
+    final textButtonColor = Color(0xff131089);
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
@@ -151,12 +155,18 @@ class _ReportPageState extends State<ReportPage> {
                             "Recent Bills",
                             style: heading2,
                           ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Text("See All",
-                                style: TextStyle(
-                                    color: primaryBackground, fontSize: 18)),
-                          ),
+                          TextButton(
+                            child: Text(
+                              'See All',
+                              style: TextStyle(
+                                  color: textButtonColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            onPressed: () {
+                              controller.filterInvoice();
+                              homeViewModel.ontap(2);
+                            }),
                         ],
                       ),
                     ],
