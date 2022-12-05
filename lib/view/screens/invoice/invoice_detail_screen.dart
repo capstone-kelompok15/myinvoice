@@ -9,11 +9,7 @@ import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
 import 'package:provider/provider.dart';
 
-<<<<<<< HEAD
-import '../../../viewmodel/invoice_view_model.dart';
-=======
 import '../../../viewmodel/invoice_provider.dart';
->>>>>>> brian/report
 
 class InvoiceDetailScreen extends StatelessWidget {
   const InvoiceDetailScreen(
@@ -22,11 +18,7 @@ class InvoiceDetailScreen extends StatelessWidget {
   final Invoice invoice;
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    final invoiceProvider = Provider.of<InvoiceViewModel>(context);
-=======
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
->>>>>>> brian/report
 
     return Scaffold(
       appBar: MethodHelper.buildAppBar(
@@ -355,11 +347,7 @@ class MethodPaymentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    final invoiceProvider = Provider.of<InvoiceViewModel>(context);
-=======
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
->>>>>>> brian/report
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(

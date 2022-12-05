@@ -64,12 +64,9 @@ const suksespayment = "${icons}Successful purchase-pana (1) 1.svg";
 //Notification Screen image
 const emptyNotif = "${assets}empty_notification.svg";
 
-<<<<<<< HEAD
-=======
 // icon yg ada di report page
 const filterIcon = "${icons}filter.svg";
 
->>>>>>> brian/report
 NumberFormat idrFormat = NumberFormat.currency(
   locale: 'id',
   symbol: 'IDR ',

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myinvoice/models/auth_response.dart';
 import 'package:myinvoice/repository/api_repository.dart';
 
-class AuthViewModel extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier {
   bool isLoading = false;
   String? emailSignUp;
   Future<SignInResponse?> signIn(String email, String password) async {

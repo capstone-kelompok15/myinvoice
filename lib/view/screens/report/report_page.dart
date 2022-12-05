@@ -1,22 +1,14 @@
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-<<<<<<< HEAD
-import 'package:myinvoice/models/invoice.dart';
-=======
 import 'package:flutter_svg/flutter_svg.dart';
->>>>>>> brian/report
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/chart.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-<<<<<<< HEAD
-import 'package:myinvoice/viewmodel/invoice_view_model.dart';
-=======
 import 'package:myinvoice/view/widgets/rounded_button.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/report_provider.dart';
->>>>>>> brian/report
 import 'package:provider/provider.dart';
 
 import 'components/filter_inital_page.dart';
@@ -39,11 +31,7 @@ class _ReportPageState extends State<ReportPage> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    final invoiceProvider = Provider.of<InvoiceViewModel>(context);
-=======
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
->>>>>>> brian/report
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -63,48 +51,9 @@ class _ReportPageState extends State<ReportPage> {
                           style: heading1.copyWith(fontSize: 30),
                         ),
                       ),
-<<<<<<< HEAD
-                      Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        child: TabBarView(children: [
-                          ListView(
-                            physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 8),
-                            children: List.generate(
-                                invoiceProvider.dataUnPaid.length,
-                                (index) => InvoiceCard(
-                                    paid: true,
-                                    invoice: invoiceProvider
-                                        .dataUnPaid[index])).toList(),
-                          ),
-                          ListView(
-                            physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 8),
-                            children: List.generate(
-                                invoiceProvider.dataPaid.length,
-                                (index) => InvoiceCard(
-                                    paid: true, invoice: Invoice())).toList(),
-                          ),
-                          ListView(
-                            physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 8),
-                            children: List.generate(
-                                invoiceProvider.dataPaid.length,
-                                (index) => InvoiceCard(
-                                      paid: true,
-                                      invoice: Invoice(),
-                                    )).toList(),
-                          ),
-                        ]),
-=======
                       GestureDetector(
                         onTap: () => _filterBottomSheet(context),
                         child: SizedBox(child: SvgPicture.asset(filterIcon)),
->>>>>>> brian/report
                       )
                     ],
                   ),

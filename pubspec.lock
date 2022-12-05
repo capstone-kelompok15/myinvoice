@@ -43,8 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.16.0"
-<<<<<<< HEAD
-=======
   community_charts_common:
     dependency: transitive
     description:
@@ -59,7 +57,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
->>>>>>> brian/report
   cross_file:
     dependency: transitive
     description:
