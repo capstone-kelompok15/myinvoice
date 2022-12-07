@@ -1,4 +1,6 @@
+import 'package:f_line_chart/line_chart_point.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 enum ReportState { initial, typeBiils, rangeTime }
 
@@ -7,41 +9,51 @@ class ReportProvider extends ChangeNotifier {
   ReportState reportState = ReportState.initial;
 
   /// TYPE BILLS
-  String typeBiils = "All";
   final List<String> listTypeBills = ["All", "Paid", "Unpaid"];
 
   /// RANGE TIME
   String rangeTime = "1 Week";
   final List<String> listRangeTime = ["1 Week", "1 Month", "3 Month", "1 Year"];
 
-  List<Map<String, dynamic>> initialData = [
-    {
-      'id': 'Paid',
-      'data': [
-        {'domain': 0, 'measure': 5},
-        {'domain': 1, 'measure': 14},
-        {'domain': 2, 'measure': 6},
-        {'domain': 3, 'measure': 5},
-        {'domain': 4, 'measure': 5},
-        {'domain': 5, 'measure': 10},
-        {'domain': 6, 'measure': 8},
-      ],
-    },
-    {
-      'id': 'Unpaid',
-      'data': [
-        {'domain': 0, 'measure': 0},
-        {'domain': 1, 'measure': 5},
-        {'domain': 2, 'measure': 1},
-        {'domain': 3, 'measure': 3},
-        {'domain': 4, 'measure': 4},
-        {'domain': 5, 'measure': 0},
-        {'domain': 6, 'measure': 1},
-      ],
-    },
+  List<LineChartPoint> paidData = [
+    LineChartPoint(xStr: "Mon", xValue: 1, yStr: "100", yValue: 200),
+    LineChartPoint(xStr: "Tues", xValue: 2, yStr: "200", yValue: 120),
+    LineChartPoint(xStr: "Wed", xValue: 3, yStr: "300", yValue: 150),
+    LineChartPoint(xStr: "Thurs", xValue: 4, yStr: "400", yValue: 100),
+    LineChartPoint(xStr: "Fri", xValue: 5, yStr: "400", yValue: 210),
+    LineChartPoint(xStr: "Sat", xValue: 6, yStr: "400", yValue: 50),
+    LineChartPoint(xStr: "Sun", xValue: 7, yStr: "300", yValue: 150),
   ];
 
-  List<Map<String, dynamic>> data = [];
+  List<LineChartPoint> unpaidData = [
+    LineChartPoint(xStr: "Mon", xValue: 1, yStr: "100", yValue: 100),
+    LineChartPoint(xStr: "Tues", xValue: 2, yStr: "200", yValue: 420),
+    LineChartPoint(xStr: "Wed", xValue: 3, yStr: "300", yValue: 50),
+    LineChartPoint(xStr: "Thurs", xValue: 4, yStr: "400", yValue: 200),
+    LineChartPoint(xStr: "Fri", xValue: 5, yStr: "400", yValue: 10),
+    LineChartPoint(xStr: "Sat", xValue: 6, yStr: "400", yValue: 50),
+    LineChartPoint(xStr: "Sun", xValue: 7, yStr: "300", yValue: 10),
+  ];
+
+  List<List<LineChartPoint>> initialData = [];
+  
+  String typeBiils = "All";
+
+  List<Color>? chartColor() {
+    if (typeBiils == "Paid") {
+      return [
+        Colors.green,
+      ];
+    } else if (typeBiils == "Unpaid") {
+      return [
+        Colors.red,
+      ];
+    } else {
+      return [Colors.green, Colors.red];
+    }
+  }
+
+  List<List<LineChartPoint>> data = [];
 
   void changeState(ReportState state) {
     switch (state) {
@@ -66,18 +78,20 @@ class ReportProvider extends ChangeNotifier {
   }
 
   void initData() {
-    data.addAll(initialData);
+    data.add(paidData);
+    data.add(unpaidData);
   }
 
   void onFilter() {
     data.clear();
     if (typeBiils == "Paid") {
       // data.clear();
-      data.add(initialData[0]);
+      data.add(paidData);
     } else if (typeBiils == "Unpaid") {
-      data.add(initialData[1]);
+      data.add(unpaidData);
     } else {
-      data.addAll(initialData);
+      data.add(paidData);
+      data.add(unpaidData);
     }
 
     notifyListeners();

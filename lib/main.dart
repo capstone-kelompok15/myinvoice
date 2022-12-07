@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
+import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/screens/splash/splash_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_view_model.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           textTheme: GoogleFonts.poppinsTextTheme(),
         ),
-        home: const SplashScreen(),
+        home: SplashScreen(),
       ),
     );
   }

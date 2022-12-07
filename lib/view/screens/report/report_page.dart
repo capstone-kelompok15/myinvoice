@@ -1,4 +1,6 @@
-import 'package:d_chart/d_chart.dart';
+import 'package:f_line_chart/f_line_chart.dart';
+import 'package:f_line_chart/line_chart_point.dart';
+import 'package:f_line_chart/line_chart_point_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,11 +9,10 @@ import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/chart.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
-import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'components/filter_inital_page.dart';
 import 'components/filter_rangetime_page.dart';
 import 'components/filter_typebiils_page.dart';
@@ -32,9 +33,6 @@ class _ReportPageState extends State<ReportPage> {
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context);
-    final controller = Provider.of<InvoiceProvider>(context);
-    final textButtonColor = Color(0xff131089);
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
@@ -74,21 +72,29 @@ class _ReportPageState extends State<ReportPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: SizedBox(
                     height: 200,
-                    child: DChartLine(
-                      animate: false,
-                      lineWidth: 3,
-                      data: reportProvider.data,
-                      areaColor: (lineData, index, id) => primaryBackground,
-                      includePoints: true,
-                      pointColor: (lineData, index, id) => Colors.white,
-                      lineColor: (lineData, index, id) {
-                        if (id == 'Paid') {
-                          return Colors.green;
-                        } else {
-                          return Colors.redAccent;
-                        }
-                      },
+                    child: LineChart(
+                      bgColor: Colors.white,
+
+                      // bgColor: Color.fromARGB(255, 179, 216, 94),
+
+                      xLineNums: 6,
+                      multipleLinePointsColor: [
+                        Colors.green,
+                        Colors.red,
+                      ],
+                      multipleLinePoints: reportProvider.data,
+                
+                      showXLineText: true,
+                 
+                      showYAxis: true,
+           
+                      showYLineMark: true,
+                      config: LineChartPointConfig(
+                          showNormalPoints: true,
+                          showSelectedLine: true,
+                          showSelectedPoint: true),
                     ),
+                
                   ),
                 ),
                 Padding(
@@ -155,18 +161,12 @@ class _ReportPageState extends State<ReportPage> {
                             "Recent Bills",
                             style: heading2,
                           ),
-                          TextButton(
-                            child: Text(
-                              'See All',
-                              style: TextStyle(
-                                  color: textButtonColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            onPressed: () {
-                              controller.filterInvoice();
-                              homeViewModel.ontap(2);
-                            }),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Text("See All",
+                                style: TextStyle(
+                                    color: primaryBackground, fontSize: 18)),
+                          ),
                         ],
                       ),
                     ],
