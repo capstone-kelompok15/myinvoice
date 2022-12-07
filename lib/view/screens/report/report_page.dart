@@ -83,18 +83,17 @@ class _ReportPageState extends State<ReportPage> {
                         Colors.red,
                       ],
                       multipleLinePoints: reportProvider.data,
-                
+
                       showXLineText: true,
-                 
+
                       showYAxis: true,
-           
+
                       showYLineMark: true,
                       config: LineChartPointConfig(
                           showNormalPoints: true,
                           showSelectedLine: true,
                           showSelectedPoint: true),
                     ),
-                
                   ),
                 ),
                 Padding(
