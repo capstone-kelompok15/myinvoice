@@ -81,7 +81,7 @@ class InvoicePage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'paid',
+                              'Paid',
                               style:
                                   heading4.copyWith(color: primaryBackground),
                             ),
