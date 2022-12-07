@@ -97,9 +97,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
                     if (modelView.notifItems[index].isRead == true) {
                       return ListTile(
+                        onTap: () {},
                         isThreeLine: true,
                         leading: Container(
-                          transform: Matrix4.translationValues(0, -20, 0),
+                          transform: Matrix4.translationValues(0, -10, 0),
                           padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                           child: notifIcons(),
                           // SvgPicture.asset(
@@ -109,7 +110,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           // ),
                         ),
                         title: Container(
-                          transform: Matrix4.translationValues(0, -10, 0),
                           padding: EdgeInsets.fromLTRB(0, 10, 42, 0),
                           child: Text(
                             modelView.notifItems[index].title!,
@@ -141,14 +141,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     } else {
                       return ListTile(
                         onTap: () {
-                          setState(() {
-                            modelView.notifItems[index].isRead = true;
-                          });
+                          modelView.markAsRead(index);
                         },
                         isThreeLine: true,
                         tileColor: netralCardColor,
                         leading: Container(
-                          transform: Matrix4.translationValues(0, -20, 0),
                           padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                           child: Badge(
                               badgeColor: Colors.orange,
@@ -156,7 +153,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               child: notifIcons()),
                         ),
                         title: Container(
-                          transform: Matrix4.translationValues(0, -10, 0),
                           padding: EdgeInsets.fromLTRB(0, 10, 42, 0),
                           child: Text(
                             modelView.notifItems[index].title!,

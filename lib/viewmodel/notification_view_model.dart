@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/models/notification_model.dart';
+import 'package:myinvoice/view/styles/styles.dart';
 
 class NotificationViewModel extends ChangeNotifier {
   List<NotificationItem> _notifItems = [
@@ -28,9 +30,15 @@ class NotificationViewModel extends ChangeNotifier {
       title: 'You need verification',
       content: 'Your account needs to be verified by admin',
       datetime: 'Nov 30, 2022',
-      type: 'isInfo',
+      isRead: false,
+      type: 'info',
     ),
   ];
 
   List<NotificationItem> get notifItems => _notifItems;
+
+  void markAsRead(int index) {
+    _notifItems[index].isRead = true;
+    notifyListeners();
+  }
 }
