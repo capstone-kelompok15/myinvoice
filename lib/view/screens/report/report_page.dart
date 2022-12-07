@@ -156,17 +156,17 @@ class _ReportPageState extends State<ReportPage> {
                             style: heading2,
                           ),
                           TextButton(
-                            child: Text(
-                              'See All',
-                              style: TextStyle(
-                                  color: textButtonColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            onPressed: () {
-                              controller.filterInvoice();
-                              homeViewModel.ontap(2);
-                            }),
+                              child: Text(
+                                'See All',
+                                style: TextStyle(
+                                    color: textButtonColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              onPressed: () {
+                                controller.filterInvoice();
+                                homeViewModel.ontap(2);
+                              }),
                         ],
                       ),
                     ],
@@ -178,11 +178,11 @@ class _ReportPageState extends State<ReportPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                  children: List.generate(
-                      invoiceProvider.dataUnPaid.length,
-                      (index) => InvoiceCard(
-                          paid: true,
-                          invoice: invoiceProvider.dataUnPaid[index])).toList(),
+                  // children: List.generate(
+                  //     invoiceProvider.dataUnPaid.length,
+                  //     (index) => InvoiceCard(
+                  //         paid: true,
+                  //         invoice: invoiceProvider.dataUnPaid[index])).toList(),
                 ),
                 const SizedBox(
                   height: 20,

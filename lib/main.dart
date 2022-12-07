@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => NotificationViewModel(),
         ),
-           ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => ReportProvider(),
         ),
       ],
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           textTheme: GoogleFonts.poppinsTextTheme(),
         ),
-        home: const SplashScreen(),
+        home: const HomeScreen(),
       ),
     );
   }

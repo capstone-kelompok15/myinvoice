@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/models/home_model/bill_model.dart';
 import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/view/widgets/invoice_card.dart';
+import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +17,7 @@ class InvoicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
+    final homeViewModel = Provider.of<HomeViewModel>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -81,13 +85,13 @@ class InvoicePage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'paid',
+                              'Pending',
                               style:
                                   heading4.copyWith(color: primaryBackground),
                             ),
                           )
                         : Text(
-                            'Paid',
+                            'Pending',
                             style: heading5.copyWith(color: netralDisableColor),
                           ),
                   ),
@@ -111,13 +115,13 @@ class InvoicePage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'Pending',
+                              'paid',
                               style:
                                   heading4.copyWith(color: primaryBackground),
                             ),
                           )
                         : Text(
-                            'Pending',
+                            'Paid',
                             style: heading5.copyWith(color: netralDisableColor),
                           ),
                   ),
@@ -135,39 +139,27 @@ class InvoicePage extends StatelessWidget {
                   children: [
                     SingleChildScrollView(
                       child: Column(
-                        children: invoiceProvider.dataUnPaid
-                            .map(
-                              (e) => InvoiceCard(
-                                paid: e.isPaid,
-                                invoice: e,
-                              ),
-                            )
-                            .toList(),
-                      ),
+                          children: homeViewModel.dataUnpaid
+                              .map((e) => InvoiceCard(
+                                    recentItem: e,
+                                  ))
+                              .toList()),
                     ),
                     SingleChildScrollView(
                       child: Column(
-                        children: invoiceProvider.dataPaid
-                            .map(
-                              (e) => InvoiceCard(
-                                paid: e.isPaid,
-                                invoice: e,
-                              ),
-                            )
-                            .toList(),
-                      ),
+                          children: homeViewModel.dataPending
+                              .map((e) => InvoiceCard(
+                                    recentItem: e,
+                                  ))
+                              .toList()),
                     ),
                     SingleChildScrollView(
                       child: Column(
-                        children: invoiceProvider.dataPaid
-                            .map(
-                              (e) => InvoiceCard(
-                                paid: e.isPaid,
-                                invoice: e,
-                              ),
-                            )
-                            .toList(),
-                      ),
+                          children: homeViewModel.dataPaid
+                              .map((e) => InvoiceCard(
+                                    recentItem: e,
+                                  ))
+                              .toList()),
                     ),
                   ],
                 ),
@@ -180,86 +172,13 @@ class InvoicePage extends StatelessWidget {
   }
 }
 
-class InvoiceCard extends StatelessWidget {
-  const InvoiceCard({
-    Key? key,
-    required this.paid,
-    required this.invoice,
-  }) : super(key: key);
+class EmptyInvoiceScreen extends StatelessWidget {
+  const EmptyInvoiceScreen({super.key});
 
-  final bool paid;
-  final Invoice invoice;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  InvoiceDetailScreen(isPaid: paid, invoice: invoice),
-            ));
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: netralCardColor,
-            boxShadow: [
-              BoxShadow(
-                  color: const Color(0xff0e1f351f).withOpacity(0.12),
-                  blurRadius: 3,
-                  offset: const Offset(0, 3)),
-            ]),
-        child: Row(
-          children: [
-            const SizedBox(
-              width: 10,
-            ),
-            CircleAvatar(
-                backgroundColor: Colors.white,
-                child: SvgPicture.asset('assets/icons/fi-sr-home.svg')),
-            const SizedBox(
-              width: 20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  invoice.storeName ?? '',
-                  style: heading5.copyWith(color: blackTextColor),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  invoice.dateInvoice ?? '',
-                  style: paragraph4.copyWith(color: netralDisableColor),
-                ),
-              ],
-            ),
-            Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  invoice.subtotal ?? '',
-                  style: subhead2.copyWith(color: blackTextColor),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  paid ? 'Paid' : 'Unpaid',
-                  style:
-                      heading7.copyWith(color: paid ? Colors.green : redColor),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+    return Column(
+      children: [SvgPicture.asset('assets/icons/Receipt-pana 1.svg')],
     );
   }
 }
