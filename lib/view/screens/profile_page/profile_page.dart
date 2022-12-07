@@ -7,7 +7,6 @@ import 'package:myinvoice/view/screens/profile_page/help_center_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/personal_data_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/privacy_policy_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {

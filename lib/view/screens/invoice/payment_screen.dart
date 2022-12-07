@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
-import 'package:myinvoice/view/screens/invoice/choose_payment_method_screen.dart';
 import 'package:myinvoice/view/screens/invoice/confirm_payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
@@ -10,6 +9,7 @@ import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/rounded_button.dart';
+import 'invoice_detail_screen.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({super.key, required this.data});

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
-import 'package:myinvoice/view/screens/invoice/choose_payment_method_screen.dart';
 import 'package:myinvoice/view/screens/invoice/payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
@@ -540,6 +539,43 @@ class ItemDescriptionCard extends StatelessWidget {
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class ChooseBankCard extends StatelessWidget {
+  const ChooseBankCard({
+    Key? key,
+    required this.namaBank,
+    required this.icon,
+  }) : super(key: key);
+
+  final String namaBank;
+  final String icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Column(
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(icon),
+              const SizedBox(
+                width: 15,
+              ),
+              Text(
+                namaBank,
+                style: paragraph4.copyWith(color: Colors.black),
+              )
+            ],
+          ),
+          const Divider()
         ],
       ),
     );

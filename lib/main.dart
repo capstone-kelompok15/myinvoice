@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => NotificationViewModel(),
         ),
-           ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => ReportProvider(),
         ),
       ],

@@ -27,160 +27,188 @@ class _HomePageState extends State<HomePage> {
     final controller = Provider.of<InvoiceProvider>(context);
     final textButtonColor = Color(0xff131089);
     return Scaffold(
-      body: ListView(
-        shrinkWrap: false,
-        children: [
-          Column(
-            children: [
-              Container(
-                height: 195,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(70),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
+              children: [
+                Container(
+                  height: 195,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(70),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 23),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "My Invoice",
+                              style: title.copyWith(color: Colors.white),
+                            ),
+                            Badge(
+                              toAnimate: true,
+                              animationType: BadgeAnimationType.scale,
+                              badgeContent: Text(
+                                textScaleFactor: 0.5,
+                                '55',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              badgeColor: redColor,
+                              position: BadgePosition.topEnd(top: 2, end: 8),
+                              child: IconButton(
+                                icon: SvgPicture.asset(iconNotifFilled,
+                                    width: 24),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) {
+                                        return const NotificationScreen();
+                                      },
+                                    ),
+                                  );
+                                },
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Welcome!',
+                          style: body3.copyWith(
+                              fontWeight: FontWeight.w400, color: Colors.white),
+                        ),
+                        Text(
+                          'Clarissa Maharani',
+                          style: body1.copyWith(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 23),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 22, horizontal: 30),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "My Invoice",
-                            style: title.copyWith(color: Colors.white),
+                            "Summary",
+                            style: sectionTitle,
                           ),
-                          Badge(
-                            toAnimate: true,
-                            animationType: BadgeAnimationType.scale,
-                            badgeContent: Text(
-                              textScaleFactor: 0.5,
-                              '55',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                          TextButton(
+                              child: Text(
+                                'Details',
+                                style: TextStyle(
+                                    color: textButtonColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
                               ),
-                            ),
-                            badgeColor: redColor,
-                            position: BadgePosition.topEnd(top: 2, end: 8),
-                            child: IconButton(
-                              icon:
-                                  SvgPicture.asset(iconNotifFilled, width: 24),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) {
-                                      return const NotificationScreen();
-                                    },
-                                  ),
-                                );
-                              },
-                              color: Colors.white,
+                                controller.filterInvoice();
+                                homeViewModel.ontap(2);
+                              }),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Flexible(
+                            flex: 1,
+                            child: HomeSummary(
+                              bill: 500,
+                              status: 'Total Paid',
+                            ),
+                          ),
+                          SizedBox(
+                            width: 16,
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: HomeSummary(
+                              bill: 1000,
+                              status: 'Total Unpaid',
                             ),
                           ),
                         ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Welcome!',
-                        style: body3.copyWith(
-                            fontWeight: FontWeight.w400, color: Colors.white),
-                      ),
-                      Text(
-                        'Clarissa Maharani',
-                        style: body1.copyWith(color: Colors.white),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Recent Bills",
+                            style: sectionTitle,
+                          ),
+                          TextButton(
+                              child: Text(
+                                'See All',
+                                style: TextStyle(
+                                    color: textButtonColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              onPressed: () {
+                                homeViewModel.filterInvoice();
+                                homeViewModel.ontap(1);
+                              }),
+                        ],
                       ),
                     ],
                   ),
                 ),
+              ],
+            ),
+
+            // ini kalau menggunakan maping ngak ada masalah
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                children: homeViewModel.recentList
+                    .map((e) => InvoiceCard(recentItem: e))
+                    .toList(),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 22, horizontal: 30),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Summary",
-                          style: sectionTitle,
-                        ),
-                        TextButton(
-                            child: Text(
-                              'Details',
-                              style: TextStyle(
-                                  color: textButtonColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            onPressed: () {
-                              controller.filterInvoice();
-                              homeViewModel.ontap(2);
-                            }),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Flexible(
-                          flex: 1,
-                          child: HomeSummary(
-                            bill: 500,
-                            status: 'Total Paid',
-                          ),
-                        ),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: HomeSummary(
-                            bill: 1000,
-                            status: 'Total Unpaid',
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Recent Bills",
-                          style: sectionTitle,
-                        ),
-                        TextButton(
-                          child: Text(
-                            'See All',
-                            style: TextStyle(
-                                color: textButtonColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          onPressed: () => homeViewModel.ontap(1),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          InvoiceCard(),
-        ],
+            ),
+
+// tapi kalau menggunakan listview.builder kyk ada jarak
+
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 30),
+            //   child: ListView.builder(
+            //     shrinkWrap: true,
+            //     physics: NeverScrollableScrollPhysics(),
+            //     itemCount: homeViewModel.recentList.length,
+            //     itemBuilder: (context, index) {
+            //       var data = homeViewModel.recentList[index];
+            //       return InvoiceCard(recentItem: data);
+            //     },
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

@@ -9,6 +9,7 @@ import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/chart.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
+import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,7 @@ class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
+    final homeViewModel = Provider.of<HomeViewModel>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -178,10 +180,9 @@ class _ReportPageState extends State<ReportPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
                   children: List.generate(
-                      invoiceProvider.dataUnPaid.length,
-                      (index) => InvoiceCard(
-                          paid: true,
-                          invoice: invoiceProvider.dataUnPaid[index])).toList(),
+                    homeViewModel.recentList.length,
+                    (index) => InvoiceCard1(paid: true),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
