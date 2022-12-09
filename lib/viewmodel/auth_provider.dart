@@ -1,107 +1,98 @@
-import 'dart:ffi';
-import 'dart:math';
+// ignore_for_file: use_build_context_synchronously
 
-import 'package:dio/dio.dart';
-import 'package:myinvoice/data/endpoint/endpoint.dart';
-import 'package:myinvoice/models/auth/auth_model.dart';
-import 'package:platform_device_id/platform_device_id.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:myinvoice/data/pref.dart';
+import 'package:myinvoice/models/auth/auth_response.dart';
+import 'package:myinvoice/services/auth_services.dart';
+import 'package:myinvoice/view/screens/auth/otp_screen.dart';
+import 'package:myinvoice/view/screens/auth/signup_screen.dart';
+import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
+import 'package:myinvoice/view/screens/home/home_screen.dart';
 
-class AuthService {
-  static Future<SignInResponse> signIn(String email, String password) async {
-    String? deviceId = await PlatformDeviceId.getDeviceId;
-    print(deviceId);
-    try {
-      print(Endpoint.login);
-      final res = await Dio().post(Endpoint.login,
-          data: {"email": email, "password": password, "device_id": deviceId});
-      print(res.data);
-      print(res.statusCode);
+class AuthProvider extends ChangeNotifier {
+  bool isLoading = false;
+  String? emailSignUp;
 
-      return SignInResponse(
-          statusCode: res.statusCode, data: res.data, error: res.data);
-    } on DioError catch (e) {
-      print(e.response!.data);
+  Future<void> signIn(
+      BuildContext context, String email, String password) async {
+    isLoading = true;
+    notifyListeners();
 
-      if (e.response!.statusCode! > 500) {
-        return SignInResponse(
-          statusCode: e.response?.statusCode,
-          data: {
-            'error': {'message': 'Server error'}
-          },
-        );
-      } else {
-        return SignInResponse(
-            statusCode: e.response?.statusCode,
-            data: e.response?.data,
-            error: e.response?.data);
-      }
+    final result = await AuthService.signIn(email, password);
+    if (result.statusCode == 200) {
+      Pref.saveToken(result.data!['data']['access_token']);
+      Navigator.pushAndRemoveUntil(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+          (route) => false);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          result.data!['error']['message'] ?? "",
+        ),
+        backgroundColor: Colors.red,
+      ));
+    }
+
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> signUp(
+      BuildContext context, String name, String email, String password) async {
+    isLoading = true;
+    notifyListeners();
+    final result = await AuthService.signUp(name, email, password);
+    emailSignUp = email;
+    if (result.statusCode == 201) {
+      Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => const OtpScreen(),
+          ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(result.error!['message'] ?? ''),
+        backgroundColor: Colors.red,
+      ));
+    }
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> verifEmail(BuildContext context, String code) async {
+    final result = await AuthService.verifEmail(emailSignUp ?? '', code);
+
+    if (result.statusCode == 200) {
+      Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => const SuccessSignupScreen(),
+          ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content:
+            Text(result.error != null ? result.error!['message'] ?? '' : ''),
+        backgroundColor: Colors.red,
+      ));
     }
   }
 
-  static Future<SignUpResponse> signUp(
-      String fullname, String email, String password) async {
-    try {
-      final res = await Dio().post(
-        Endpoint.register,
-        data: {"email": email, "password": password, "full_name": fullname},
-      );
-
-      print(res.data);
-      print(res.statusCode);
-
-      return SignUpResponse(
-          statusCode: res.statusCode,
-          data: res.data['data'],
-          error: res.data['error']);
-    } on DioError catch (e) {
-      if (e.response!.statusCode! > 500) {
-        return SignUpResponse(
-            statusCode: e.response?.statusCode,
-            error: {'message': 'Server error'});
-      } else {
-        print(e.response?.data);
-        return SignUpResponse(
-            statusCode: e.response?.statusCode,
-            error: e.response?.data['error']);
-      }
-    }
+  Future<bool> resetPassword(String email) async {
+    final result = await AuthService.resetPassword(email);
+    return result ?? false;
   }
 
-  static Future<Verification> verifEmail(String email, String code) async {
-    try {
-      final res = await Dio()
-          .post(Endpoint.verification, data: {'email': email, 'code': code});
-      print(res.data);
-
-      return Verification(
-          statusCode: res.statusCode,
-          data: res.data['data'],
-          error: res.data['error']);
-    } on DioError catch (e) {
-      if (e.response!.statusCode! > 500) {
-        return Verification(
-            statusCode: e.response?.statusCode,
-            error: {'message': 'Server error'});
-      } else {
-        return Verification(
-            statusCode: e.response?.statusCode,
-            data: e.response?.data['data'],
-            error: e.response?.data['error']);
-      }
-    }
-  }
-
-  static Future<bool?> resetPassword(String email) async {
-    try {
-      final res = await Dio().post(Endpoint.resetPassword, data: {
-        'email': email,
-      });
-
-      if (res.statusCode == 200) {
-        return true;
-      }
-    } catch (e) {
-      return false;
-    }
+  Future logut(BuildContext context) async {
+    await Pref.removeToken();
+    Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => SignupScreen(),
+        ),
+        (route) => false);
   }
 }
