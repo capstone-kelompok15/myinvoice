@@ -33,6 +33,7 @@ dependencies:
   charts_flutter: ^0.12.0
   cupertino_icons: ^1.0.2
   d_chart: ^1.0.0
+  dio: ^4.0.6
   f_line_chart: ^1.1.5
   fl_chart: ^0.55.2
   flutter:
