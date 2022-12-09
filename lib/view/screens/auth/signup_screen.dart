@@ -10,27 +10,41 @@ import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   SignupScreen({super.key});
 
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final _fullname = TextEditingController();
+
   final _email = TextEditingController();
+
   final _password = TextEditingController();
+
   final _confirmPassword = TextEditingController();
 
-  _submit(BuildContext context) async {
+  _submit() async {
     if (_formKey.currentState!.validate()) {
       final res = await context
           .read<AuthProvider>()
           .signUp(_fullname.text, _email.text, _password.text);
-      if (res!.success ?? false) {
+
+      if (res!.statusCode == 201) {
+        if (!mounted) return;
         Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => const OtpScreen(),
+              builder: (context) => OtpScreen(),
             ));
+      } else {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(res.error!['message'] ?? "",), backgroundColor: Colors.red,));
       }
     }
   }
@@ -144,7 +158,7 @@ class SignupScreen extends StatelessWidget {
                       color: primaryMain,
                       borderRadius: BorderRadius.circular(12)),
                   child: TextButton(
-                      onPressed: () => _submit(context),
+                      onPressed: () => _submit(),
                       child: state.isLoading
                           ? const CicularLoading()
                           : Text(

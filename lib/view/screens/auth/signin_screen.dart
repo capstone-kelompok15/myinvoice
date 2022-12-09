@@ -11,17 +11,25 @@ import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+
   final _email = TextEditingController();
+
   final _password = TextEditingController();
 
   _submit(BuildContext context, String email, String password) async {
     if (_formKey.currentState!.validate()) {
       final res = await context.read<AuthProvider>().signIn(email, password);
 
-      if (res!.success!) {
+      if (res!.statusCode == 200) {
         // ignore: use_build_context_synchronously
         Navigator.pushAndRemoveUntil(
             context,
@@ -30,8 +38,13 @@ class SignInScreen extends StatelessWidget {
             ),
             (route) => false);
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(res.message ?? "")));
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            res.data!['error']['message'] ?? "",
+          ),
+          backgroundColor: Colors.red,
+        ));
       }
     }
   }
@@ -90,6 +103,10 @@ class SignInScreen extends StatelessWidget {
                   validator: (text) {
                     if (text == null || text.isEmpty) {
                       return 'Can\'t be empty';
+                    }
+
+                    if (text.length < 8) {
+                      return 'Password must be at least 8 characters in length';
                     }
 
                     return null;
