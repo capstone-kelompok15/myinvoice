@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
+import 'package:myinvoice/viewmodel/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -14,11 +18,7 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   bool _isReset = false;
 
-  void resetPassword() {
-    setState(() {
-      _isReset = true;
-    });
-  }
+  final email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           style: heading1,
         ),
         Text(
-          "An email been sent to your email address, Cla****@gmail.com",
+          "An email been sent to your email address, ${email.text}",
           style: TextStyle(color: netralDisableColor),
         )
       ],
@@ -75,7 +75,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         const SizedBox(
           height: 18,
         ),
-        const CustomTextField(
+        CustomTextField(
+          controller: email,
           title: "Email",
           hint: "example@gmail.com",
         ),
@@ -87,12 +88,21 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           width: double.infinity,
           decoration: BoxDecoration(
               color: primaryMain, borderRadius: BorderRadius.circular(12)),
-          child: TextButton(
-              onPressed: () => resetPassword(),
-              child: Text(
-                "Reset Password",
-                style: body1.copyWith(color: Colors.white),
-              )),
+          child: Consumer<AuthProvider>(builder: (context, state, _) {
+            return TextButton(
+                onPressed: () async {
+                  final res = await state.resetPassword(email.text);
+                  if (res) {
+                    setState(() {
+                      _isReset = true;
+                    });
+                  }
+                },
+                child: Text(
+                  "Reset Password",
+                  style: body1.copyWith(color: Colors.white),
+                ));
+          }),
         ),
       ],
     );

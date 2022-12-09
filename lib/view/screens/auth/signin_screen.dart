@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/auth/reset_password_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
@@ -27,25 +28,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   _submit(BuildContext context, String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      final res = await context.read<AuthProvider>().signIn(email, password);
-
-      if (res!.statusCode == 200) {
-        // ignore: use_build_context_synchronously
-        Navigator.pushAndRemoveUntil(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => const HomeScreen(),
-            ),
-            (route) => false);
-      } else {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-            res.data!['error']['message'] ?? "",
-          ),
-          backgroundColor: Colors.red,
-        ));
-      }
+      await context.read<AuthProvider>().signIn(context, email, password);
     }
   }
 

@@ -30,22 +30,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
   _submit() async {
     if (_formKey.currentState!.validate()) {
-      final res = await context
+      await context
           .read<AuthProvider>()
-          .signUp(_fullname.text, _email.text, _password.text);
-
-      if (res!.statusCode == 201) {
-        if (!mounted) return;
-        Navigator.push(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => OtpScreen(),
-            ));
-      } else {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(res.error!['message'] ?? "",), backgroundColor: Colors.red,));
-      }
+          .signUp(context, _fullname.text, _email.text, _password.text);
     }
   }
 

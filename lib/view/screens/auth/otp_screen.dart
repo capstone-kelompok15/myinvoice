@@ -42,12 +42,8 @@ class OtpScreen extends StatelessWidget {
                     numberOfFields: 4,
                     fieldWidth: 55,
                     keyboardType: TextInputType.number,
-                    onSubmit: (value) {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => SuccessSignupScreen(),
-                          ));
+                    onSubmit: (code) async {
+                     await state.verifEmail(context, code);
                     },
                   ),
                 ],

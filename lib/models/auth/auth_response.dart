@@ -8,9 +8,17 @@ class SignInResponse {
 
 class SignUpResponse {
   int? statusCode;
-  Map<String, String>? error;
+  Map<String, dynamic>? error;
   String? data;
 
   String? message;
   SignUpResponse({this.statusCode, this.error, this.data});
+}
+
+class Verification {
+   int? statusCode;
+  Map<String, dynamic>? error;
+  String? data;
+
+  Verification({this.statusCode, this.error, this.data});
 }
