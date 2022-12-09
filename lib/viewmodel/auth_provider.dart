@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myinvoice/models/auth_response.dart';
-import 'package:myinvoice/repository/api_repository.dart';
+import 'package:myinvoice/models/auth/auth_model.dart';
+import 'package:myinvoice/services/auth_services.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool isLoading = false;
