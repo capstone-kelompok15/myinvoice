@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
-import 'package:myinvoice/models/auth/auth_response.dart';
+import 'package:myinvoice/models/auth/auth_model.dart';
 
 class AuthService {
   static Future<SignInResponse> signIn(String email, String password) async {
