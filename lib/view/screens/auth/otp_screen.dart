@@ -39,9 +39,9 @@ class OtpScreen extends StatelessWidget {
                     height: 50,
                   ),
                   OtpTextField(
+                    keyboardType: TextInputType.text,
                     numberOfFields: 4,
                     fieldWidth: 55,
-                    keyboardType: TextInputType.number,
                     onSubmit: (value) {
                       Navigator.push(
                           context,
