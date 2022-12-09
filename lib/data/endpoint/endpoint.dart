@@ -4,4 +4,6 @@ class Endpoint {
 
   static const register = "${auth}register/customer";
   static const login = "${auth}login/customer";
+  static const verification = "${auth}verification/customer";
+  static const resetPassword = "${auth}reset/password/request/customer";
 }
