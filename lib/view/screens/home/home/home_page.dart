@@ -121,7 +121,6 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.w400),
                               ),
                               onPressed: () {
-                                controller.filterInvoice();
                                 homeViewModel.ontap(2);
                               }),
                         ],

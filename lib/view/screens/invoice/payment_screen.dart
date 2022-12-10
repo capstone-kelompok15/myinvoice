@@ -12,8 +12,7 @@ import '../../widgets/rounded_button.dart';
 import 'invoice_detail_screen.dart';
 
 class PaymentScreen extends StatelessWidget {
-  const PaymentScreen({super.key, required this.data});
-  final Invoice data;
+  const PaymentScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
@@ -298,8 +297,7 @@ class PaymentScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ConfirmPaymentScreen(data: data),
+                              builder: (context) => ConfirmPaymentScreen(),
                             ),
                           );
                         }),
