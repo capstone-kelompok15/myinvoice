@@ -10,6 +10,7 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/circular_loading.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
+import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -34,6 +35,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -120,8 +122,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         color: primaryMain,
                         borderRadius: BorderRadius.circular(12)),
                     child: TextButton(
-                        onPressed: () =>
-                            _submit(context, _email.text, _password.text),
+                        onPressed: () async {
+                          _submit(context, _email.text, _password.text);
+                        },
                         child: state.isLoading
                             ? const CicularLoading()
                             : Text(

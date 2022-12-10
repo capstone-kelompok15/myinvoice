@@ -11,10 +11,10 @@ import 'package:provider/provider.dart';
 import '../../../viewmodel/invoice_provider.dart';
 
 class InvoiceDetailScreen extends StatelessWidget {
-  const InvoiceDetailScreen(
-      {super.key, required this.isPaid, required this.invoice});
-  final bool isPaid;
-  final Invoice invoice;
+  const InvoiceDetailScreen({
+    super.key,
+  });
+  // final Invoice invoice;
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
@@ -30,21 +30,17 @@ class InvoiceDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StoreAndNameDetailsCard(invoice: invoice),
-              Column(
-                children: invoice.items!
-                    .map((e) => ItemDescriptionCard(itemInvoice: e))
-                    .toList(),
-              ),
-              isPaid ? SizedBox() : MethodPaymentCard(),
+              StoreAndNameDetailsCard(),
+              ItemDescriptionCard(),
+              MethodPaymentCard(),
               SizedBox(
                 height: 16,
               ),
-              TotalProduckCard(invoice: invoice, isPaid: isPaid),
+              TotalProduckCard(),
               SizedBox(
                 height: 16,
               ),
-              isPaid ? SizedBox() : NoteCard(),
+              NoteCard(),
               SizedBox(
                 height: 80,
               ),
@@ -52,7 +48,7 @@ class InvoiceDetailScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: buildBottom(isPaid),
+      bottomNavigationBar: buildBottom(true),
       extendBody: true,
     );
   }
@@ -68,18 +64,14 @@ class InvoiceDetailScreen extends StatelessWidget {
         child: RoundedButton(title: 'Download', press: () {}),
       );
     } else {
-      return PayNowCard(
-        data: invoice,
-      );
+      return PayNowCard();
     }
   }
 }
 
 class StoreAndNameDetailsCard extends StatelessWidget {
-  final Invoice invoice;
   const StoreAndNameDetailsCard({
     Key? key,
-    required this.invoice,
   }) : super(key: key);
 
   @override
@@ -88,14 +80,14 @@ class StoreAndNameDetailsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          invoice.storeName ?? '',
+          "invoice.data. ?? ''",
           style: body3.copyWith(color: blackTextColor),
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          invoice.alamatStore ?? '',
+          'alamat',
           style: paragraph4.copyWith(color: blackTextColor),
         ),
         const Divider(
@@ -114,12 +106,12 @@ class StoreAndNameDetailsCard extends StatelessWidget {
         Row(
           children: [
             Text(
-              invoice.userName ?? '',
+              '',
               style: body3.copyWith(color: blackTextColor),
             ),
             const Spacer(),
             Text(
-              'Date Invoice: ${invoice.dateInvoice}',
+              'Date Invoice: ',
               style: paragraph4.copyWith(color: blackTextColor),
             ),
           ],
@@ -128,7 +120,7 @@ class StoreAndNameDetailsCard extends StatelessWidget {
           height: 5,
         ),
         Text(
-          invoice.emailUser ?? '',
+          '',
           style: paragraph4.copyWith(color: blackTextColor),
         ),
         const SizedBox(
@@ -137,12 +129,12 @@ class StoreAndNameDetailsCard extends StatelessWidget {
         Row(
           children: [
             Text(
-              invoice.alamatUser ?? '',
+              '',
               style: paragraph4.copyWith(color: blackTextColor),
             ),
             const Spacer(),
             Text(
-              'Date Invoice: ${invoice.dateOverdue}',
+              'Date Invoice: ',
               style: paragraph4.copyWith(color: blackTextColor),
             ),
           ],
@@ -161,9 +153,7 @@ class StoreAndNameDetailsCard extends StatelessWidget {
 class PayNowCard extends StatelessWidget {
   const PayNowCard({
     Key? key,
-    required this.data,
   }) : super(key: key);
-  final Invoice data;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -202,9 +192,7 @@ class PayNowCard extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PaymentScreen(
-                      data: data,
-                    ),
+                    builder: (context) => PaymentScreen(),
                   ),
                 );
               },
@@ -267,12 +255,7 @@ class NoteCard extends StatelessWidget {
 class TotalProduckCard extends StatelessWidget {
   const TotalProduckCard({
     Key? key,
-    required this.isPaid,
-    required this.invoice,
   }) : super(key: key);
-
-  final bool isPaid;
-  final Invoice invoice;
 
   @override
   Widget build(BuildContext context) {
@@ -281,29 +264,29 @@ class TotalProduckCard extends StatelessWidget {
       decoration: BoxDecoration(color: netralCardColor),
       child: Column(
         children: [
-          isPaid
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Method Payment',
-                          style: body4.copyWith(color: netralDisableColor),
-                        ),
-                        const Spacer(),
-                        Text(
-                          'Text',
-                          style: paragraph4.copyWith(color: netralDisableColor),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                )
-              : const SizedBox(),
+          // isPaid
+          //     ? Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Row(
+          //             children: [
+          //               Text(
+          //                 'Method Payment',
+          //                 style: body4.copyWith(color: netralDisableColor),
+          //               ),
+          //               const Spacer(),
+          //               Text(
+          //                 'Text',
+          //                 style: paragraph4.copyWith(color: netralDisableColor),
+          //               ),
+          //             ],
+          //           ),
+          //           const SizedBox(
+          //             height: 8,
+          //           ),
+          //         ],
+          //       )
+          //     : const SizedBox(),
           Row(
             children: [
               Text(
@@ -312,7 +295,7 @@ class TotalProduckCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                invoice.totalProduct ?? '',
+                '',
                 style: paragraph4.copyWith(color: netralDisableColor),
               ),
             ],
@@ -328,7 +311,7 @@ class TotalProduckCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                invoice.subtotal ?? '',
+                '',
                 style: paragraph4.copyWith(color: netralDisableColor),
               ),
             ],
@@ -343,7 +326,6 @@ class MethodPaymentCard extends StatelessWidget {
   const MethodPaymentCard({
     Key? key,
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -438,10 +420,8 @@ class MethodPaymentCard extends StatelessWidget {
 }
 
 class ItemDescriptionCard extends StatelessWidget {
-  final Item itemInvoice;
   const ItemDescriptionCard({
     Key? key,
-    required this.itemInvoice,
   }) : super(key: key);
 
   @override
@@ -470,7 +450,7 @@ class ItemDescriptionCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "${itemInvoice.itemDescription}",
+                      "",
                       style: paragraph4.copyWith(color: netralDisableColor),
                     ),
                   ],
@@ -486,7 +466,7 @@ class ItemDescriptionCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "${itemInvoice.quantity}",
+                      "",
                       style: paragraph4.copyWith(color: netralDisableColor),
                     ),
                   ],
@@ -502,7 +482,7 @@ class ItemDescriptionCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "${itemInvoice.price}",
+                      "",
                       style: paragraph4.copyWith(color: netralDisableColor),
                     ),
                   ],
@@ -529,7 +509,7 @@ class ItemDescriptionCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "${itemInvoice.total}",
+                      "",
                       style: paragraph4.copyWith(color: netralDisableColor),
                     ),
                   ],

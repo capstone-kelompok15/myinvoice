@@ -1,5 +1,4 @@
-import 'dart:ffi';
-import 'dart:math';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
@@ -10,9 +9,9 @@ class AuthService {
     try {
       print(Endpoint.login);
       final res = await Dio().post(Endpoint.login,
-          data: {"email": email, "password": password, "device_id": "11111"});
-      print(res.data);
+          data: {"email": email, "password": password, "device_id": "321832"});
       print(res.statusCode);
+      print(res.data);
 
       return SignInResponse(
           statusCode: res.statusCode, data: res.data, error: res.data);

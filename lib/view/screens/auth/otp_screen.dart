@@ -43,7 +43,7 @@ class OtpScreen extends StatelessWidget {
                     fieldWidth: 55,
                     keyboardType: TextInputType.number,
                     onSubmit: (code) async {
-                     await state.verifEmail(context, code);
+                      await state.verifEmail(context, code);
                     },
                   ),
                 ],

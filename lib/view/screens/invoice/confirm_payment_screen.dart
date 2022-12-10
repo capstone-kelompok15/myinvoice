@@ -15,8 +15,7 @@ import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmPaymentScreen extends StatefulWidget {
-  const ConfirmPaymentScreen({super.key, required this.data});
-  final Invoice data;
+  const ConfirmPaymentScreen({super.key});
 
   @override
   State<ConfirmPaymentScreen> createState() => _ConfirmPaymentScreenState();
@@ -167,9 +166,6 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
               RoundedButton(
                 title: 'Confirm',
                 press: () {
-                  print('${widget.data.invoiceID}');
-                  invoiceProvider
-                      .changeStatus(widget.data.invoiceID.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
