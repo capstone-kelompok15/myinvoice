@@ -9,7 +9,7 @@ import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
-import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context);
+    final homeViewModel = Provider.of<HomeProvider>(context);
     final controller = Provider.of<InvoiceProvider>(context);
     final textButtonColor = Color(0xff131089);
     return Scaffold(
@@ -183,12 +183,28 @@ class _HomePageState extends State<HomePage> {
 
             // ini kalau menggunakan maping ngak ada masalah
 
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 30),
+            //   child: Column(
+            //     children: homeViewModel.recentList
+            //         .map((e) => InvoiceCard(recentItem: e))
+            //         .toList(),
+            //   ),
+            // ),
+
+// tapi kalau menggunakan listview.builder kyk ada jarak
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                children: homeViewModel.recentList
-                    .map((e) => InvoiceCard(recentItem: e))
-                    .toList(),
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                primary: false,
+                itemCount: homeViewModel.recentList.length,
+                itemBuilder: (context, index) {
+                  var data = homeViewModel.recentList[index];
+                  return InvoiceCard(recentItem: data);
+                },
               ),
             ),
 

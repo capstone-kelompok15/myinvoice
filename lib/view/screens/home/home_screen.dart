@@ -6,7 +6,7 @@ import 'package:myinvoice/view/screens/home/home/home_page.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../viewmodel/invoice_provider.dart';

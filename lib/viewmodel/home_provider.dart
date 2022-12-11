@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:myinvoice/models/home_model/bill_model.dart';
 
-class HomeViewModel extends ChangeNotifier {
+class HomeProvider extends ChangeNotifier {
   List<RecentItem> _recentList = [
     RecentItem(
       merchantName: 'Amazon',

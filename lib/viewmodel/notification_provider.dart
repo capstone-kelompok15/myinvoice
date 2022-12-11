@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/models/notification_model.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
-class NotificationViewModel extends ChangeNotifier {
+class NotificationProvider extends ChangeNotifier {
   List<NotificationItem> _notifItems = [
     NotificationItem(
       title: 'Payment Received',
