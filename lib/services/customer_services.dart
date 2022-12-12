@@ -9,7 +9,7 @@ class CustomerServices {
   Future<Customer> getCustomer() async {
     try {
       String? token = await Pref.getToken();
-      print(token.toString());
+      // print(token.toString());
 
       var response = await Dio()
           .get('https://api.staging.my-invoice.me/api/v1/customers/me',

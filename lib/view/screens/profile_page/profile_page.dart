@@ -19,8 +19,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileHomeView = Provider.of<ProfileProvider>(context);
-    final Widget networkSvg =
-        SvgPicture.network(profileHomeView.customer.displayProfilePictureUrl!);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -42,7 +41,8 @@ class ProfilePage extends StatelessWidget {
                       backgroundColor: Colors.white,
                       radius: 35,
                       backgroundImage: NetworkImage(
-                          profileHomeView.customer.displayProfilePictureUrl!)),
+                          profileHomeView.customer.displayProfilePictureUrl ??
+                              '')),
                   SizedBox(
                     height: 12,
                   ),
