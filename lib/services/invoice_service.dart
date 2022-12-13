@@ -6,7 +6,6 @@ class InvoiceServices {
     try {
       print('tes');
       var response = await Dio().get(Endpoint.getInvoice);
-      print(response.data);
     } on DioError catch (e) {
       throw Exception(e);
     }

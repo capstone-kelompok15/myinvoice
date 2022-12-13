@@ -31,7 +31,7 @@ class InvoicePage extends StatelessWidget {
               ),
               Text(
                 'Invoice List',
-                style: heading1.copyWith(fontSize: 30),
+                style: title.copyWith(color: pressed),
               ),
               const SizedBox(
                 height: 10,
@@ -187,14 +187,16 @@ class InvoiceCard1 extends StatelessWidget {
   const InvoiceCard1({
     Key? key,
     required this.paid,
+    this.press,
   }) : super(key: key);
 
   final bool paid;
+  final Function()? press;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: press,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
