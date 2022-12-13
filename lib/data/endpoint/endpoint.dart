@@ -8,6 +8,7 @@ class Endpoint {
   static const verification = "${auth}verification/customer";
   static const resetPassword = "${auth}reset/password/request/customer";
   static const getCustomer = "${customer}me";
-  static const updateFotoProfileCustomer =
-      "${baseUrl}customers/me/picture";
+  static const updateFotoProfileCustomer = "${baseUrl}customers/me/picture";
+
+  static const getInvoice = "${baseUrl}invoices";
 }

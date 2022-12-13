@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context);
+    final homeViewModel = Provider.of<HomeProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
