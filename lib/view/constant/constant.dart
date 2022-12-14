@@ -36,7 +36,7 @@ const iconChatFilled = "${icons}chat_filled.svg";
 
 // REGEX FOR EMAIL VALIDATION
 const emailRex =
-    "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+    "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+";
 
 const homeSmall = "${icons}fi-sr-home.svg";
 const copy = "${icons}fi-rr-copy-alt.svg";

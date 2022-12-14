@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
-import 'package:provider/provider.dart';
 
-import '../../../viewmodel/invoice_provider.dart';
 import '../../widgets/bank_card.dart';
 import '../../widgets/item_desciption.dart';
 
@@ -101,9 +98,9 @@ class InvoiceDetailScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              ItemDescription(),
-              ItemDescription(),
-              SizedBox(
+              const ItemDescription(),
+              const ItemDescription(),
+              const SizedBox(
                 height: 12,
               ),
               GestureDetector(
@@ -136,7 +133,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               Container(
@@ -176,7 +173,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Column(
@@ -213,12 +210,12 @@ class InvoiceDetailScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
             ],
@@ -232,7 +229,7 @@ class InvoiceDetailScreen extends StatelessWidget {
 
   Future<dynamic> _choosePayment(BuildContext context) {
     return showModalBottomSheet(
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(20),
           topLeft: Radius.circular(20),
@@ -247,7 +244,7 @@ class InvoiceDetailScreen extends StatelessWidget {
             children: [
               Center(
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 11),
+                  margin: const EdgeInsets.symmetric(vertical: 11),
                   height: 3,
                   width: 85,
                   decoration: BoxDecoration(
@@ -260,7 +257,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                 'Choose Payment Method',
                 style: heading3.copyWith(color: blackTextColor),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Text(
@@ -302,7 +299,7 @@ class InvoiceDetailScreen extends StatelessWidget {
         child: RoundedButton(title: 'Download', press: () {}),
       );
     } else {
-      return PayNowCard();
+      return const PayNowCard();
     }
   }
 }
@@ -339,7 +336,7 @@ class PayNowCard extends StatelessWidget {
           const Spacer(),
           ElevatedButton(
               style: TextButton.styleFrom(
-                backgroundColor: Color(0xFFCDCDCD),
+                backgroundColor: const Color(0xFFCDCDCD),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -350,7 +347,7 @@ class PayNowCard extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PaymentScreen(),
+                    builder: (context) => const PaymentScreen(),
                   ),
                 );
               },

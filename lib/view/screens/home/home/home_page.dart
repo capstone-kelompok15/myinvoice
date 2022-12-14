@@ -2,10 +2,8 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
-import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
@@ -25,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
     final controller = Provider.of<InvoiceProvider>(context);
-    final textButtonColor = Color(0xff131089);
+    const textButtonColor = Color(0xff131089);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -56,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                             Badge(
                               toAnimate: true,
                               animationType: BadgeAnimationType.scale,
-                              badgeContent: Text(
+                              badgeContent: const Text(
                                 textScaleFactor: 0.5,
                                 '55',
                                 style: TextStyle(
@@ -84,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
@@ -113,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                             style: sectionTitle,
                           ),
                           TextButton(
-                              child: Text(
+                              child: const Text(
                                 'Details',
                                 style: TextStyle(
                                     color: textButtonColor,
@@ -162,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                             style: sectionTitle,
                           ),
                           TextButton(
-                              child: Text(
+                              child: const Text(
                                 'See All',
                                 style: TextStyle(
                                     color: textButtonColor,

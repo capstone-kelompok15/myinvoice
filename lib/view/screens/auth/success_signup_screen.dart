@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
@@ -24,10 +22,10 @@ class SuccessSignupScreen extends StatelessWidget {
                 "Yeay, your account has\n          been created",
                 style: heading2,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Text(
+              const Text(
                   "Sign In to continue your journey\n                  for your bills")
             ],
           ),

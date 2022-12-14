@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/notification_view_model.dart';
 import 'package:provider/provider.dart';
@@ -101,7 +100,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         isThreeLine: true,
                         leading: Container(
                           transform: Matrix4.translationValues(0, -10, 0),
-                          padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                           child: notifIcons(),
                           // SvgPicture.asset(
                           //   modelView.notifItems[index].avatar!,
@@ -110,7 +109,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           // ),
                         ),
                         title: Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 42, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 42, 0),
                           child: Text(
                             modelView.notifItems[index].title!,
                             style: heading3.copyWith(
@@ -127,11 +126,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 style: notifContent.copyWith(
                                     color: primaryBackground),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Text(
-                                "${DateFormat('d MMM y, HH:mm').format(DateTime.now())}",
+                                DateFormat('d MMM y, HH:mm').format(DateTime.now()),
                                 style: notifContent,
                               ),
                             ],
@@ -146,14 +145,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         isThreeLine: true,
                         tileColor: netralCardColor,
                         leading: Container(
-                          padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                           child: Badge(
                               badgeColor: Colors.orange,
                               position: BadgePosition.topEnd(top: -1, end: -1),
                               child: notifIcons()),
                         ),
                         title: Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 42, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 42, 0),
                           child: Text(
                             modelView.notifItems[index].title!,
                             style: heading3.copyWith(
@@ -170,11 +169,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 style: notifContent.copyWith(
                                     color: primaryBackground),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Text(
-                                "${DateFormat('d MMM y, HH:mm').format(DateTime.now())}",
+                                DateFormat('d MMM y, HH:mm').format(DateTime.now()),
                                 style: notifContent,
                               ),
                             ],
@@ -199,14 +198,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   SvgPicture.asset(
                     "assets/empty_notification.svg",
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 64,
                   ),
                   Text(
                     "No Notification",
                     style: title.copyWith(color: primaryText),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   Text(

@@ -37,7 +37,7 @@ class InvoiceCard extends StatelessWidget {
             backgroundColor: Colors.white,
             child: SvgPicture.asset(
               'assets/icons/home_filled.svg',
-              color: Color(0xff404040),
+              color: const Color(0xff404040),
               width: 20,
             ),
           ),
@@ -62,7 +62,7 @@ class InvoiceCard extends StatelessWidget {
             Text(
               recentItem.date!,
               style: sectionSubHead.copyWith(
-                color: Color(0xff999999),
+                color: const Color(0xff999999),
               ),
             ),
             if (recentItem.status == 'Paid') ...[

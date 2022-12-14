@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/custumer.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/help_center_screen.dart';
@@ -38,19 +35,20 @@ class ProfilePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 35,
-                      backgroundImage: NetworkImage(
-                          profileHomeView.customer.displayProfilePictureUrl ??
-                              '')),
-                  SizedBox(
+                    backgroundColor: Colors.white,
+                    radius: 35,
+                    backgroundImage: NetworkImage(
+                        profileHomeView.customer.displayProfilePictureUrl ??
+                            ''),
+                  ),
+                  const SizedBox(
                     height: 12,
                   ),
                   Text(
                     profileHomeView.customer.fullName.toString(),
                     style: heading2.copyWith(color: Colors.white),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 6,
                   ),
                   Text(
@@ -70,7 +68,7 @@ class ProfilePage extends StatelessWidget {
                     // profileHomeView.customer.displayProfilePictureUrl!,
                     style: heading4.copyWith(color: blackTextColor),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   _buildCardSetting(
@@ -79,9 +77,9 @@ class ProfilePage extends StatelessWidget {
                       () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PersonalDataScreen(),
+                            builder: (context) => const PersonalDataScreen(),
                           ))),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Text(
@@ -94,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                       () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PrivacyPolicyScreen(),
+                            builder: (context) => const PrivacyPolicyScreen(),
                           ))),
                   _buildCardSetting(
                     help,
@@ -102,7 +100,7 @@ class ProfilePage extends StatelessWidget {
                     () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HelpCenterScreen(),
+                          builder: (context) => const HelpCenterScreen(),
                         )),
                   ),
                   _buildCardSetting(
@@ -132,7 +130,7 @@ class ProfilePage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(child: const Text('Logging Out')),
+          title: const Center(child: Text('Logging Out')),
           content: Text(
             'Are you sure want to sign out from your myinvoice account?',
             style: paragraph4.copyWith(color: blackTextColor),
@@ -158,7 +156,7 @@ class ProfilePage extends StatelessWidget {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SignInScreen(),
+                      builder: (context) => const SignInScreen(),
                     ));
               },
             ),
@@ -185,7 +183,7 @@ class ProfilePage extends StatelessWidget {
               height: 16,
               fit: BoxFit.scaleDown,
             ),
-            SizedBox(
+            const SizedBox(
               width: (8),
             ),
             isTwoText
@@ -210,7 +208,7 @@ class ProfilePage extends StatelessWidget {
                     style: paragraph4.copyWith(
                         color: isRed ? Colors.red : blackTextColor),
                   ),
-            Spacer(),
+            const Spacer(),
             isArrow
                 ? SvgPicture.asset('assets/icons/arrow.svg')
                 : const SizedBox(),

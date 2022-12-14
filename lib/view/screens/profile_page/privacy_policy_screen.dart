@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 
@@ -16,42 +14,42 @@ class PrivacyPolicyScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Text(
               'Privacy Policy',
               style: heading1.copyWith(color: blackTextColor),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Text(
               'POLICY & PRIVACY (LANGUAGE)',
               style: heading5.copyWith(color: blackTextColor),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Text(
               'Collection and Use of Personal Data',
               style: heading7.copyWith(color: blackTextColor),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Text(
               'Personal data is information that relates directly or indirectly to you, which is identified or can be identified from that information or from other information and information. Transactions and dealings with BSC, you may be asked to provide your personal data from time to time. BSC and third party service providers may share Personal data with each other and use personal data consistent with this Privacy Policy. They may also combine it with other information to provide and improve BSC products and services',
               style: paragraph4.copyWith(color: blackTextColor),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Text(
               'Retention of Personal Information  ',
               style: heading7.copyWith(color: blackTextColor),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Text(

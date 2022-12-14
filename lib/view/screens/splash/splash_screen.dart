@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
+import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) =>  SignupScreen(),
+              builder: (context) => SignInScreen(),
             ));
       },
     );

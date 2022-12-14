@@ -12,7 +12,7 @@ Color get pressed => const Color(0xff0F0D72);
 // Status Color
 Color get redColor => const Color(0xffD62D33);
 Color get greenColor => const Color(0xff329059);
-Color get orangeColor => Color.fromARGB(0, 245, 126, 21);
+Color get orangeColor => const Color.fromARGB(0, 245, 126, 21);
 
 // Netral Color
 Color get netralCardColor => const Color(0xffF7F7F7);
@@ -66,4 +66,4 @@ TextStyle get body4 =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 12);
 
 TextStyle get notifContent =>
-    TextStyle(fontWeight: FontWeight.w400, fontSize: 10);
+    const TextStyle(fontWeight: FontWeight.w400, fontSize: 10);

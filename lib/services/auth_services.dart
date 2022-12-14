@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
@@ -99,5 +98,6 @@ class AuthService {
     } catch (e) {
       return false;
     }
+    return null;
   }
 }

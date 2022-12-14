@@ -3,29 +3,30 @@ class Customer {
   String? fullName;
   String? email;
   String? displayProfilePictureUrl;
-  String? token;
+  String? address;
 
-  Customer({
-    this.id,
-    this.fullName,
-    this.email,
-    this.displayProfilePictureUrl,
-  });
+  Customer(
+      {this.id,
+      this.fullName,
+      this.email,
+      this.displayProfilePictureUrl,
+      this.address});
 
   Customer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     fullName = json['full_name'];
     email = json['email'];
     displayProfilePictureUrl = json['display_profile_picture_url'];
+    address = json['address'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['full_name'] = this.fullName;
-    data['email'] = this.email;
-    data['display_profile_picture_url'] = this.displayProfilePictureUrl;
-
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['full_name'] = fullName;
+    data['email'] = email;
+    data['display_profile_picture_url'] = displayProfilePictureUrl;
+    data['address'] = address;
     return data;
   }
 }

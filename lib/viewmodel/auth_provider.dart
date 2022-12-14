@@ -3,7 +3,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/auth/auth_response.dart';
 import 'package:myinvoice/services/auth_services.dart';
 import 'package:myinvoice/view/screens/auth/otp_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
@@ -97,7 +96,7 @@ class AuthProvider extends ChangeNotifier {
     Navigator.pushAndRemoveUntil(
         context,
         CupertinoPageRoute(
-          builder: (context) => SignupScreen(),
+          builder: (context) => const SignupScreen(),
         ),
         (route) => false);
   }

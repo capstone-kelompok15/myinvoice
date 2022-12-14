@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +39,7 @@ class OtpScreen extends StatelessWidget {
                   OtpTextField(
                     numberOfFields: 4,
                     fieldWidth: 55,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                     onSubmit: (code) async {
                       await state.verifEmail(context, code);
                     },

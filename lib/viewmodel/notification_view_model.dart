@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/models/notification_model.dart';
-import 'package:myinvoice/view/styles/styles.dart';
 
 class NotificationViewModel extends ChangeNotifier {
-  List<NotificationItem> _notifItems = [
+  final List<NotificationItem> _notifItems = [
     NotificationItem(
       title: 'Payment Received',
       content: 'Your payment has been received by Pulsa Cell',

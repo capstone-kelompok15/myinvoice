@@ -89,7 +89,7 @@ class StatusPembayaranScreen extends StatelessWidget {
                       "Call center My Invoice",
                       style: subhead1.copyWith(color: blackTextColor),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 60,
                     ),
                     RoundedButton(
