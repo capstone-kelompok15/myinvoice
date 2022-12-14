@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/data/pref.dart';
+import 'package:myinvoice/models/customer.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/help_center_screen.dart';
