@@ -2,16 +2,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/models/home_model/bill_model.dart';
+import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:provider/provider.dart';
 
 class InvoiceCard extends StatelessWidget {
-  final RecentItem recentItem;
   const InvoiceCard({
     Key? key,
-    required this.recentItem,
+    required this.merchant,
+    required this.totalPrice,
+    required this.createAt,
+    required this.status,
   }) : super(key: key);
+
+  final String merchant;
+  final int totalPrice;
+  final String createAt;
+  final String status;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +51,11 @@ class InvoiceCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              recentItem.merchantName ?? '-',
+              merchant,
               style: sectionHead.copyWith(color: primaryText),
             ),
             Text(
-              idrFormat.format(recentItem.bill),
+              idrFormat.format(totalPrice),
               style: sectionHead.copyWith(
                   color: primaryText, fontWeight: FontWeight.w400),
             ),
@@ -57,28 +65,28 @@ class InvoiceCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              recentItem.date!,
+              createAt,
               style: sectionSubHead.copyWith(
                 color: const Color(0xff999999),
               ),
             ),
-            if (recentItem.status == 'Paid') ...[
+            if (status == 'Paid') ...[
               Text(
-                recentItem.status!,
+                status,
                 style: body4.copyWith(
                   color: greenColor,
                 ),
               ),
-            ] else if (recentItem.status == 'Unpaid') ...[
+            ] else if (status == 'Unpaid') ...[
               Text(
-                recentItem.status!,
+                status,
                 style: body4.copyWith(
                   color: redColor,
                 ),
               ),
-            ] else if (recentItem.status == 'Pending') ...[
+            ] else if (status == 'Pending') ...[
               Text(
-                recentItem.status!,
+                status,
                 style: body4.copyWith(
                   color: orangeColor,
                 ),

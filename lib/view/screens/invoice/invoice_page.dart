@@ -5,13 +5,25 @@ import 'package:myinvoice/models/home_model/bill_model.dart';
 import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
+import 'package:myinvoice/view/screens/profile_page/profile_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
-class InvoicePage extends StatelessWidget {
+class InvoicePage extends StatefulWidget {
   const InvoicePage({super.key});
+
+  @override
+  State<InvoicePage> createState() => _InvoicePageState();
+}
+
+class _InvoicePageState extends State<InvoicePage> {
+  @override
+  void initState() {
+    Provider.of<InvoiceProvider>(context, listen: false).getAllinvoices();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,40 +141,29 @@ class InvoicePage extends StatelessWidget {
                 height: 20,
               ),
               Expanded(
-                child: PageView(
-                  controller: invoiceProvider.pageController,
-                  onPageChanged: (value) {
-                    invoiceProvider.changePage(value);
-                  },
-                  children: [
-                    // SingleChildScrollView(
-                    //   child: Column(
-
-                    // //       children: homeViewModel.dataUnpaid
-                    // //           .map((e) => InvoiceCard(
-                    // //                 recentItem: e,
-                    // //               ))
-                    // //           .toList()),
-                    // // ),
-                    // // SingleChildScrollView(
-                    // //   child: Column(
-                    // //       children: homeViewModel.dataPending
-                    // //           .map((e) => InvoiceCard(
-                    // //                 recentItem: e,
-                    // //               ))
-                    // //           .toList()),
-                    // // ),
-                    // // SingleChildScrollView(
-                    // //   child: Column(
-                    // //       children: homeViewModel.dataPaid
-                    // //           .map((e) => InvoiceCard(
-                    // //                 recentItem: e,
-                    // //               ))
-                    // //           .toList()),
-                    // ),
-                  ],
-                ),
-              ),
+                  child: PageView(
+                controller: invoiceProvider.pageController,
+                onPageChanged: (value) {
+                  invoiceProvider.changePage(value);
+                },
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: invoiceProvider.invoice.isNotEmpty
+                          ? invoiceProvider.invoice
+                              .map(
+                                (e) => InvoiceCard(
+                                    merchant: e.merchantName!,
+                                    totalPrice: e.totalPrice!,
+                                    createAt: e.createdAt!,
+                                    status: e.paymentStatusName ?? ''),
+                              )
+                              .toList()
+                          : [Text('Data Kosong')],
+                    ),
+                  ),
+                ],
+              )),
             ],
           ),
         ),

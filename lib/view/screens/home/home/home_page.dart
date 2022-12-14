@@ -178,32 +178,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-
-            // ini kalau menggunakan maping ngak ada masalah
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                children: homeViewModel.recentList
-                    .map((e) => InvoiceCard(recentItem: e))
-                    .toList(),
-              ),
+              child: Text(''),
             ),
-
-// tapi kalau menggunakan listview.builder kyk ada jarak
-
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 30),
-            //   child: ListView.builder(
-            //     shrinkWrap: true,
-            //     physics: NeverScrollableScrollPhysics(),
-            //     itemCount: homeViewModel.recentList.length,
-            //     itemBuilder: (context, index) {
-            //       var data = homeViewModel.recentList[index];
-            //       return InvoiceCard(recentItem: data);
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),

@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/services/auth_services.dart';
+import 'package:myinvoice/services/invoice_service.dart';
 import 'package:myinvoice/view/screens/auth/otp_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -22,11 +24,14 @@ class AuthProvider extends ChangeNotifier {
 
     ProfileProvider profileProvider =
         Provider.of<ProfileProvider>(context, listen: false);
+    InvoiceProvider p = Provider.of<InvoiceProvider>(context, listen: false);
 
     final result = await AuthService.signIn(email, password);
     if (result.statusCode == 200) {
       Pref.saveToken(result.data!['data']['access_token']);
       await profileProvider.getCustomer();
+      await InvoiceServices().getAllInvoice();
+
       Navigator.pushAndRemoveUntil(
           context,
           CupertinoPageRoute(

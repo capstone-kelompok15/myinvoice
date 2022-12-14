@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:myinvoice/services/invoice_service.dart';
+
+import '../models/invoice.dart';
 
 class InvoiceProvider extends ChangeNotifier {
-  bool isShow = false;
-  void onClick() {
-    isShow = !isShow;
-    print(isShow);
-    notifyListeners();
-  }
-
   // page controller untuk unpaid ama paid
   int currendIndex = 0;
 
@@ -29,28 +25,19 @@ class InvoiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // final List<Invoice> _allInvoice = [
+  List<Invoice> _invoice = [];
 
-  // ];
+  List<Invoice> get invoice => _invoice;
 
-  // List<Invoice> _dataPaid = [];
-  // List<Invoice> _dataUnPaid = [];
+  Future<void> getAllinvoices() async {
+    try {
+      var inv = await InvoiceServices().getAllInvoice();
+      _invoice = inv;
+      notifyListeners();
 
-  // List<Invoice> get allInvoice => _allInvoice;
-  // List<Invoice> get dataPaid => _dataPaid;
-  // List<Invoice> get dataUnPaid => _dataUnPaid;
-
-  // filterInvoice() {
-  //   _dataPaid = [];
-  //   _dataUnPaid = [];
-  //   for (var item in _allInvoice) {
-  //     if (item.isPaid) {
-  //       _dataPaid.add(item);
-  //     } else {
-  //       _dataUnPaid.add(item);
-  //     }
-  //   }
-  //   notifyListeners();
-  // }
-
+      print('sukses');
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
