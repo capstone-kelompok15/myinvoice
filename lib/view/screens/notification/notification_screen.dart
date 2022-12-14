@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/viewmodel/notification_view_model.dart';
+import 'package:myinvoice/viewmodel/notification_provider.dart';
 import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
-    final modelView = Provider.of<NotificationViewModel>(context);
+    final modelView = Provider.of<NotificationProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -130,7 +130,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 height: 5,
                               ),
                               Text(
-                                DateFormat('d MMM y, HH:mm').format(DateTime.now()),
+                                DateFormat('d MMM y, HH:mm')
+                                    .format(DateTime.now()),
                                 style: notifContent,
                               ),
                             ],
@@ -173,7 +174,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 height: 5,
                               ),
                               Text(
-                                DateFormat('d MMM y, HH:mm').format(DateTime.now()),
+                                DateFormat('d MMM y, HH:mm')
+                                    .format(DateTime.now()),
                                 style: notifContent,
                               ),
                             ],

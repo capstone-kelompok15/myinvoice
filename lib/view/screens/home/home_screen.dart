@@ -5,7 +5,7 @@ import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/home/home/home_page.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/report_page.dart';
-import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../profile_page/profile_page.dart';
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context);
+    final homeViewModel = Provider.of<HomeProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(

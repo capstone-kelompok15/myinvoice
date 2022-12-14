@@ -1,7 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:myinvoice/models/customer.dart';
 import 'package:myinvoice/models/home_model/bill_model.dart';
-import 'package:myinvoice/services/customer_services.dart';
 
 class HomeProvider extends ChangeNotifier {
   List<RecentItem> _recentList = [

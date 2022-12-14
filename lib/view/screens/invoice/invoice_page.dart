@@ -7,7 +7,6 @@ import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
-import 'package:myinvoice/viewmodel/home_view_model.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +16,6 @@ class InvoicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
-    final homeViewModel = Provider.of<HomeViewModel>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -137,30 +135,31 @@ class InvoicePage extends StatelessWidget {
                     invoiceProvider.changePage(value);
                   },
                   children: [
-                    SingleChildScrollView(
-                      child: Column(
-                          children: homeViewModel.dataUnpaid
-                              .map((e) => InvoiceCard(
-                                    recentItem: e,
-                                  ))
-                              .toList()),
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
-                          children: homeViewModel.dataPending
-                              .map((e) => InvoiceCard(
-                                    recentItem: e,
-                                  ))
-                              .toList()),
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
-                          children: homeViewModel.dataPaid
-                              .map((e) => InvoiceCard(
-                                    recentItem: e,
-                                  ))
-                              .toList()),
-                    ),
+                    // SingleChildScrollView(
+                    //   child: Column(
+
+                    // //       children: homeViewModel.dataUnpaid
+                    // //           .map((e) => InvoiceCard(
+                    // //                 recentItem: e,
+                    // //               ))
+                    // //           .toList()),
+                    // // ),
+                    // // SingleChildScrollView(
+                    // //   child: Column(
+                    // //       children: homeViewModel.dataPending
+                    // //           .map((e) => InvoiceCard(
+                    // //                 recentItem: e,
+                    // //               ))
+                    // //           .toList()),
+                    // // ),
+                    // // SingleChildScrollView(
+                    // //   child: Column(
+                    // //       children: homeViewModel.dataPaid
+                    // //           .map((e) => InvoiceCard(
+                    // //                 recentItem: e,
+                    // //               ))
+                    // //           .toList()),
+                    // ),
                   ],
                 ),
               ),
