@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/custumer.dart';
+import 'package:myinvoice/models/customer.dart';
 
 class CustomerServices {
   Future<Customer> getCustomer() async {

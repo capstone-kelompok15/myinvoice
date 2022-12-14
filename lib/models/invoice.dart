@@ -1,4 +1,3 @@
-
 class Invoice {
   int? id;
   String? invoiceNumber;
@@ -32,16 +31,17 @@ class Invoice {
       updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
-  Map<String, dynamic> toJson(){
-    return {
-      'id': id,
-      'invoiceNumber': invoiceNumber,
-      'customerName': customerName,
-      'customerAddress': customerAddress,
-      'totalAmount': totalAmount,
-      'status': status,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
-    };
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['invoiceNumber'] = this.invoiceNumber;
+    data['customerName'] = this.customerName;
+    data['customerAddress'] = this.customerAddress;
+    data['totalAmount'] = this.totalAmount;
+    data['status'] = this.status;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
   }
 }
