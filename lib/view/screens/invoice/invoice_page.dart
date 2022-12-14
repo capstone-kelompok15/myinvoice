@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/models/home_model/bill_model.dart';
 import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/view/widgets/invoice_card.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
 class InvoicePage extends StatelessWidget {
-  InvoicePage({super.key});
+  const InvoicePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
+    final homeViewModel = Provider.of<HomeProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -27,7 +31,7 @@ class InvoicePage extends StatelessWidget {
               ),
               Text(
                 'Invoice List',
-                style: heading1.copyWith(fontSize: 30),
+                style: title.copyWith(color: pressed),
               ),
               const SizedBox(
                 height: 10,
@@ -81,13 +85,13 @@ class InvoicePage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'paid',
+                              'Pending',
                               style:
                                   heading4.copyWith(color: primaryBackground),
                             ),
                           )
                         : Text(
-                            'Paid',
+                            'Pending',
                             style: heading5.copyWith(color: netralDisableColor),
                           ),
                   ),
@@ -111,13 +115,13 @@ class InvoicePage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'Pending',
+                              'paid',
                               style:
                                   heading4.copyWith(color: primaryBackground),
                             ),
                           )
                         : Text(
-                            'Pending',
+                            'Paid',
                             style: heading5.copyWith(color: netralDisableColor),
                           ),
                   ),
@@ -133,42 +137,31 @@ class InvoicePage extends StatelessWidget {
                     invoiceProvider.changePage(value);
                   },
                   children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        children: invoiceProvider.dataUnPaid
-                            .map(
-                              (e) => InvoiceCard(
-                                paid: e.isPaid,
-                                invoice: e,
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
-                        children: invoiceProvider.dataPaid
-                            .map(
-                              (e) => InvoiceCard(
-                                paid: e.isPaid,
-                                invoice: e,
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
-                        children: invoiceProvider.dataPaid
-                            .map(
-                              (e) => InvoiceCard(
-                                paid: e.isPaid,
-                                invoice: e,
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
+                    // SingleChildScrollView(
+                    //   child: Column(
+
+                    // //       children: homeViewModel.dataUnpaid
+                    // //           .map((e) => InvoiceCard(
+                    // //                 recentItem: e,
+                    // //               ))
+                    // //           .toList()),
+                    // // ),
+                    // // SingleChildScrollView(
+                    // //   child: Column(
+                    // //       children: homeViewModel.dataPending
+                    // //           .map((e) => InvoiceCard(
+                    // //                 recentItem: e,
+                    // //               ))
+                    // //           .toList()),
+                    // // ),
+                    // // SingleChildScrollView(
+                    // //   child: Column(
+                    // //       children: homeViewModel.dataPaid
+                    // //           .map((e) => InvoiceCard(
+                    // //                 recentItem: e,
+                    // //               ))
+                    // //           .toList()),
+                    // ),
                   ],
                 ),
               ),
@@ -180,26 +173,31 @@ class InvoicePage extends StatelessWidget {
   }
 }
 
-class InvoiceCard extends StatelessWidget {
-  const InvoiceCard({
+class EmptyInvoiceScreen extends StatelessWidget {
+  const EmptyInvoiceScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [SvgPicture.asset('assets/icons/Receipt-pana 1.svg')],
+    );
+  }
+}
+
+class InvoiceCard1 extends StatelessWidget {
+  const InvoiceCard1({
     Key? key,
     required this.paid,
-    required this.invoice,
+    this.press,
   }) : super(key: key);
 
   final bool paid;
-  final Invoice invoice;
+  final Function()? press;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  InvoiceDetailScreen(isPaid: paid, invoice: invoice),
-            ));
-      },
+      onTap: press,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
@@ -217,34 +215,33 @@ class InvoiceCard extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            CircleAvatar(
-                backgroundColor: Colors.white,
-                child: SvgPicture.asset('assets/icons/fi-sr-home.svg')),
+            SvgPicture.asset(homeSmall),
             const SizedBox(
               width: 20,
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  invoice.storeName ?? '',
+                  'Seven Store',
                   style: heading5.copyWith(color: blackTextColor),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 Text(
-                  invoice.dateInvoice ?? '',
+                  'Nov 22, 2022',
                   style: paragraph4.copyWith(color: netralDisableColor),
                 ),
               ],
             ),
-            Spacer(),
+            const SizedBox(
+              width: 39,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  invoice.subtotal ?? '',
+                  'IDR. 1.120.000,-',
                   style: subhead2.copyWith(color: blackTextColor),
                 ),
                 const SizedBox(
@@ -252,8 +249,8 @@ class InvoiceCard extends StatelessWidget {
                 ),
                 Text(
                   paid ? 'Paid' : 'Unpaid',
-                  style:
-                      heading7.copyWith(color: paid ? Colors.green : redColor),
+                  style: heading7.copyWith(
+                      color: paid ? Colors.greenAccent : redColor),
                 ),
               ],
             ),

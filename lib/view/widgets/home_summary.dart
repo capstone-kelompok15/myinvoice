@@ -17,13 +17,13 @@ class HomeSummary extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Color(0xff0E1F35).withOpacity(0.08),
-              offset: Offset(0, 4),
+              color: const Color(0xff0E1F35).withOpacity(0.08),
+              offset: const Offset(0, 4),
               blurRadius: 8,
             ),
             BoxShadow(
-              color: Color(0xff0E1F35).withOpacity(0.12),
-              offset: Offset(0, 1),
+              color: const Color(0xff0E1F35).withOpacity(0.12),
+              offset: const Offset(0, 1),
               blurRadius: 4,
             ),
           ]),
@@ -41,7 +41,7 @@ class HomeSummary extends StatelessWidget {
                 color: Colors.black.withOpacity(.5),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(idrFormat.format(bill),

@@ -9,6 +9,7 @@ const imageSignIn = "${assets}Image-Login.svg";
 const imageForgotPassword = "${assets}Image-Forgot-Password.svg";
 const imageCheckbox = "${assets}checkbox.svg";
 const imageSuccessSignup = "${assets}success_signup.svg";
+const imageError = "assets/error.svg";
 
 //icon yg ada di profile page
 const edit = "${icons}fi-rr-pencil.svg";
@@ -36,7 +37,7 @@ const iconChatFilled = "${icons}chat_filled.svg";
 
 // REGEX FOR EMAIL VALIDATION
 const emailRex =
-    "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+    "^[a-zA-Z0-9.a-zA-Z0-9.!#%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+";
 
 const homeSmall = "${icons}fi-sr-home.svg";
 const copy = "${icons}fi-rr-copy-alt.svg";

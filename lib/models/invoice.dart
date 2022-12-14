@@ -1,44 +1,47 @@
 class Invoice {
-  String? storeName;
-  String? alamatStore;
-  String? invoiceID;
-  String? userName;
-  String? emailUser;
-  String? alamatUser;
-  String? dateInvoice;
-  String? dateOverdue;
-
-  List<Item>? items = [];
-  String? totalProduct;
-  String? subtotal;
-  bool isPaid;
+  int? id;
+  String? invoiceNumber;
+  String? customerName;
+  String? customerAddress;
+  double? totalAmount;
+  String? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   Invoice({
-    this.storeName,
-    this.alamatStore,
-    this.invoiceID,
-    this.userName,
-    this.emailUser,
-    this.alamatUser,
-    this.dateInvoice,
-    this.dateOverdue,
-    this.totalProduct,
-    this.items,
-    this.subtotal,
-    this.isPaid = false,
+    this.id,
+    this.invoiceNumber,
+    this.customerName,
+    this.customerAddress,
+    this.totalAmount,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
   });
-}
 
-class Item {
-  String? itemDescription;
-  String? quantity;
-  String? price;
-  String? total;
+  factory Invoice.fromJson(Map<String, dynamic> json) {
+    return Invoice(
+      id: json['id'],
+      invoiceNumber: json['invoiceNumber'],
+      customerName: json['customerName'],
+      customerAddress: json['customerAddress'],
+      totalAmount: json['totalAmount'],
+      status: json['status'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
+    );
+  }
 
-  Item({
-    this.itemDescription,
-    this.quantity,
-    this.price,
-    this.total,
-  });
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['invoiceNumber'] = this.invoiceNumber;
+    data['customerName'] = this.customerName;
+    data['customerAddress'] = this.customerAddress;
+    data['totalAmount'] = this.totalAmount;
+    data['status'] = this.status;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
+  }
 }

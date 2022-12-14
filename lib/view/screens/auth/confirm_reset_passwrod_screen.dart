@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/auth/reset_password_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
-import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 
@@ -129,7 +128,7 @@ class ConfirmResetPasswordScreen extends StatelessWidget {
                       onTap: () => Navigator.pushAndRemoveUntil(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => SignupScreen(),
+                            builder: (context) => const SignupScreen(),
                           ),
                           (value) => false),
                       child: Text(

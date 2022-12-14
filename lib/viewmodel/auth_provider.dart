@@ -3,12 +3,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/auth/auth_response.dart';
 import 'package:myinvoice/services/auth_services.dart';
 import 'package:myinvoice/view/screens/auth/otp_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
+import 'package:myinvoice/viewmodel/profile_provider.dart';
+import 'package:provider/provider.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -19,9 +20,13 @@ class AuthProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
+    ProfileProvider profileProvider =
+        Provider.of<ProfileProvider>(context, listen: false);
+
     final result = await AuthService.signIn(email, password);
     if (result.statusCode == 200) {
       Pref.saveToken(result.data!['data']['access_token']);
+      await profileProvider.getCustomer();
       Navigator.pushAndRemoveUntil(
           context,
           CupertinoPageRoute(
@@ -59,6 +64,7 @@ class AuthProvider extends ChangeNotifier {
         backgroundColor: Colors.red,
       ));
     }
+    
     isLoading = false;
     notifyListeners();
   }
@@ -91,7 +97,7 @@ class AuthProvider extends ChangeNotifier {
     Navigator.pushAndRemoveUntil(
         context,
         CupertinoPageRoute(
-          builder: (context) => SignupScreen(),
+          builder: (context) => const SignupScreen(),
         ),
         (route) => false);
   }

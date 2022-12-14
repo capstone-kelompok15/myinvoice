@@ -1,14 +1,13 @@
 import 'package:f_line_chart/f_line_chart.dart';
-import 'package:f_line_chart/line_chart_point.dart';
 import 'package:f_line_chart/line_chart_point_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
-import 'package:myinvoice/view/screens/report/chart.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +17,7 @@ import 'components/filter_rangetime_page.dart';
 import 'components/filter_typebiils_page.dart';
 
 class ReportPage extends StatefulWidget {
-  ReportPage({super.key});
+  const ReportPage({super.key});
 
   @override
   State<ReportPage> createState() => _ReportPageState();
@@ -34,6 +33,7 @@ class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
+    final homeViewModel = Provider.of<HomeProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -78,23 +78,22 @@ class _ReportPageState extends State<ReportPage> {
                       // bgColor: Color.fromARGB(255, 179, 216, 94),
 
                       xLineNums: 6,
-                      multipleLinePointsColor: [
+                      multipleLinePointsColor: const [
                         Colors.green,
                         Colors.red,
                       ],
                       multipleLinePoints: reportProvider.data,
-                
+
                       showXLineText: true,
-                 
+
                       showYAxis: true,
-           
+
                       showYLineMark: true,
                       config: LineChartPointConfig(
                           showNormalPoints: true,
                           showSelectedLine: true,
                           showSelectedPoint: true),
                     ),
-                
                   ),
                 ),
                 Padding(
@@ -105,7 +104,7 @@ class _ReportPageState extends State<ReportPage> {
                       reportProvider.typeBiils == "Paid" ||
                               reportProvider.typeBiils == "All"
                           ? Row(
-                              children: [
+                              children: const [
                                 SizedBox(
                                   height: 20,
                                   child: CircleAvatar(
@@ -120,14 +119,14 @@ class _ReportPageState extends State<ReportPage> {
                                 )
                               ],
                             )
-                          : SizedBox(),
+                          : const SizedBox(),
                       // const SizedBox(
                       //   width: 18,
                       // ),
                       reportProvider.typeBiils == "Unpaid" ||
                               reportProvider.typeBiils == "All"
                           ? Row(
-                              children: [
+                              children: const [
                                 SizedBox(
                                   height: 20,
                                   child: CircleAvatar(
@@ -139,7 +138,7 @@ class _ReportPageState extends State<ReportPage> {
                                 )
                               ],
                             )
-                          : SizedBox(),
+                          : const SizedBox(),
                     ],
                   ),
                 ),
@@ -179,10 +178,9 @@ class _ReportPageState extends State<ReportPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
                   children: List.generate(
-                      invoiceProvider.dataUnPaid.length,
-                      (index) => InvoiceCard(
-                          paid: true,
-                          invoice: invoiceProvider.dataUnPaid[index])).toList(),
+                    homeViewModel.recentList.length,
+                    (index) => const InvoiceCard1(paid: true),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,

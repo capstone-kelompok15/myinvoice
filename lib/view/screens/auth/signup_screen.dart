@@ -2,16 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
-import 'package:myinvoice/view/screens/auth/otp_screen.dart';
 import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/circular_loading.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
+import 'package:myinvoice/view/widgets/success_dialog.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
-  SignupScreen({super.key});
+  const SignupScreen({super.key});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -30,6 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   _submit() async {
     if (_formKey.currentState!.validate()) {
+      successDialog(context, _email.text);
       await context
           .read<AuthProvider>()
           .signUp(context, _fullname.text, _email.text, _password.text);
@@ -171,7 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     onTap: () => Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => SignInScreen(),
+                          builder: (context) => const SignInScreen(),
                         )),
                     child: Text(
                       "Sign In",

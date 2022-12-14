@@ -6,10 +6,9 @@ import 'package:myinvoice/view/screens/home/home/home_page.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../viewmodel/invoice_provider.dart';
 import '../profile_page/profile_page.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,8 +16,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context);
-    final controller = Provider.of<InvoiceProvider>(context);
+    final homeViewModel = Provider.of<HomeProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -29,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             topRight: Radius.circular(25.0),
           ),
           child: SizedBox(
-            height: 110,
+            height: 84,
             child: BottomNavigationBar(
                 backgroundColor: Theme.of(context).primaryColor,
                 type: BottomNavigationBarType.fixed,
@@ -40,7 +38,6 @@ class HomeScreen extends StatelessWidget {
                 elevation: 0,
                 currentIndex: homeViewModel.currentIndex,
                 onTap: (value) {
-                  controller.filterInvoice();
                   homeViewModel.ontap(value);
                 },
                 items: [
@@ -72,7 +69,7 @@ class HomeScreen extends StatelessWidget {
         ),
         body: IndexedStack(
           index: homeViewModel.currentIndex,
-          children: [
+          children: const [
             HomePage(),
             InvoicePage(),
             ReportPage(),

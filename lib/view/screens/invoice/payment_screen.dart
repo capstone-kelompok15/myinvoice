@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
-import 'package:myinvoice/view/screens/invoice/choose_payment_method_screen.dart';
 import 'package:myinvoice/view/screens/invoice/confirm_payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/bank_card.dart';
 import '../../widgets/rounded_button.dart';
 
 class PaymentScreen extends StatelessWidget {
-  const PaymentScreen({super.key, required this.data});
-  final Invoice data;
+  const PaymentScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
@@ -217,7 +215,7 @@ class PaymentScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('ATM BERSAMA / MANDIRI / PRIMA'),
+                                const Text('ATM BERSAMA / MANDIRI / PRIMA'),
                                 Container(
                                   padding: const EdgeInsets.only(left: 8),
                                   child: ListView.builder(
@@ -245,7 +243,7 @@ class PaymentScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Mobile Banking'),
+                                const Text('Mobile Banking'),
                                 Container(
                                   padding: const EdgeInsets.only(left: 8),
                                   child: ListView.builder(
@@ -273,7 +271,7 @@ class PaymentScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Internet Banking'),
+                                const Text('Internet Banking'),
                                 Container(
                                   padding: const EdgeInsets.only(left: 8),
                                   child: ListView.builder(
@@ -298,8 +296,7 @@ class PaymentScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ConfirmPaymentScreen(data: data),
+                              builder: (context) => const ConfirmPaymentScreen(),
                             ),
                           );
                         }),

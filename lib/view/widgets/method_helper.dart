@@ -29,7 +29,7 @@ class MethodHelper {
       centerTitle: isCenter,
       title: Text(
         title,
-        style: heading3.copyWith(color: blackTextColor),
+        style: heading3.copyWith(color: pressed),
       ),
     );
   }

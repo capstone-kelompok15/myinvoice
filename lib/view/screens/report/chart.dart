@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +75,7 @@ class ChartViewState extends State<ChartView> {
           color: isTouched ? Colors.yellow : primaryBackground,
           width: width,
           borderSide: isTouched
-              ? BorderSide(color: Colors.yellow)
+              ? const BorderSide(color: Colors.yellow)
               : const BorderSide(color: Colors.white, width: 0),
         ),
       ],
@@ -203,7 +202,7 @@ class ChartViewState extends State<ChartView> {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    TextStyle style = TextStyle(
+    TextStyle style = const TextStyle(
       color: Color(0xff404040),
       fontWeight: FontWeight.bold,
       fontSize: 14,

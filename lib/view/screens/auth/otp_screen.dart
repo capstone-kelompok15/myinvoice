@@ -1,13 +1,36 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/index.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-class OtpScreen extends StatelessWidget {
+class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
+
+  @override
+  State<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends State<OtpScreen> {
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 300;
+  late CountdownTimerController controller;
+  @override
+  void initState() {
+    controller = CountdownTimerController(
+      endTime: endTime,
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +64,46 @@ class OtpScreen extends StatelessWidget {
                   OtpTextField(
                     numberOfFields: 4,
                     fieldWidth: 55,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                     onSubmit: (code) async {
-                     await state.verifEmail(context, code);
+                      await state.verifEmail(context, code);
                     },
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Your code will expire in",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        CountdownTimer(
+                          endWidget: Text(""),
+                          endTime: endTime,
+                          controller: controller,
+                          textStyle: TextStyle(color: Colors.red),
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        GestureDetector(
+                          onTap: () => setState(() {
+                            controller.start();
+                          }),
+                          child: Text(
+                            "Resend Code",
+                            style: TextStyle(
+                                color: Colors.purple,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
                 ],
               );
             }),

@@ -1,12 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
+import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,15 +22,29 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  checkToken() async {
+    String? token = await Pref.getToken();
+    if (token != null) {
+      Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => const HomeScreen(),
+          ));
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => SignupScreen(),
+          ));
+    }
+  }
+
   initSplash() {
     return Timer(
       const Duration(seconds: 1),
       () {
-        Navigator.push(
-            context,
-            CupertinoPageRoute(
-              builder: (context) =>  SignupScreen(),
-            ));
+        checkToken();
       },
     );
   }
