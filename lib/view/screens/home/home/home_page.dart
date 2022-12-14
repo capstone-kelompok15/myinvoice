@@ -9,6 +9,7 @@ import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeProvider>(context);
+    final profileViewModel = Provider.of<ProfileProvider>(context);
     final controller = Provider.of<InvoiceProvider>(context);
     const textButtonColor = Color(0xff131089);
     return Scaffold(
@@ -91,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.w400, color: Colors.white),
                         ),
                         Text(
-                          'Clarissa Maharani',
+                          profileViewModel.customer.fullName.toString(),
                           style: body1.copyWith(color: Colors.white),
                         ),
                       ],
