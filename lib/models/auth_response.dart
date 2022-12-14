@@ -1,14 +1,24 @@
 class SignInResponse {
-  bool? success;
-  String? token;
-  String? message;
+   int? statusCode;
+  Map<String, dynamic>? error;
+  Map<String, dynamic>? data;
 
-  SignInResponse({this.success, this.token, this.message});
+  SignInResponse({this.statusCode, this.error, this.data});
 }
 
 class SignUpResponse {
-  bool? success;
+  int? statusCode;
+  Map<String, dynamic>? error;
+  String? data;
 
   String? message;
-  SignUpResponse({this.success, this.message});
+  SignUpResponse({this.statusCode, this.error, this.data});
+}
+
+class Verification {
+   int? statusCode;
+  Map<String, dynamic>? error;
+  String? data;
+
+  Verification({this.statusCode, this.error, this.data});
 }
