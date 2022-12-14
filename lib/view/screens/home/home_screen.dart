@@ -39,7 +39,6 @@ class HomeScreen extends StatelessWidget {
                 elevation: 0,
                 currentIndex: homeViewModel.currentIndex,
                 onTap: (value) {
-                  homeViewModel.filterInvoice();
                   homeViewModel.ontap(value);
                 },
                 items: [
