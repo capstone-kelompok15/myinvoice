@@ -90,8 +90,6 @@ class AuthProvider extends ChangeNotifier {
     final result = await AuthService.resetPassword(email);
     return result ?? false;
   }
-
-  //create function for auto signout then back to SigninScreen 
     Future autoSignOut(BuildContext context) async {
     await Pref.removeToken();
     Navigator.pushAndRemoveUntil(

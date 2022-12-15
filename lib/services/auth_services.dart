@@ -85,9 +85,7 @@ class AuthService {
       }
     }
   }
-
-  //use auto signout when login on another device
-
+  
   static Future<bool?> resetPassword(String email) async {
     try {
       final res = await Dio().post(Endpoint.resetPassword, data: {

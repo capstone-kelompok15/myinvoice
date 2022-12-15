@@ -22,10 +22,6 @@ class _OtpScreenState extends State<OtpScreen> {
     controller = CountdownTimerController(
       endTime: endTime,
     );
-
-// create controller start to make it work again to send new code 
-      
-
     super.initState();
   }
 
@@ -99,7 +95,6 @@ class _OtpScreenState extends State<OtpScreen> {
                           }),
                           child: const Text(
                             "Resend Code",
-                            //add controller start to make it work again to send new code 
                             style: TextStyle(
                                 color: Colors.purple,
                                 fontWeight: FontWeight.w700),
