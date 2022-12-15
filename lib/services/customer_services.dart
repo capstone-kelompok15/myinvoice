@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/models/customer.dart';
+import 'package:myinvoice/viewmodel/auth_provider.dart';
 
 class CustomerServices {
   Future<Customer> getCustomer() async {
@@ -17,6 +18,9 @@ class CustomerServices {
                 'accept': 'application/json',
                 'Authorization': 'Bearer $token',
               }));
+      if (response.statusCode == 401) { 
+        AuthProvider().SignOut;
+      }
       Customer data = Customer.fromJson(response.data['data']);
       return data;
     } on DioError catch (e) {

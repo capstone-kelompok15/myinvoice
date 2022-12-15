@@ -85,12 +85,14 @@ class AuthService {
       }
     }
   }
-
+  
   static Future<bool?> resetPassword(String email) async {
     try {
       final res = await Dio().post(Endpoint.resetPassword, data: {
         'email': email,
       });
+
+      print(res.data);
 
       if (res.statusCode == 200) {
         return true;

@@ -127,7 +127,7 @@ class _InvoicePageState extends State<InvoicePage> {
                               ),
                             ),
                             child: Text(
-                              'paid',
+                              'Paid',
                               style:
                                   heading4.copyWith(color: primaryBackground),
                             ),

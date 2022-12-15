@@ -54,7 +54,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 Text(
                   "Sign In",
-                  style: heading1,
+                  style: heading0,
                 ),
                 const SizedBox(
                   height: 18,
@@ -104,8 +104,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "Forget Password?",
-                      style: TextStyle(color: netralDisableColor),
+                      "Forgot Password?",
+                      style: TextStyle(color: primaryBackground),
                     ),
                   ),
                 ),

@@ -9,6 +9,7 @@ const imageSignIn = "${assets}Image-Login.svg";
 const imageForgotPassword = "${assets}Image-Forgot-Password.svg";
 const imageCheckbox = "${assets}checkbox.svg";
 const imageSuccessSignup = "${assets}success_signup.svg";
+const imageError = "assets/error.svg";
 
 //icon yg ada di profile page
 const edit = "${icons}fi-rr-pencil.svg";

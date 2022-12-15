@@ -29,7 +29,8 @@ Color get backgroundCard => const Color(0xffBAC0CA);
 
 TextStyle get title =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 30);
-
+TextStyle get heading0 =>
+    const TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Color(0Xff173468) );
 TextStyle get heading1 =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 24);
 TextStyle get heading2 =>

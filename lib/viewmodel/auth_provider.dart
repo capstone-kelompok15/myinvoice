@@ -6,12 +6,17 @@ import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/services/auth_services.dart';
 import 'package:myinvoice/services/invoice_service.dart';
 import 'package:myinvoice/view/screens/auth/otp_screen.dart';
+import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/view/widgets/signin_dialog.dart';
+import 'package:myinvoice/view/widgets/signup_dialog.dart';
+import 'package:myinvoice/view/widgets/success_dialog.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../view/widgets/custom_textfield.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -24,14 +29,11 @@ class AuthProvider extends ChangeNotifier {
 
     ProfileProvider profileProvider =
         Provider.of<ProfileProvider>(context, listen: false);
-    InvoiceProvider p = Provider.of<InvoiceProvider>(context, listen: false);
 
     final result = await AuthService.signIn(email, password);
     if (result.statusCode == 200) {
       Pref.saveToken(result.data!['data']['access_token']);
       await profileProvider.getCustomer();
-      await InvoiceServices().getAllInvoice();
-
       Navigator.pushAndRemoveUntil(
           context,
           CupertinoPageRoute(
@@ -39,14 +41,8 @@ class AuthProvider extends ChangeNotifier {
           ),
           (route) => false);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          result.data!['error']['message'] ?? "",
-        ),
-        backgroundColor: Colors.red,
-      ));
+      signinDialog(context, email, password);
     }
-
     isLoading = false;
     notifyListeners();
   }
@@ -58,17 +54,17 @@ class AuthProvider extends ChangeNotifier {
     final result = await AuthService.signUp(name, email, password);
     emailSignUp = email;
     if (result.statusCode == 201) {
+      successDialog(context, email);
+      await Future.delayed(const Duration(seconds: 1));
       Navigator.push(
           context,
           CupertinoPageRoute(
             builder: (context) => const OtpScreen(),
           ));
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(result.error!['message'] ?? ''),
-        backgroundColor: Colors.red,
-      ));
+     signupDialog(context, email);
     }
+    
     isLoading = false;
     notifyListeners();
   }
@@ -95,14 +91,14 @@ class AuthProvider extends ChangeNotifier {
     final result = await AuthService.resetPassword(email);
     return result ?? false;
   }
-
-  Future logut(BuildContext context) async {
+    Future SignOut(BuildContext context) async {
     await Pref.removeToken();
     Navigator.pushAndRemoveUntil(
         context,
         CupertinoPageRoute(
-          builder: (context) => const SignupScreen(),
+          builder: (context) => const SignInScreen(),
         ),
         (route) => false);
   }
 }
+
