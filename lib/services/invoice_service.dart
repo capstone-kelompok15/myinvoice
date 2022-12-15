@@ -10,6 +10,7 @@ class InvoiceServices {
       if (response.statusCode == 401) { 
         AuthProvider().SignOut;
       }
+      print(response.data);
     } on DioError catch (e) {
       throw Exception(e);
     }
