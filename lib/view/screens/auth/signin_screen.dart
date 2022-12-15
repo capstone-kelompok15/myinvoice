@@ -75,7 +75,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         .hasMatch(text)) {
                       return 'Invalid Email';
                     }
-                    
                     return null;
                   },
                 ),
