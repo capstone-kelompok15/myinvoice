@@ -8,6 +8,7 @@ import 'package:myinvoice/view/screens/auth/otp_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
+import 'package:myinvoice/view/widgets/success_dialog.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -53,6 +54,8 @@ class AuthProvider extends ChangeNotifier {
     final result = await AuthService.signUp(name, email, password);
     emailSignUp = email;
     if (result.statusCode == 201) {
+      successDialog(context, email);
+      await Future.delayed(const Duration(seconds: 1));
       Navigator.push(
           context,
           CupertinoPageRoute(

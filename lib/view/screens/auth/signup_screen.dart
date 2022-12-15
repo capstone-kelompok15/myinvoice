@@ -30,7 +30,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   _submit() async {
     if (_formKey.currentState!.validate()) {
-      successDialog(context, _email.text);
       await context
           .read<AuthProvider>()
           .signUp(context, _fullname.text, _email.text, _password.text);
@@ -57,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Text(
                 "Sign Up",
-                style: heading1,
+                style: heading0,
               ),
               const SizedBox(
                 height: 18,
@@ -72,10 +71,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       hint: "e.g Darryl Martine",
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Can\'t be empty';
-                        }
-                        if (text.length < 4) {
-                          return 'Too short';
+                          return 'Full name can\'t be empty';
                         }
                         return null;
                       },
@@ -86,10 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       hint: "example@gmail.com",
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Can\'t be empty';
-                        }
-                        if (text.length < 4) {
-                          return 'Too short';
+                          return 'Email can\'t be empty';
                         }
                         if (!RegExp(
                                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -106,7 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       hint: "********",
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Can\'t be empty';
+                          return 'Password can\'t be empty';
                         }
                         if (text.length < 8 || text.length > 16) {
                           return 'Password must be 8-16 characters';
@@ -121,7 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       hint: "********",
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Can\'t be empty';
+                          return 'Confirm password can\'t be empty';
                         }
                         if (text.length < 8 || text.length > 16) {
                           return 'Password must be 8-16 characters';

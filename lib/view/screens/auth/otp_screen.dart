@@ -23,6 +23,9 @@ class _OtpScreenState extends State<OtpScreen> {
       endTime: endTime,
     );
 
+// create controller start to make it work again to send new code 
+      
+
     super.initState();
   }
 
@@ -74,28 +77,29 @@ class _OtpScreenState extends State<OtpScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Your code will expire in",
                           style: TextStyle(color: Colors.grey),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         CountdownTimer(
-                          endWidget: Text(""),
+                          endWidget: const Text(""),
                           endTime: endTime,
                           controller: controller,
-                          textStyle: TextStyle(color: Colors.red),
+                          textStyle: const TextStyle(color: Colors.red),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 12,
                         ),
                         GestureDetector(
                           onTap: () => setState(() {
                             controller.start();
                           }),
-                          child: Text(
+                          child: const Text(
                             "Resend Code",
+                            //add controller start to make it work again to send new code 
                             style: TextStyle(
                                 color: Colors.purple,
                                 fontWeight: FontWeight.w700),
