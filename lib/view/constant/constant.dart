@@ -77,3 +77,7 @@ NumberFormat idrFormat = NumberFormat.currency(
   symbol: 'IDR ',
   decimalDigits: 0,
 );
+
+formatDateBasic(DateTime dateTime) {
+  return DateFormat('MMM dd, yyyy').format(dateTime);
+}

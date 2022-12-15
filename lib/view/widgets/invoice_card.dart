@@ -70,7 +70,7 @@ class InvoiceCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              createAt,
+              formatDateBasic(DateTime.parse(createAt)),
               style: sectionSubHead.copyWith(
                 color: const Color(0xff999999),
               ),
@@ -82,18 +82,20 @@ class InvoiceCard extends StatelessWidget {
                   color: redColor,
                 ),
               ),
-            ] else if (status == 'Paid') ...[
+            ],
+            if (status == 'Paid') ...[
               Text(
                 'Paid',
                 style: body4.copyWith(
                   color: greenColor,
                 ),
               ),
-            ] else if (status == 'Pending') ...[
+            ],
+            if (status == 'Pending') ...[
               Text(
                 'Pending',
                 style: body4.copyWith(
-                  color: orangeColor,
+                  color: Colors.orangeAccent,
                 ),
               ),
             ]

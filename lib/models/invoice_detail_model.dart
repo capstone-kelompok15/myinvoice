@@ -1,26 +1,26 @@
-class Data {
+class InvoiceDetail {
   int? invoiceId;
   int? merchantId;
   String? merchantName;
   int? customerId;
   String? customerName;
   String? customerAddress;
-  Null? approvalDocumentUrl;
+  String? approvalDocumentUrl;
   int? paymentStatusId;
   String? paymentStatusName;
-  Null? paymentTypeId;
-  Null? paymentTypeName;
-  Null? merchantBankId;
+  int? paymentTypeId;
+  String? paymentTypeName;
+  int? merchantBankId;
   int? totalPrice;
   int? productQuantity;
   String? note;
-  Null? message;
+  String? message;
   String? dueAt;
   String? createdAt;
   String? updatedAt;
-  List<InvoiceDetail>? invoiceDetail;
+  List<ItemDescription>? invoiceDetail;
 
-  Data(
+  InvoiceDetail(
       {this.invoiceId,
       this.merchantId,
       this.merchantName,
@@ -42,19 +42,36 @@ class Data {
       this.updatedAt,
       this.invoiceDetail});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  InvoiceDetail.fromJson(Map<String, dynamic> json) {
     invoiceId = json['invoice_id'];
     merchantId = json['merchant_id'];
     merchantName = json['merchant_name'];
     customerId = json['customer_id'];
     customerName = json['customer_name'];
     customerAddress = json['customer_address'];
-    approvalDocumentUrl = json['approval_document_url'];
+    if (json['approval_document_url'] != null) {
+      approvalDocumentUrl = json['approval_document_url'];
+    } else {
+      approvalDocumentUrl = null;
+    }
     paymentStatusId = json['payment_status_id'];
     paymentStatusName = json['payment_status_name'];
-    paymentTypeId = json['payment_type_id'];
-    paymentTypeName = json['payment_type_name'];
-    merchantBankId = json['merchant_bank_id'];
+    if (json['payment_type_id'] != null) {
+      paymentStatusId = json['payment_type_id'];
+    } else {
+      paymentStatusId = null;
+    }
+    if (json['payment_type_name'] != null) {
+      paymentTypeName = json['payment_type_name'];
+    } else {
+      paymentTypeName = null;
+    }
+    if (json['merchant_bank_id'] != null) {
+      merchantBankId = json['merchant_bank_id'];
+    } else {
+      merchantBankId = null;
+    }
+
     totalPrice = json['total_price'];
     productQuantity = json['product_quantity'];
     note = json['note'];
@@ -63,9 +80,9 @@ class Data {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['invoice_detail'] != null) {
-      invoiceDetail = <InvoiceDetail>[];
+      invoiceDetail = <ItemDescription>[];
       json['invoice_detail'].forEach((v) {
-        invoiceDetail!.add(new InvoiceDetail.fromJson(v));
+        invoiceDetail!.add(new ItemDescription.fromJson(v));
       });
     }
   }
@@ -99,7 +116,7 @@ class Data {
   }
 }
 
-class InvoiceDetail {
+class ItemDescription {
   int? invoiceDetailId;
   String? product;
   int? quantity;
@@ -107,7 +124,7 @@ class InvoiceDetail {
   String? createdAt;
   String? updatedAt;
 
-  InvoiceDetail(
+  ItemDescription(
       {this.invoiceDetailId,
       this.product,
       this.quantity,
@@ -115,7 +132,7 @@ class InvoiceDetail {
       this.createdAt,
       this.updatedAt});
 
-  InvoiceDetail.fromJson(Map<String, dynamic> json) {
+  ItemDescription.fromJson(Map<String, dynamic> json) {
     invoiceDetailId = json['invoice_detail_id'];
     product = json['product'];
     quantity = json['quantity'];

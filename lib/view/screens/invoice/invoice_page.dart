@@ -5,6 +5,7 @@ import 'package:myinvoice/models/home_model/bill_model.dart';
 import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
+import 'package:myinvoice/view/screens/invoice/status_pembayaran_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/profile_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
@@ -24,8 +25,6 @@ class InvoicePage extends StatefulWidget {
 class _InvoicePageState extends State<InvoicePage> {
   @override
   void initState() {
-    Provider.of<InvoiceProvider>(context, listen: false).getAllinvoices();
-
     super.initState();
   }
 
@@ -146,40 +145,105 @@ class _InvoicePageState extends State<InvoicePage> {
                 height: 20,
               ),
               Expanded(
-                  child: PageView(
-                controller: invoiceProvider.pageController,
-                onPageChanged: (value) {
-                  invoiceProvider.changePage(value);
-                },
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: invoiceProvider.allInvoice.isNotEmpty
-                          ? invoiceProvider.allInvoice
-                              .map(
-                                (e) => InvoiceCard(
-                                    merchant: e.merchantName!,
-                                    totalPrice: e.totalPrice!,
-                                    createAt: e.createdAt!,
-                                    status: e.paymentStatusName ?? '',
-                                    press: () async {
-                                      await InvoiceServices().getInvoice(
-                                          invoiceProvider.data.invoiceId!);
-                                      await invoiceProvider.getInvoiceDetail(
-                                          invoiceProvider.data.invoiceId!);
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          return InvoiceDetailScreen();
-                                        },
-                                      ));
-                                    }),
-                              )
-                              .toList()
-                          : [Text('Data Kosong')],
+                child: PageView(
+                  controller: invoiceProvider.pageController,
+                  onPageChanged: (value) {
+                    invoiceProvider.changePage(value);
+                  },
+                  children: [
+                    FutureBuilder<List<Invoice>>(
+                      future: InvoiceServices().getAllInvoice(1),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return SingleChildScrollView(
+                            child: Column(
+                                children: snapshot.data!
+                                    .map(
+                                      (e) => InvoiceCard(
+                                          merchant: e.merchantName!,
+                                          totalPrice: e.totalPrice!,
+                                          createAt: e.createdAt!,
+                                          status: e.paymentStatusName ?? '',
+                                          press: () async {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                              builder: (context) {
+                                                return InvoiceDetailScreen(
+                                                    isPaid: false,
+                                                    e.invoiceId!);
+                                              },
+                                            ));
+                                          }),
+                                    )
+                                    .toList()),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
                     ),
-                  ),
-                ],
-              )),
+                    FutureBuilder<List<Invoice>>(
+                      future: InvoiceServices().getAllInvoice(2),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return SingleChildScrollView(
+                            child: Column(
+                                children: snapshot.data!
+                                    .map(
+                                      (e) => InvoiceCard(
+                                          merchant: e.merchantName!,
+                                          totalPrice: e.totalPrice!,
+                                          createAt: e.createdAt!,
+                                          status: e.paymentStatusName ?? '',
+                                          press: () async {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                              builder: (context) {
+                                                return StatusPembayaranScreen();
+                                              },
+                                            ));
+                                          }),
+                                    )
+                                    .toList()),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                    FutureBuilder<List<Invoice>>(
+                      future: InvoiceServices().getAllInvoice(3),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return SingleChildScrollView(
+                            child: Column(
+                                children: snapshot.data!
+                                    .map(
+                                      (e) => InvoiceCard(
+                                          merchant: e.merchantName!,
+                                          totalPrice: e.totalPrice!,
+                                          createAt: e.createdAt!,
+                                          status: e.paymentStatusName ?? '',
+                                          press: () async {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                              builder: (context) {
+                                                return InvoiceDetailScreen(
+                                                    isPaid: true, e.invoiceId!);
+                                              },
+                                            ));
+                                          }),
+                                    )
+                                    .toList()),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

@@ -30,9 +30,6 @@ class AuthProvider extends ChangeNotifier {
     if (result.statusCode == 200) {
       Pref.saveToken(result.data!['data']['access_token']);
       await profileProvider.getCustomer();
-      await InvoiceServices().getAllInvoice();
-      await InvoiceServices().getInvoice(1);
-
       Navigator.pushAndRemoveUntil(
           context,
           CupertinoPageRoute(

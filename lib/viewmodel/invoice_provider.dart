@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:myinvoice/models/bank_model.dart';
 import 'package:myinvoice/models/invoice_detail_model.dart';
 import 'package:myinvoice/services/invoice_service.dart';
+import 'package:myinvoice/view/constant/constant.dart';
 
 import '../models/invoice.dart';
 
 class InvoiceProvider extends ChangeNotifier {
   // page controller untuk unpaid ama paid
   int currendIndex = 0;
+
+  int bill = 0;
 
   PageController pageController = PageController();
 
@@ -30,9 +34,9 @@ class InvoiceProvider extends ChangeNotifier {
 
   List<Invoice> get allInvoice => _allInvoice;
 
-  Future<void> getAllinvoices() async {
+  Future<void> getAllinvoices(int isPaid) async {
     try {
-      var inv = await InvoiceServices().getAllInvoice();
+      var inv = await InvoiceServices().getAllInvoice(isPaid);
       _allInvoice = inv;
       notifyListeners();
 
@@ -42,18 +46,35 @@ class InvoiceProvider extends ChangeNotifier {
     }
   }
 
-  // function untuk get Invoice detail by id
+  String payment = 'Choose';
+  String icon = '';
 
-  // Data data = Data();
+  String accountNumber = '';
 
-  Data data = Data();
+  choosePayment(String payment, String icon, String accountNumber) {
+    this.payment = payment;
+    this.accountNumber = accountNumber;
+    this.icon = icon;
+    notifyListeners();
+  }
 
-  Future<void> getInvoiceDetail(int id) async {
-    try {
-      Data data = await InvoiceServices().getInvoice(id);
-      this.data = data;
-    } catch (e) {
-      print(e);
+// function untuk mengecek apakah bank tersedia atau tidak
+  bool checkBakMerch(String codeBank, List<BankModel> bankModel) {
+    for (var item in bankModel) {
+      if (item.bankCode == codeBank) {
+        return false;
+      }
     }
+    return true;
+  }
+
+  // function to get sub total
+
+  Future getSubTotal(int data) async {
+    bill = 0;
+    Future.delayed(Duration(milliseconds: 300), () {
+      bill = data;
+      notifyListeners();
+    });
   }
 }
