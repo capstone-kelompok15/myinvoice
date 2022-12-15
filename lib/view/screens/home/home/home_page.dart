@@ -10,6 +10,7 @@ import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/notification_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final notifViewModel = Provider.of<NotificationProvider>(context);
     final homeViewModel = Provider.of<HomeProvider>(context);
     final profileViewModel = Provider.of<ProfileProvider>(context);
     final controller = Provider.of<InvoiceProvider>(context);
@@ -59,9 +61,9 @@ class _HomePageState extends State<HomePage> {
                             Badge(
                               toAnimate: true,
                               animationType: BadgeAnimationType.scale,
-                              badgeContent: const Text(
+                              badgeContent: Text(
                                 textScaleFactor: 0.5,
-                                '55',
+                                notifViewModel.unreadCount?.data?.unreadCount.toString() ?? '',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
