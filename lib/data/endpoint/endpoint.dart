@@ -14,4 +14,8 @@ class Endpoint {
 
   static const getInvoiceById = "${baseUrl}invoices/";
 
+  static const getNotification = "${baseUrl}customers/notifications?page=1&limit=50";
+  static const getNotifCount = "${baseUrl}customers/notifications/unread_count";
+  static const markAsRead = "${baseUrl}customers/notifications/";
+
 }

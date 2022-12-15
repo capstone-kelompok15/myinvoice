@@ -45,7 +45,7 @@ class InvoiceProvider extends ChangeNotifier {
 
   Invoice? get invoiceById => _invoiceById;
 
-  Future<void> getInvoiceById(int id) async {
+  Future<void> getInvoiceById(String id) async {
     try {
       var inv = await InvoiceServices().getInvoiceById(id);
       _invoiceById = inv;

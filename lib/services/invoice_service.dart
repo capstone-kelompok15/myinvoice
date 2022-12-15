@@ -42,7 +42,7 @@ class InvoiceServices {
     }
   }
 
-  Future<Invoice> getInvoiceById(int id) async {
+  Future<Invoice> getInvoiceById(String id) async {
     try {
       final String? token = await Pref.getToken();
       var headers = {
@@ -51,7 +51,7 @@ class InvoiceServices {
       };
 
       var response = await Dio().get(
-        "${Endpoint.getInvoiceById}/$id/customers}",
+        "${Endpoint.getInvoiceById}$id/customers",
         options: Options(headers: headers),
       );
 
@@ -60,7 +60,7 @@ class InvoiceServices {
       if (response.statusCode == 200) {
         Invoice invoice = Invoice.fromJson(response.data);
 
-        print('success $invoice');
+        print('berhasil $invoice');
 
         return invoice;
       } else {

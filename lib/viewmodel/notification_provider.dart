@@ -1,44 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:myinvoice/models/notification_model.dart';
+import 'package:myinvoice/models/notification/notification_model.dart';
+import 'package:myinvoice/models/notification/unread_count.dart';
+import 'package:myinvoice/services/notification_service.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
 class NotificationProvider extends ChangeNotifier {
-  List<NotificationItem> _notifItems = [
-    NotificationItem(
-      title: 'Payment Received',
-      content: 'Your payment has been received by Pulsa Cell',
-      datetime: 'Nov 30, 2022',
-      isRead: false,
-      type: "payment",
-    ),
-    NotificationItem(
-      title: '[nama_toko] has sent you an invoice',
-      content: 'You have a new invoice from Pulsa Cell',
-      datetime: 'Nov 30, 2022',
-      isRead: true,
-      type: "invoice",
-    ),
-    NotificationItem(
-      title: 'Payment is Due Soon',
-      content: 'Your payment on Pulsa Cell will due tomorrow',
-      datetime: 'Nov 30, 2022',
-      isRead: true,
-      type: 'info',
-    ),
-    NotificationItem(
-      title: 'You need verification',
-      content: 'Your account needs to be verified by admin',
-      datetime: 'Nov 30, 2022',
-      isRead: false,
-      type: 'info',
-    ),
-  ];
+  NotificationData? _notification;
 
-  List<NotificationItem> get notifItems => _notifItems;
+  NotificationData? get notification => _notification;
 
-  void markAsRead(int index) {
-    _notifItems[index].isRead = true;
+  getAllNotification() async {
+    final response = await NotificationServices().fetchAllNotification();
+    _notification = response;
+    notifyListeners();
+  }
+
+  UnreadNotifCount? _unreadCount;
+
+  UnreadNotifCount? get unreadCount => _unreadCount;
+
+  getUnreadCount() async {
+    final response = await NotificationServices().fetchNotifCount();
+    _unreadCount = response;
+    notifyListeners();
+  }
+
+  markAsRead(String id) async {
+    final response = await NotificationServices().markAsRead(id);
+    _notification = response;
     notifyListeners();
   }
 }

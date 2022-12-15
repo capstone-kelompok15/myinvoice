@@ -15,9 +15,17 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+
+  @override
+  void initState() {
+    Provider.of<NotificationProvider>(context, listen: false).getAllNotification();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    final modelView = Provider.of<NotificationProvider>(context);
+    final notifViewModel = Provider.of<NotificationProvider>(context);
+    final dataViewModel =
+        Provider.of<NotificationProvider>(context).notification?.data;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -66,25 +74,25 @@ class _NotificationScreenState extends State<NotificationScreen> {
           style: heading3.copyWith(color: primaryBackground),
         ),
       ),
-      body: modelView.notifItems.isNotEmpty
+      body: dataViewModel != null
           ? SafeArea(
               child: ListView.separated(
                   itemBuilder: (context, index) {
                     notifIcons() {
-                      if (modelView.notifItems[index].type == 'info') {
+                      if (dataViewModel[index].notificationType == 'info') {
                         return SvgPicture.asset(
                           'assets/icons/info.svg',
                           color: primaryBackground,
                           width: 24,
                         );
-                      } else if (modelView.notifItems[index].type ==
+                      } else if (dataViewModel[index].notificationType ==
                           'payment') {
                         return SvgPicture.asset(
                           'assets/icons/payment.svg',
                           color: primaryBackground,
                           width: 24,
                         );
-                      } else if (modelView.notifItems[index].type ==
+                      } else if (dataViewModel[index].notificationType ==
                           'invoice') {
                         return SvgPicture.asset(
                           'assets/icons/invoice.svg',
@@ -94,7 +102,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       }
                     }
 
-                    if (modelView.notifItems[index].isRead == true) {
+                    if (dataViewModel[index].isRead == true) {
                       return ListTile(
                         onTap: () {},
                         isThreeLine: true,
@@ -103,7 +111,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                           child: notifIcons(),
                           // SvgPicture.asset(
-                          //   modelView.notifItems[index].avatar!,
+                          //   dataViewModel[index].avatar!,
                           //   width: 24,
                           //   color: primaryBackground,
                           // ),
@@ -111,7 +119,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         title: Container(
                           padding: const EdgeInsets.fromLTRB(0, 10, 42, 0),
                           child: Text(
-                            modelView.notifItems[index].title!,
+                            dataViewModel[index].title!,
                             style: heading3.copyWith(
                                 color: primaryBackground, letterSpacing: 0.16),
                           ),
@@ -122,7 +130,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                modelView.notifItems[index].content!,
+                                dataViewModel[index].content!,
                                 style: notifContent.copyWith(
                                     color: primaryBackground),
                               ),
@@ -130,8 +138,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 height: 5,
                               ),
                               Text(
-                                DateFormat('d MMM y, HH:mm')
-                                    .format(DateTime.now()),
+                                  dataViewModel[index].createdAt!,
                                 style: notifContent,
                               ),
                             ],
@@ -141,7 +148,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     } else {
                       return ListTile(
                         onTap: () {
-                          modelView.markAsRead(index);
+                          notifViewModel.markAsRead(dataViewModel[index].id!.toString());
                         },
                         isThreeLine: true,
                         tileColor: netralCardColor,
@@ -155,7 +162,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         title: Container(
                           padding: const EdgeInsets.fromLTRB(0, 10, 42, 0),
                           child: Text(
-                            modelView.notifItems[index].title!,
+                            dataViewModel[index].title!,
                             style: heading3.copyWith(
                                 color: primaryBackground, letterSpacing: 0.16),
                           ),
@@ -166,7 +173,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                modelView.notifItems[index].content!,
+                                dataViewModel[index].content!,
                                 style: notifContent.copyWith(
                                     color: primaryBackground),
                               ),
@@ -174,8 +181,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 height: 5,
                               ),
                               Text(
-                                DateFormat('d MMM y, HH:mm')
-                                    .format(DateTime.now()),
+                                dataViewModel[index].createdAt!,
                                 style: notifContent,
                               ),
                             ],
@@ -191,7 +197,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       color: Colors.black.withOpacity(0.3),
                     );
                   },
-                  itemCount: modelView.notifItems.length),
+                  itemCount: dataViewModel.length),
             )
           : Center(
               child: Column(
