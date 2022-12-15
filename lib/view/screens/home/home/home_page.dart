@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/models/customer.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
@@ -11,6 +12,8 @@ import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../services/customer_services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -92,10 +95,18 @@ class _HomePageState extends State<HomePage> {
                           style: body3.copyWith(
                               fontWeight: FontWeight.w400, color: Colors.white),
                         ),
-                        Text(
-                          profileViewModel.customer.fullName.toString(),
-                          style: body1.copyWith(color: Colors.white),
-                        ),
+                        FutureBuilder<Customer>(
+                            future: CustomerServices().getCustomer(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Text(
+                                  snapshot.data!.fullName!,
+                                  style: body1.copyWith(color: Colors.white),
+                                );
+                              } else {
+                                return Text('....');
+                              }
+                            }),
                       ],
                     ),
                   ),
