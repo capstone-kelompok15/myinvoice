@@ -15,6 +15,8 @@ import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../services/invoice_service.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -53,6 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     initSplash();
+
     super.initState();
   }
 

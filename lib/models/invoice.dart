@@ -31,10 +31,8 @@ class Invoice {
     merchantId = json['merchant_id'];
     merchantName = json['merchant_name'];
     customerName = json['customer_name'];
-    if (json['payment_status_id'] == null) {
-      paymentStatusId = null;
-    }
 
+    paymentStatusId = json['payment_status_id'];
     paymentStatusName = json['payment_status_name'];
     paymentTypeId = json['payment_type_id'];
     paymentTypeName = json['payment_type_name'];

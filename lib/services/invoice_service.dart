@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
+import 'package:myinvoice/models/bank_model.dart';
 import 'package:myinvoice/models/invoice.dart';
+import 'package:myinvoice/models/invoice_detail_model.dart';
 
 import '../data/pref.dart';
 
 class InvoiceServices {
-  Future<List<Invoice>> getAllInvoice() async {
+  // function get all invoice
+  Future<List<Invoice>> getAllInvoice(int isPaid) async {
     try {
       final String? token = await Pref.getToken();
       var headers = {
@@ -16,7 +19,7 @@ class InvoiceServices {
       };
 
       var response = await Dio().get(
-        Endpoint.getInvoice,
+        "${Endpoint.getInvoice}&payment_status_id=$isPaid",
         options: Options(headers: headers),
       );
 
@@ -31,9 +34,68 @@ class InvoiceServices {
           invoices.add(Invoice.fromJson(item));
         }
 
-        print('success $data');
-
         return invoices;
+      } else {
+        throw Exception('Data Gagal Diambil');
+      }
+    } on DioError catch (e) {
+      throw Exception(e);
+    }
+  }
+
+// function untuk get invoice berdasarkan id
+  Future<InvoiceDetail> getInvoiceById(int id) async {
+    try {
+      final String? token = await Pref.getToken();
+      var headers = {
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      var response = await Dio().get(
+        'https://api.staging.my-invoice.me/api/v1/invoices/$id/customers',
+        options: Options(headers: headers),
+      );
+
+      if (response.statusCode == 200) {
+        var data = response.data['data'];
+
+        InvoiceDetail invoiceDetail = InvoiceDetail.fromJson(data);
+        // print('succes=.>>>> ' + invoiceDetail);
+        return invoiceDetail;
+      } else {
+        throw Exception('Data Gagal Diambil');
+      }
+    } on DioError catch (e) {
+      throw Exception(e);
+    }
+  }
+
+// function untuk mendapatkan list bank si merchant
+
+  Future<List<BankModel>> getAllBank(int id) async {
+    try {
+      final String? token = await Pref.getToken();
+      var headers = {
+        'accept': 'application/json',
+      };
+
+      var response = await Dio().get(
+        'https://api.staging.my-invoice.me/api/v1/merchants/$id/banks',
+        options: Options(headers: headers),
+      );
+
+      // print(response.data);
+
+      if (response.statusCode == 200) {
+        var data = response.data['data'];
+        List<BankModel> bankModel = [];
+
+        for (var item in data) {
+          bankModel.add(BankModel.fromJson(item));
+        }
+        print('susces');
+        return bankModel;
       } else {
         throw Exception('Data Gagal Diambil');
       }

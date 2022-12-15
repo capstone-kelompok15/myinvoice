@@ -1,233 +1,270 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/models/bank_model.dart';
+import 'package:myinvoice/models/invoice_detail_model.dart';
+import 'package:myinvoice/services/invoice_service.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/bank_card.dart';
 import '../../widgets/item_desciption.dart';
 
 class InvoiceDetailScreen extends StatelessWidget {
-  const InvoiceDetailScreen({
+  const InvoiceDetailScreen(
+    this.id, {
     super.key,
+    required this.isPaid,
   });
-  // final Invoice invoice;
+  final int id;
+  final bool isPaid;
   @override
   Widget build(BuildContext context) {
+    final invoiceProvider = Provider.of<InvoiceProvider>(context);
+    bool isSelect = false;
     return Scaffold(
       appBar: MethodHelper.buildAppBar(
         context,
         'Invoice Details',
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Name Store",
-                    style: body3.copyWith(color: blackTextColor),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Jl. merpati bandung jawa barat',
-                    style: paragraph4.copyWith(color: blackTextColor),
-                  ),
-                  const Divider(
-                    thickness: 2,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Invoice #44335',
-                        style: paragraph4.copyWith(color: netralDisableColor),
-                      ),
-                      const Spacer(),
-                      Text(
-                        'Date Invoice: ',
-                        style: paragraph4.copyWith(color: blackTextColor),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Name User',
-                    style: body3.copyWith(color: blackTextColor),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Email User',
-                        style: paragraph4.copyWith(color: blackTextColor),
-                      ),
-                      const Spacer(),
-                      Text(
-                        'Date Invoice: ',
-                        style: paragraph4.copyWith(color: blackTextColor),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Jl. merpati bandung jawa barat',
-                    style: paragraph4.copyWith(color: blackTextColor),
-                  ),
-                  const Divider(
-                    thickness: 2,
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                ],
-              ),
-              const ItemDescription(),
-              const ItemDescription(),
-              const SizedBox(
-                height: 12,
-              ),
-              GestureDetector(
-                onTap: () {
-                  _choosePayment(context);
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: netralCardColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Method Payment',
-                        style: subhead2.copyWith(color: blackTextColor),
-                      ),
-                      const Spacer(),
-                      Text(
-                        'Choose',
-                        style: paragraph4.copyWith(color: netralDisableColor),
-                      ),
-                      SvgPicture.asset(
-                        arrow,
-                        color: netralDisableColor,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(color: netralCardColor),
+      body: FutureBuilder<InvoiceDetail>(
+        future: InvoiceServices().getInvoiceById(id),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            InvoiceDetail data = snapshot.data!;
+            invoiceProvider.getSubTotal(data.totalPrice ?? 0);
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Total Product',
-                          style: heading7.copyWith(color: blackTextColor),
+                          "Name Store",
+                          style: body3.copyWith(color: blackTextColor),
                         ),
-                        const Spacer(),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         Text(
-                          'Text',
+                          data.merchantName ?? '',
                           style: paragraph4.copyWith(color: blackTextColor),
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Invoice #${data.invoiceId}',
+                              style: paragraph4.copyWith(
+                                  color: netralDisableColor),
+                            ),
+                            const Spacer(),
+                            Text(
+                              'Date Invoice: ${formatDateBasic(DateTime.parse(data.createdAt!))}',
+                              style: paragraph4.copyWith(color: blackTextColor),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Name User',
+                          style: body3.copyWith(color: blackTextColor),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              data.customerName!,
+                              style: paragraph4.copyWith(color: blackTextColor),
+                            ),
+                            const Spacer(),
+                            Text(
+                              'Date Overdue: ${formatDateBasic(DateTime.parse(data.dueAt!))}',
+                              style: paragraph4.copyWith(color: blackTextColor),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          data.customerAddress ??
+                              'Mohon Input Alamat Anda Di profile',
+                          style: paragraph4.copyWith(color: blackTextColor),
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        const SizedBox(
+                          height: 18,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: data.invoiceDetail!
+                          .map(
+                            (e) => ItemDescriptionCard(e),
+                          )
+                          .toList(),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    if (data.paymentStatusName == 'Unpaid')
+                      GestureDetector(
+                        onTap: () async {
+                          var banks = await InvoiceServices()
+                              .getAllBank(data.merchantId!);
+                          _choosePayment(context, banks);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: netralCardColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Method Payment',
+                                style: subhead2.copyWith(color: blackTextColor),
+                              ),
+                              const Spacer(),
+                              Text(
+                                invoiceProvider.payment,
+                                style: paragraph4.copyWith(
+                                    color: netralDisableColor),
+                              ),
+                              SvgPicture.asset(
+                                arrow,
+                                color: netralDisableColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(color: netralCardColor),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'Total Product',
+                                style: heading7.copyWith(color: blackTextColor),
+                              ),
+                              const Spacer(),
+                              Text(
+                                data.productQuantity.toString(),
+                                style:
+                                    paragraph4.copyWith(color: blackTextColor),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Sub Total',
+                                style: heading7.copyWith(color: blackTextColor),
+                              ),
+                              const Spacer(),
+                              Text(
+                                idrFormat.format(data.totalPrice),
+                                style:
+                                    paragraph4.copyWith(color: blackTextColor),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Notes',
+                          style: heading7.copyWith(color: noteTextColor),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          'It was pleasure doing business with you',
+                          style: heading7.copyWith(
+                            color: noteTextColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          'Term & Conditions',
+                          style: heading7.copyWith(color: noteTextColor),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          'Please make the payment by the due',
+                          style: heading7.copyWith(
+                            color: noteTextColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
                         ),
                       ],
                     ),
                     const SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Sub Total',
-                          style: heading7.copyWith(color: blackTextColor),
-                        ),
-                        const Spacer(),
-                        Text(
-                          'Text',
-                          style: paragraph4.copyWith(color: blackTextColor),
-                        ),
-                      ],
+                      height: 80,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Notes',
-                    style: heading7.copyWith(color: noteTextColor),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    'It was pleasure doing business with you',
-                    style: heading7.copyWith(
-                      color: noteTextColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Text(
-                    'Term & Conditions',
-                    style: heading7.copyWith(color: noteTextColor),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    'Please make the payment by the due',
-                    style: heading7.copyWith(
-                      color: noteTextColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 80,
-              ),
-            ],
-          ),
-        ),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
-      bottomNavigationBar: buildBottom(false),
+      bottomNavigationBar: buildBottom(isPaid),
       extendBody: true,
     );
   }
 
-  Future<dynamic> _choosePayment(BuildContext context) {
+  Future<dynamic> _choosePayment(BuildContext context, List<BankModel> data) {
+    final invoiceProvider =
+        Provider.of<InvoiceProvider>(context, listen: false);
+
     return showModalBottomSheet(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -267,9 +304,24 @@ class InvoiceDetailScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const ChooseBankCard(icon: bni, namaBank: 'Bank BNI'),
-              const ChooseBankCard(icon: bca, namaBank: 'Bank BCA'),
-              const ChooseBankCard(icon: mandiri, namaBank: 'Bank Mandiri'),
+              ChooseBankCard(
+                icon: bni,
+                namaBank: 'Bank BNI',
+                isNA: invoiceProvider.checkBakMerch('BNI', data),
+                accountNumber: data.first.bankNumber.toString(),
+              ),
+              ChooseBankCard(
+                icon: bca,
+                namaBank: 'Bank BCA',
+                isNA: invoiceProvider.checkBakMerch('BCA', data),
+                accountNumber: data.first.bankNumber.toString(),
+              ),
+              ChooseBankCard(
+                icon: mandiri,
+                namaBank: 'Bank Mandiri',
+                isNA: invoiceProvider.checkBakMerch('MANDIRI', data),
+                accountNumber: data.first.bankNumber.toString(),
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -280,7 +332,11 @@ class InvoiceDetailScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const ChooseBankCard(namaBank: 'Bank BNI', icon: bni)
+              ChooseBankCard(
+                namaBank: 'Bank BNI',
+                icon: bni,
+                accountNumber: data.first.bankNumber.toString(),
+              )
             ],
           ),
         );
@@ -299,7 +355,7 @@ class InvoiceDetailScreen extends StatelessWidget {
         child: RoundedButton(title: 'Download', press: () {}),
       );
     } else {
-      return const PayNowCard();
+      return PayNowCard();
     }
   }
 }
@@ -308,8 +364,10 @@ class PayNowCard extends StatelessWidget {
   const PayNowCard({
     Key? key,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final invoicePro = Provider.of<InvoiceProvider>(context);
     return Container(
       height: 80,
       color: Colors.white,
@@ -328,7 +386,7 @@ class PayNowCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'IDR.',
+                invoicePro.bill == 0 ? '...' : 'IDR. ${invoicePro.bill}',
                 style: body4.copyWith(color: Colors.black),
               ),
             ],
@@ -347,7 +405,7 @@ class PayNowCard extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PaymentScreen(),
+                    builder: (context) => PaymentScreen(),
                   ),
                 );
               },
