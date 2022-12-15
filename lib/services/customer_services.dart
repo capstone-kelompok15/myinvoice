@@ -19,7 +19,7 @@ class CustomerServices {
                 'Authorization': 'Bearer $token',
               }));
       if (response.statusCode == 401) { 
-        AuthProvider().autoSignOut;
+        AuthProvider().SignOut;
       }
       Customer data = Customer.fromJson(response.data['data']);
       return data;

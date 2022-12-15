@@ -90,17 +90,7 @@ class AuthProvider extends ChangeNotifier {
     final result = await AuthService.resetPassword(email);
     return result ?? false;
   }
-    Future autoSignOut(BuildContext context) async {
-    await Pref.removeToken();
-    Navigator.pushAndRemoveUntil(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => const SignInScreen(),
-        ),
-        (route) => false);
-  }
-
-  Future logut(BuildContext context) async {
+    Future SignOut(BuildContext context) async {
     await Pref.removeToken();
     Navigator.pushAndRemoveUntil(
         context,

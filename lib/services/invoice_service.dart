@@ -8,7 +8,7 @@ class InvoiceServices {
       print('tes');
       var response = await Dio().get(Endpoint.getInvoice);
       if (response.statusCode == 401) { 
-        AuthProvider().autoSignOut;
+        AuthProvider().SignOut;
       }
     } on DioError catch (e) {
       throw Exception(e);
