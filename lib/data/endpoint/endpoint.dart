@@ -11,4 +11,7 @@ class Endpoint {
   static const updateFotoProfileCustomer = "${baseUrl}customers/me/picture";
 
   static const getInvoice = "${baseUrl}invoices/customers?limit=10&offset=0";
+
+  static const getInvoiceById = "${baseUrl}invoices/";
+
 }

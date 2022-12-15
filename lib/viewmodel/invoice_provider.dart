@@ -40,4 +40,19 @@ class InvoiceProvider extends ChangeNotifier {
       throw Exception(e);
     }
   }
+
+  Invoice? _invoiceById;
+
+  Invoice? get invoiceById => _invoiceById;
+
+  Future<void> getInvoiceById(int id) async {
+    try {
+      var inv = await InvoiceServices().getInvoiceById(id);
+      _invoiceById = inv;
+      notifyListeners();
+      print('sukses');
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

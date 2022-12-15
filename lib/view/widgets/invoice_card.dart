@@ -6,6 +6,7 @@ import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
 class InvoiceCard extends StatelessWidget {
@@ -24,7 +25,8 @@ class InvoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final modelView = Provider.of<HomeProvider>(context);
+    final homeViewModel = Provider.of<HomeProvider>(context);
+    final invoiceViewModel = Provider.of<InvoiceProvider>(context);
 
     return Card(
       elevation: 4,
@@ -97,7 +99,10 @@ class InvoiceCard extends StatelessWidget {
             ],
           ],
         ),
-        onTap: () {},
+        onTap: () {
+          int id = invoiceViewModel.invoiceById!.invoiceId!;
+          invoiceViewModel.getInvoiceById(id);
+        },
       ),
     );
   }
