@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/services/auth_services.dart';
 import 'package:myinvoice/view/screens/auth/otp_screen.dart';
+import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
@@ -90,13 +91,25 @@ class AuthProvider extends ChangeNotifier {
     return result ?? false;
   }
 
+  //create function for auto signout then back to SigninScreen 
+    Future autoSignOut(BuildContext context) async {
+    await Pref.removeToken();
+    Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => const SignInScreen(),
+        ),
+        (route) => false);
+  }
+
   Future logut(BuildContext context) async {
     await Pref.removeToken();
     Navigator.pushAndRemoveUntil(
         context,
         CupertinoPageRoute(
-          builder: (context) => const SignupScreen(),
+          builder: (context) => const SignInScreen(),
         ),
         (route) => false);
   }
 }
+
