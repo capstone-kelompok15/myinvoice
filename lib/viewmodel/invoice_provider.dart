@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:myinvoice/models/invoice_detail_model.dart';
 import 'package:myinvoice/services/invoice_service.dart';
 
 import '../models/invoice.dart';
@@ -25,19 +26,34 @@ class InvoiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Invoice> _invoice = [];
+  List<Invoice> _allInvoice = [];
 
-  List<Invoice> get invoice => _invoice;
+  List<Invoice> get allInvoice => _allInvoice;
 
   Future<void> getAllinvoices() async {
     try {
       var inv = await InvoiceServices().getAllInvoice();
-      _invoice = inv;
+      _allInvoice = inv;
       notifyListeners();
 
       print('sukses');
     } catch (e) {
       throw Exception(e);
+    }
+  }
+
+  // function untuk get Invoice detail by id
+
+  // Data data = Data();
+
+  Data data = Data();
+
+  Future<void> getInvoiceDetail(int id) async {
+    try {
+      Data data = await InvoiceServices().getInvoice(id);
+      this.data = data;
+    } catch (e) {
+      print(e);
     }
   }
 }

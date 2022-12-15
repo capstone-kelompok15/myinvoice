@@ -13,7 +13,6 @@ class InvoiceDetailScreen extends StatelessWidget {
   const InvoiceDetailScreen({
     super.key,
   });
-  // final Invoice invoice;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

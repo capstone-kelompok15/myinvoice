@@ -9,6 +9,8 @@ import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
+import '../../../services/invoice_service.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -33,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     initSplash();
+
     super.initState();
   }
 

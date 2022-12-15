@@ -12,6 +12,8 @@ import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../services/invoice_service.dart';
+
 class InvoicePage extends StatefulWidget {
   const InvoicePage({super.key});
 
@@ -23,6 +25,7 @@ class _InvoicePageState extends State<InvoicePage> {
   @override
   void initState() {
     Provider.of<InvoiceProvider>(context, listen: false).getAllinvoices();
+
     super.initState();
   }
 
@@ -151,14 +154,25 @@ class _InvoicePageState extends State<InvoicePage> {
                 children: [
                   SingleChildScrollView(
                     child: Column(
-                      children: invoiceProvider.invoice.isNotEmpty
-                          ? invoiceProvider.invoice
+                      children: invoiceProvider.allInvoice.isNotEmpty
+                          ? invoiceProvider.allInvoice
                               .map(
                                 (e) => InvoiceCard(
                                     merchant: e.merchantName!,
                                     totalPrice: e.totalPrice!,
                                     createAt: e.createdAt!,
-                                    status: e.paymentStatusName ?? ''),
+                                    status: e.paymentStatusName ?? '',
+                                    press: () async {
+                                      await InvoiceServices().getInvoice(
+                                          invoiceProvider.data.invoiceId!);
+                                      await invoiceProvider.getInvoiceDetail(
+                                          invoiceProvider.data.invoiceId!);
+                                      Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) {
+                                          return InvoiceDetailScreen();
+                                        },
+                                      ));
+                                    }),
                               )
                               .toList()
                           : [Text('Data Kosong')],

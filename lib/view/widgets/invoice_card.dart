@@ -15,12 +15,14 @@ class InvoiceCard extends StatelessWidget {
     required this.totalPrice,
     required this.createAt,
     required this.status,
+    this.press,
   }) : super(key: key);
 
   final String merchant;
   final int totalPrice;
   final String createAt;
   final String status;
+  final Function()? press;
 
   @override
   Widget build(BuildContext context) {
@@ -73,31 +75,31 @@ class InvoiceCard extends StatelessWidget {
                 color: const Color(0xff999999),
               ),
             ),
-            if (status == 'Paid') ...[
+            if (status == 'Unpaid') ...[
               Text(
-                status,
-                style: body4.copyWith(
-                  color: greenColor,
-                ),
-              ),
-            ] else if (status == 'Unpaid') ...[
-              Text(
-                status,
+                'Unpaid',
                 style: body4.copyWith(
                   color: redColor,
                 ),
               ),
+            ] else if (status == 'Paid') ...[
+              Text(
+                'Paid',
+                style: body4.copyWith(
+                  color: greenColor,
+                ),
+              ),
             ] else if (status == 'Pending') ...[
               Text(
-                status,
+                'Pending',
                 style: body4.copyWith(
                   color: orangeColor,
                 ),
               ),
-            ],
+            ]
           ],
         ),
-        onTap: () {},
+        onTap: press,
       ),
     );
   }
