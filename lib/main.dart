@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myinvoice/view/screens/home/home_screen.dart';
-import 'package:myinvoice/view/screens/report/report_page.dart';
 import 'package:myinvoice/view/screens/splash/splash_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
-import 'package:myinvoice/viewmodel/notification_view_model.dart';
+import 'package:myinvoice/viewmodel/notification_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
@@ -33,10 +31,10 @@ class MyApp extends StatelessWidget {
           create: (context) => InvoiceProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => HomeViewModel(),
+          create: (context) => HomeProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => NotificationViewModel(),
+          create: (context) => NotificationProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => ReportProvider(),
@@ -49,7 +47,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           textTheme: GoogleFonts.poppinsTextTheme(),
         ),
-        home: SplashScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/models/auth/auth_response.dart';
+
 
 class AuthService {
   static Future<SignInResponse> signIn(String email, String password) async {
@@ -86,12 +85,14 @@ class AuthService {
       }
     }
   }
-
+  
   static Future<bool?> resetPassword(String email) async {
     try {
       final res = await Dio().post(Endpoint.resetPassword, data: {
         'email': email,
       });
+
+      print(res.data);
 
       if (res.statusCode == 200) {
         return true;
@@ -99,5 +100,6 @@ class AuthService {
     } catch (e) {
       return false;
     }
+    return null;
   }
 }

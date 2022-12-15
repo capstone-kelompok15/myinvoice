@@ -7,17 +7,17 @@ import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
-import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
 class InvoicePage extends StatelessWidget {
-  InvoicePage({super.key});
+  const InvoicePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
-    final homeViewModel = Provider.of<HomeViewModel>(context);
+    final homeViewModel = Provider.of<HomeProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -31,7 +31,7 @@ class InvoicePage extends StatelessWidget {
               ),
               Text(
                 'Invoice List',
-                style: heading1.copyWith(fontSize: 30),
+                style: title.copyWith(color: pressed),
               ),
               const SizedBox(
                 height: 10,

@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/models/home_model/bill_model.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/viewmodel/home_view_model.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 
 class InvoiceCard extends StatelessWidget {
@@ -16,7 +16,7 @@ class InvoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final modelView = Provider.of<HomeViewModel>(context);
+    final modelView = Provider.of<HomeProvider>(context);
 
     return Card(
       elevation: 4,
@@ -37,7 +37,7 @@ class InvoiceCard extends StatelessWidget {
             backgroundColor: Colors.white,
             child: SvgPicture.asset(
               'assets/icons/home_filled.svg',
-              color: Color(0xff404040),
+              color: const Color(0xff404040),
               width: 20,
             ),
           ),
@@ -62,7 +62,7 @@ class InvoiceCard extends StatelessWidget {
             Text(
               recentItem.date!,
               style: sectionSubHead.copyWith(
-                color: Color(0xff999999),
+                color: const Color(0xff999999),
               ),
             ),
             if (recentItem.status == 'Paid') ...[

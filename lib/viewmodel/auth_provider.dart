@@ -3,14 +3,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/auth/auth_response.dart';
 import 'package:myinvoice/services/auth_services.dart';
 import 'package:myinvoice/view/screens/auth/otp_screen.dart';
+import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
+import 'package:myinvoice/view/widgets/signin_dialog.dart';
+import 'package:myinvoice/view/widgets/signup_dialog.dart';
+import 'package:myinvoice/view/widgets/success_dialog.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../view/widgets/custom_textfield.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -35,14 +40,8 @@ class AuthProvider extends ChangeNotifier {
           ),
           (route) => false);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          result.data!['error']['message'] ?? "",
-        ),
-        backgroundColor: Colors.red,
-      ));
+      signinDialog(context, email, password);
     }
-
     isLoading = false;
     notifyListeners();
   }
@@ -54,17 +53,17 @@ class AuthProvider extends ChangeNotifier {
     final result = await AuthService.signUp(name, email, password);
     emailSignUp = email;
     if (result.statusCode == 201) {
+      successDialog(context, email);
+      await Future.delayed(const Duration(seconds: 1));
       Navigator.push(
           context,
           CupertinoPageRoute(
             builder: (context) => const OtpScreen(),
           ));
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(result.error!['message'] ?? ''),
-        backgroundColor: Colors.red,
-      ));
+     signupDialog(context, email);
     }
+    
     isLoading = false;
     notifyListeners();
   }
@@ -91,14 +90,14 @@ class AuthProvider extends ChangeNotifier {
     final result = await AuthService.resetPassword(email);
     return result ?? false;
   }
-
-  Future logut(BuildContext context) async {
+    Future SignOut(BuildContext context) async {
     await Pref.removeToken();
     Navigator.pushAndRemoveUntil(
         context,
         CupertinoPageRoute(
-          builder: (context) => SignupScreen(),
+          builder: (context) => const SignInScreen(),
         ),
         (route) => false);
   }
 }
+

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/models/custumer.dart';
@@ -132,7 +130,7 @@ class ProfilePage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(child: const Text('Logging Out')),
+          title: const Center(child: Text('Logging Out')),
           content: Text(
             'Are you sure want to sign out from your myinvoice account?',
             style: paragraph4.copyWith(color: blackTextColor),
@@ -185,7 +183,7 @@ class ProfilePage extends StatelessWidget {
               height: 16,
               fit: BoxFit.scaleDown,
             ),
-            SizedBox(
+            const SizedBox(
               width: (8),
             ),
             isTwoText
@@ -210,7 +208,7 @@ class ProfilePage extends StatelessWidget {
                     style: paragraph4.copyWith(
                         color: isRed ? Colors.red : blackTextColor),
                   ),
-            Spacer(),
+            const Spacer(),
             isArrow
                 ? SvgPicture.asset('assets/icons/arrow.svg')
                 : const SizedBox(),

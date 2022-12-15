@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/auth/reset_password_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
-import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/circular_loading.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
@@ -14,7 +12,7 @@ import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
-  SignInScreen({super.key});
+  const SignInScreen({super.key});
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -56,7 +54,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 Text(
                   "Sign In",
-                  style: heading1,
+                  style: heading0,
                 ),
                 const SizedBox(
                   height: 18,
@@ -106,8 +104,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "Forget Password?",
-                      style: TextStyle(color: netralDisableColor),
+                      "Forgot Password?",
+                      style: TextStyle(color: primaryBackground),
                     ),
                   ),
                 ),
@@ -150,7 +148,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       onTap: () => Navigator.pushAndRemoveUntil(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => SignupScreen(),
+                            builder: (context) => const SignupScreen(),
                           ),
                           (value) => false),
                       child: Text(

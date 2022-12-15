@@ -7,11 +7,12 @@ Color get primaryMain => const Color(0Xff234F9D);
 Color get primaryBackground => const Color(0Xff173468);
 Color get backgroundProfileColor => const Color(0XffD9D9D9);
 Color get primaryText => const Color(0Xff404040);
+Color get pressed => const Color(0xff0F0D72);
 
 // Status Color
 Color get redColor => const Color(0xffD62D33);
 Color get greenColor => const Color(0xff329059);
-Color get orangeColor => const Color(0xffF57D15);
+Color get orangeColor => const Color.fromARGB(0, 245, 126, 21);
 
 // Netral Color
 Color get netralCardColor => const Color(0xffF7F7F7);
@@ -24,11 +25,12 @@ Color get noteTextColor => const Color(0xff5C5C5C);
 Color get buttonDisable => const Color(0xff5C5C5C);
 
 //Color untuk itemcard diinvoice detail
-Color get backgroundCard => const Color(0xffededed);
+Color get backgroundCard => const Color(0xffBAC0CA);
 
 TextStyle get title =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 30);
-
+TextStyle get heading0 =>
+    const TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Color(0Xff173468) );
 TextStyle get heading1 =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 24);
 TextStyle get heading2 =>
@@ -65,4 +67,4 @@ TextStyle get body4 =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 12);
 
 TextStyle get notifContent =>
-    TextStyle(fontWeight: FontWeight.w400, fontSize: 10);
+    const TextStyle(fontWeight: FontWeight.w400, fontSize: 10);

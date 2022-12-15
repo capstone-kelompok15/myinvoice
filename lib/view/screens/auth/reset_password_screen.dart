@@ -1,10 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
+import 'package:myinvoice/view/widgets/failed_dialog.dart';
+import 'package:myinvoice/view/widgets/success_dialog.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -91,11 +91,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           child: Consumer<AuthProvider>(builder: (context, state, _) {
             return TextButton(
                 onPressed: () async {
+                  // successDialog(context, email.text);
                   final res = await state.resetPassword(email.text);
                   if (res) {
+                    successDialog(context, email.text);
                     setState(() {
                       _isReset = true;
                     });
+                  } else {
+                    failedDialog(context);
                   }
                 },
                 child: Text(

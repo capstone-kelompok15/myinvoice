@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 
 class HelpCenterScreen extends StatelessWidget {
@@ -27,18 +24,18 @@ class HelpCenterScreen extends StatelessWidget {
               'Talk to us!',
               style: heading1.copyWith(color: blackTextColor),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Center(child: SvgPicture.asset(contackUs)),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Text(
               'Alternatively, call us on (021) 888888888 or email us Myinvoice.support@gmail.com on for futher assistance',
               style: paragraph4.copyWith(color: netralDisableColor),
             ),
-            SizedBox(
+            const SizedBox(
               height: 21,
             ),
             Row(
@@ -46,7 +43,7 @@ class HelpCenterScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                     style: TextButton.styleFrom(
-                      backgroundColor: Color(0xffEAF0FA),
+                      backgroundColor: const Color(0xffEAF0FA),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
@@ -60,7 +57,7 @@ class HelpCenterScreen extends StatelessWidget {
                     )),
                 ElevatedButton(
                     style: TextButton.styleFrom(
-                      backgroundColor: Color(0xffEAF0FA),
+                      backgroundColor: const Color(0xffEAF0FA),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),

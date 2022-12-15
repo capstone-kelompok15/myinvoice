@@ -11,7 +11,7 @@ class StatusPembayaranScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isSukses = true;
+    bool isSukses = false;
     return Scaffold(
       appBar: MethodHelper.buildAppBar(context, ''),
       body: isSukses == true
@@ -62,59 +62,51 @@ class StatusPembayaranScreen extends StatelessWidget {
                 ],
               ),
             )
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  SvgPicture.asset(waitingConfirm),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Text(
-                    'Waiting for Confirmation',
-                    style: heading3.copyWith(color: blackTextColor),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "Yes! Enjoy your bill, Don't",
-                    style: subhead1.copyWith(color: blackTextColor),
-                  ),
-                  Text(
-                    "forget to check on your history",
-                    style: subhead1.copyWith(color: blackTextColor),
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Text(
-                    "Have a problem",
-                    style: subhead1.copyWith(color: blackTextColor),
-                  ),
-                  Text(
-                    "Call center My Invoice",
-                    style: subhead1.copyWith(color: blackTextColor),
-                  ),
-                  const Spacer(),
-                  RoundedButton(
-                      title: 'Back to Home',
-                      press: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
-                            ),
-                            (route) => false);
-                      }),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 1 / 20,
-                  ),
-                ],
+          : Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    SvgPicture.asset(waitingConfirm),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Text(
+                      'Waiting for Confirmation',
+                      style: heading3.copyWith(color: blackTextColor),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Have a problem",
+                      style: subhead1.copyWith(color: blackTextColor),
+                    ),
+                    Text(
+                      "Call center My Invoice",
+                      style: subhead1.copyWith(color: blackTextColor),
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    RoundedButton(
+                        title: 'Back to Home',
+                        press: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),
+                              (route) => false);
+                        }),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 1 / 20,
+                    ),
+                  ],
+                ),
               ),
             ),
     );

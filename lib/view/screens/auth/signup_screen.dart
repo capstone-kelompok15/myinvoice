@@ -2,16 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
-import 'package:myinvoice/view/screens/auth/otp_screen.dart';
 import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/circular_loading.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
+import 'package:myinvoice/view/widgets/success_dialog.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
-  SignupScreen({super.key});
+  const SignupScreen({super.key});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -56,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Text(
                 "Sign Up",
-                style: heading1,
+                style: heading0,
               ),
               const SizedBox(
                 height: 18,
@@ -71,10 +71,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       hint: "e.g Darryl Martine",
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Can\'t be empty';
-                        }
-                        if (text.length < 4) {
-                          return 'Too short';
+                          return 'Full name can\'t be empty';
                         }
                         return null;
                       },
@@ -85,10 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       hint: "example@gmail.com",
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Can\'t be empty';
-                        }
-                        if (text.length < 4) {
-                          return 'Too short';
+                          return 'Email can\'t be empty';
                         }
                         if (!RegExp(
                                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -105,7 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       hint: "********",
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Can\'t be empty';
+                          return 'Password can\'t be empty';
                         }
                         if (text.length < 8 || text.length > 16) {
                           return 'Password must be 8-16 characters';
@@ -120,7 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       hint: "********",
                       validator: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Can\'t be empty';
+                          return 'Confirm password can\'t be empty';
                         }
                         if (text.length < 8 || text.length > 16) {
                           return 'Password must be 8-16 characters';
@@ -171,7 +165,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     onTap: () => Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => SignInScreen(),
+                          builder: (context) => const SignInScreen(),
                         )),
                     child: Text(
                       "Sign In",

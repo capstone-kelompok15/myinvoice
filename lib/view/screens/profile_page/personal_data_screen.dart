@@ -57,18 +57,34 @@ class PersonalDataScreen extends StatelessWidget {
                 //  child 'Edit Photo',
                 //   style: heading5.copyWith(color: primaryMain),
               ),
-              SizedBox(
+              const SizedBox(
+                height: 6,
+              ),
+              TextButton(
+                onPressed: () async {
+                  await getImage();
+                  await CustomerServices().uploadImage(file);
+                  await profileHomeView.getCustomer();
+                },
+                child: Text(
+                  'Edit Photo',
+                  style: heading5.copyWith(color: primaryMain),
+                ),
+                //  child 'Edit Photo',
+                //   style: heading5.copyWith(color: primaryMain),
+              ),
+              const SizedBox(
                 height: 20,
               ),
-              CustomTextField(
+              const CustomTextField(
                 title: 'Full Name',
                 hint: 'Clarissa Maharani',
               ),
-              CustomTextField(
+              const CustomTextField(
                 title: 'Email',
                 hint: 'ClarissaMaharani@gmail.com',
               ),
-              CustomTextField(
+              const CustomTextField(
                 title: 'Number Phone',
                 hint: '0849723434',
               ),
