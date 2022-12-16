@@ -7,16 +7,14 @@ import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/invoice_detail_model.dart';
 import '../../widgets/bank_card.dart';
 import '../../widgets/rounded_button.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({
     super.key,
-    required this.id,
   });
-
-  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -308,18 +306,16 @@ class PaymentScreen extends StatelessWidget {
                     ),
                     RoundedButton(
                         title: 'Confirm Payment',
-                        press: () async {
-                          await (invoiceProvider.getInvoiceByid(id));
+                        press: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => ConfirmPaymentScreen(
-                                id: id,
 
-                                // invoiceId: invoiceId,
-                                // nameCustomer: nameCustomer,
-                                // totalPayment: totalPayment
-                              ),
+                                  // invoiceId: invoiceId,
+                                  // nameCustomer: nameCustomer,
+                                  // totalPayment: totalPayment
+                                  ),
                             ),
                           );
                         }),

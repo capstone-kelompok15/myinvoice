@@ -10,6 +10,7 @@ import 'package:myinvoice/view/screens/invoice/status_pembayaran_screen.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/invoice_detail_model.dart';
 import '../../constant/constant.dart';
 import '../../styles/styles.dart';
 import '../../widgets/custom_textfield.dart';
@@ -19,16 +20,14 @@ import '../../widgets/rounded_button.dart';
 class ConfirmPaymentScreen extends StatefulWidget {
   const ConfirmPaymentScreen({
     super.key,
-    required this.id,
   });
-
-  final int id;
 
   @override
   State<ConfirmPaymentScreen> createState() => _ConfirmPaymentScreenState();
 }
 
-String nameImage = 'Invioce.jpg';
+File file = File('');
+// bool isLoading = false;
 
 class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
   @override
@@ -38,21 +37,23 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    File file = File('');
-    Future<XFile?> getImage() async {
+    final InvoiceProvider invoiceProvider =
+        Provider.of<InvoiceProvider>(context);
+    InvoiceDetail invoiceDetail = invoiceProvider.invoiceDetail;
+    String nameImage = 'Invioce.jpg';
+
+    Future getImage() async {
       ImagePicker picker = ImagePicker();
       XFile? selectImage =
           await picker.pickImage(source: ImageSource.gallery, imageQuality: 30);
-      file = File(selectImage!.path);
 
       setState(() {
+        file = File(selectImage!.path);
         nameImage = selectImage.name;
       });
       print(file);
-      return XFile(selectImage.path);
     }
 
-    final invoiceDetail = Provider.of<InvoiceProvider>(context).invoiceDetail;
     TextEditingController dateC =
         TextEditingController(text: formatDateBasic(DateTime.now()));
     TextEditingController invoicedC =
@@ -131,8 +132,6 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                         readOnly: true,
                         onTap: () async {
                           await getImage();
-                          await InvoiceServices()
-                              .uploadImage(file, invoiceDetail.invoiceId!);
                         },
                         decoration: InputDecoration(
                           hintText: nameImage,
@@ -156,11 +155,11 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
               ),
               RoundedButton(
                 title: 'Confirm',
+                isLoading: invoiceProvider.isloading,
                 press: () async {
-
+                  invoiceProvider.onPress();
                   await InvoiceServices()
-                      .confirmPaymentByid(invoiceDetail.invoiceId!);
-
+                      .confirmPaymentByid(invoiceDetail.invoiceId!, file);
 
                   Navigator.push(
                     context,
@@ -168,6 +167,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                       builder: (context) => const StatusPembayaranScreen(),
                     ),
                   );
+                  invoiceProvider.onPress();
                 },
               ),
             ],

@@ -6,6 +6,7 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
 class StatusPembayaranScreen extends StatelessWidget {
@@ -14,6 +15,7 @@ class StatusPembayaranScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
+    final invoiceProvider = Provider.of<InvoiceProvider>(context);
     return Scaffold(
       appBar: MethodHelper.buildAppBar(context, ''),
       body: Center(
@@ -49,13 +51,13 @@ class StatusPembayaranScreen extends StatelessWidget {
               RoundedButton(
                   title: 'Back to Home',
                   press: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
-                    );
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                      builder: (context) {
+                        return HomeScreen();
+                      },
+                    ), (route) => false);
                     homeProvider.resetIndex();
+                    invoiceProvider.resetIndex();
                   }),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 1 / 20,

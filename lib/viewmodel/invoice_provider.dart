@@ -12,7 +12,22 @@ class InvoiceProvider extends ChangeNotifier {
 
   int bill = 0;
 
+  bool isloading = false;
+
+// function supaya muncul circular pada saat nekan rounded button di confirm payment
+  onPress() {
+    isloading = !isloading;
+    notifyListeners();
+  }
+
+  // ...
+
   PageController pageController = PageController();
+
+  resetIndex() {
+    currendIndex = 0;
+    notifyListeners();
+  }
 
   void changePage(int currendIndex) {
     this.currendIndex = currendIndex;
@@ -30,18 +45,24 @@ class InvoiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  InvoiceDetail invoiceDetail = InvoiceDetail();
+  InvoiceDetail _invoiceDetail = InvoiceDetail();
 
-  Future<void> getInvoiceByid(int id) async {
-    try {
-      var inv = await InvoiceServices().getInvoiceById(id);
-      invoiceDetail = inv;
-      notifyListeners();
+  InvoiceDetail get invoiceDetail => _invoiceDetail;
 
-      print('sukses');
-    } catch (e) {
-      throw Exception(e);
-    }
+  // Future<void> getInvoiceByid(int id) async {
+  //   try {
+  //     var inv = await InvoiceServices().getInvoiceById(id);
+  //     invoiceDetail = inv;
+  //     notifyListeners();
+
+  //     print('sukses');
+  //   } catch (e) {
+  //     throw Exception(e);
+  //   }
+  // }
+
+  setInvoiceData(InvoiceDetail invoiceDetail) {
+    _invoiceDetail = invoiceDetail;
   }
 
   String payment = 'Choose';

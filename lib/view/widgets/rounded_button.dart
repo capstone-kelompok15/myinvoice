@@ -6,10 +6,12 @@ class RoundedButton extends StatelessWidget {
     Key? key,
     required this.title,
     required this.press,
+    this.isLoading = false,
   }) : super(key: key);
 
   final String title;
   final Function() press;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +26,14 @@ class RoundedButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15),
         ),
         onPressed: press,
-        child: Text(
-          title,
-          style: heading4,
-        ),
+        child: isLoading
+            ? const CircularProgressIndicator(
+                color: Colors.white,
+              )
+            : Text(
+                title,
+                style: heading4,
+              ),
       ),
     );
   }

@@ -106,7 +106,7 @@ class InvoiceServices {
     }
   }
 
-  Future<void> confirmPaymentByid(int id) async {
+  Future<void> confirmPaymentByid(int id, File file) async {
     try {
       final String? token = await Pref.getToken();
       var headers = {
@@ -119,32 +119,54 @@ class InvoiceServices {
         options: Options(headers: headers),
       );
 
-      print(response.data);
-      print(response.statusCode);
+      print('success 001');
+
+      FormData formData = FormData.fromMap({
+        'payment':
+            await MultipartFile.fromFile(file.path, filename: "image.jpg")
+      });
+
+      final responseMultiPart = await Dio().patch(
+        'https://api.staging.my-invoice.me/api/v1/invoices/$id/payments/upload',
+        data: formData,
+        options: Options(
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      print('success 002');
+
+      // print(response.data);
+      print(responseMultiPart.data);
+      // print(response.statusCode);
     } on DioError catch (e) {
       throw Exception(e);
     }
   }
 
-  Future uploadImage(File file, int id) async {
-    String? token = await Pref.getToken();
+  // Future uploadImage(File file, int id) async {
+  //   String? token = await Pref.getToken();
 
-    FormData formData = FormData.fromMap({
-      'payment': await MultipartFile.fromFile(file.path, filename: "image.jpg")
-    });
+  //   FormData formData = FormData.fromMap({
+  //     'payment': await MultipartFile.fromFile(file.path, filename: "image.jpg")
+  //   });
 
-    final response = await Dio().patch(
-      'https://api.staging.my-invoice.me/api/v1/invoices/$id/payments/upload',
-      data: formData,
-      options: Options(
-        headers: {
-          'accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer $token',
-        },
-      ),
-    );
+  //   final response = await Dio().patch(
+  //     'https://api.staging.my-invoice.me/api/v1/invoices/$id/payments/upload',
+  //     data: formData,
+  //     options: Options(
+  //       headers: {
+  //         'accept': 'application/json',
+  //         'Content-Type': 'multipart/form-data',
+  //         'Authorization': 'Bearer $token',
+  //       },
+  //     ),
+  //   );
 
-    print(response.data);
-  }
+  //   print(response.data);
+  // }
 }

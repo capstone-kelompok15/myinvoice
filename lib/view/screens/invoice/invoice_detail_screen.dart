@@ -37,6 +37,7 @@ class InvoiceDetailScreen extends StatelessWidget {
           if (snapshot.hasData) {
             InvoiceDetail data = snapshot.data!;
             invoiceProvider.getSubTotal(data.totalPrice ?? 0);
+            invoiceProvider.setInvoiceData(data);
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -411,9 +412,9 @@ class PayNowCard extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => PaymentScreen(
-                      id: id,
-                      // invoiceId: ,
-                    ),
+
+                        // invoiceId: ,
+                        ),
                   ),
                 );
               },
