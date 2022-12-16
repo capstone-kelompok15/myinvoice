@@ -53,11 +53,11 @@ class HomeSummary extends StatelessWidget {
                 bill != null
                     ? '${idrFormat.format(bill)}'
                     : '${idrFormat.format(0)}',
-                style: sectionHead,
+                style: heading4.copyWith(color: blackTextColor),
                 textAlign: TextAlign.left),
             Text(
               status ?? "Status",
-              style: sectionSubHead.copyWith(
+              style: subhead2.copyWith(
                 color: status!.contains("Paid")
                     ? greenColor
                     : status!.contains("Unpaid")

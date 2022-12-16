@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:myinvoice/services/invoice_service.dart';
+import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
@@ -144,7 +145,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 height: 5,
                               ),
                               Text(
-                                dataViewModel[index].createdAt!,
+                                formatDateNotif(
+                                  DateTime.parse(
+                                      dataViewModel[index].createdAt!),
+                                ),
                                 style: notifContent,
                               ),
                             ],
@@ -154,11 +158,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     } else {
                       return ListTile(
                         onTap: () {
-                          notifViewModel
-                              .markAsRead(dataViewModel[index].id!.toString());
-                          setState(() {
-                            dataViewModel[index].isRead = true;
-                          });
+                          // notifViewModel
+                          //     .markAsRead(dataViewModel[index].id!.toString());
+                          // setState(() {
+                          //   dataViewModel[index].isRead = true;
+                          // });
                           InvoiceServices()
                               .getInvoiceById(dataViewModel[index].invoiceId!);
                           CupertinoPageRoute(
@@ -198,7 +202,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 height: 5,
                               ),
                               Text(
-                                dataViewModel[index].createdAt!,
+                                formatDateNotif(
+                                  DateTime.parse(
+                                      dataViewModel[index].createdAt!),
+                                ),
+                                // dataViewModel[index].createdAt!,
                                 style: notifContent,
                               ),
                             ],

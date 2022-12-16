@@ -16,15 +16,9 @@ class HomeService {
         options: Options(headers: headers),
       );
 
-      if (response.statusCode == 200) {
-        var data = response.data;
+      HomeReport homeReport = HomeReport.fromJson(response.data);
 
-        HomeReport homeReport = HomeReport.fromJson(data);
-        // print('succes=.>>>> ' + invoiceDetail);
-        return homeReport;
-      } else {
-        throw Exception('Data Gagal Diambil');
-      }
+      return homeReport;
     } on DioError catch (e) {
       throw Exception(e);
     }
