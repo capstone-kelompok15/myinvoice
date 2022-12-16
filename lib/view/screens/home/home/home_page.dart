@@ -63,7 +63,9 @@ class _HomePageState extends State<HomePage> {
                               animationType: BadgeAnimationType.scale,
                               badgeContent: Text(
                                 textScaleFactor: 0.5,
-                                notifViewModel.unreadCount?.data?.unreadCount.toString() ?? '',
+                                notifViewModel.unreadCount?.data?.unreadCount
+                                        .toString() ??
+                                    '',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -97,18 +99,10 @@ class _HomePageState extends State<HomePage> {
                           style: body3.copyWith(
                               fontWeight: FontWeight.w400, color: Colors.white),
                         ),
-                        FutureBuilder<Customer>(
-                            future: CustomerServices().getCustomer(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                  snapshot.data!.fullName!,
-                                  style: body1.copyWith(color: Colors.white),
-                                );
-                              } else {
-                                return Text('....');
-                              }
-                            }),
+                        Text(
+                          profileViewModel.customer.fullName!,
+                          style: body1.copyWith(color: Colors.white),
+                        ),
                       ],
                     ),
                   ),

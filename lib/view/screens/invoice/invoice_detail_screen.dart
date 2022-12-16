@@ -355,7 +355,9 @@ class InvoiceDetailScreen extends StatelessWidget {
         child: RoundedButton(title: 'Download', press: () {}),
       );
     } else {
-      return PayNowCard();
+      return PayNowCard(
+        id: id,
+      );
     }
   }
 }
@@ -363,7 +365,10 @@ class InvoiceDetailScreen extends StatelessWidget {
 class PayNowCard extends StatelessWidget {
   const PayNowCard({
     Key? key,
+    required this.id,
   }) : super(key: key);
+
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -405,7 +410,10 @@ class PayNowCard extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PaymentScreen(),
+                    builder: (context) => PaymentScreen(
+                      id: id,
+                      // invoiceId: ,
+                    ),
                   ),
                 );
               },
