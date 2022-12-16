@@ -6,10 +6,10 @@ import 'package:myinvoice/models/notification/unread_count.dart';
 
 class NotificationServices {
   final Dio dio = Dio();
-  NotificationServices() {
-    dio.interceptors.add(LogInterceptor(
-        responseHeader: true, responseBody: true, requestBody: true));
-  }
+  // NotificationServices() {
+  //   dio.interceptors.add(LogInterceptor(
+  //       responseHeader: true, responseBody: true, requestBody: true));
+  // }
 
   Future<NotificationData> fetchAllNotification() async {
     try {

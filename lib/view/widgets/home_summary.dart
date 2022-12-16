@@ -1,6 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/report_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeSummary extends StatelessWidget {
   final int? bill;
@@ -44,11 +49,15 @@ class HomeSummary extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Text(idrFormat.format(bill),
-                style: sectionHead, textAlign: TextAlign.left),
+            Text(
+                bill != null
+                    ? '${idrFormat.format(bill)}'
+                    : '${idrFormat.format(0)}',
+                style: heading4.copyWith(color: blackTextColor),
+                textAlign: TextAlign.left),
             Text(
               status ?? "Status",
-              style: sectionSubHead.copyWith(
+              style: subhead2.copyWith(
                 color: status!.contains("Paid")
                     ? greenColor
                     : status!.contains("Unpaid")
