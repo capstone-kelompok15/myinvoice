@@ -177,10 +177,6 @@ class _ReportPageState extends State<ReportPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                  children: List.generate(
-                    homeViewModel.recentList.length,
-                    (index) => const InvoiceCard1(paid: true),
-                  ),
                 ),
                 const SizedBox(
                   height: 20,

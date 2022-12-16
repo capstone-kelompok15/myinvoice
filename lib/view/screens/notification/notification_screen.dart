@@ -1,9 +1,13 @@
 import 'package:badges/badges.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:myinvoice/services/invoice_service.dart';
+import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/notification_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,17 +19,19 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-
   @override
   void initState() {
-    Provider.of<NotificationProvider>(context, listen: false).getAllNotification();
+    Provider.of<NotificationProvider>(context, listen: false)
+        .getAllNotification();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final notifViewModel = Provider.of<NotificationProvider>(context);
     final dataViewModel =
         Provider.of<NotificationProvider>(context).notification?.data;
+    final invoiceViewModel = Provider.of<InvoiceProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -138,7 +144,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 height: 5,
                               ),
                               Text(
-                                  dataViewModel[index].createdAt!,
+                                dataViewModel[index].createdAt!,
                                 style: notifContent,
                               ),
                             ],
@@ -148,7 +154,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     } else {
                       return ListTile(
                         onTap: () {
-                          notifViewModel.markAsRead(dataViewModel[index].id!.toString());
+                          notifViewModel
+                              .markAsRead(dataViewModel[index].id!.toString());
+                          setState(() {
+                            dataViewModel[index].isRead = true;
+                          });
+                          InvoiceServices()
+                              .getInvoiceById(dataViewModel[index].invoiceId!);
+                          CupertinoPageRoute(
+                            builder: (context) => InvoiceDetailScreen(
+                                dataViewModel[index].invoiceId!,
+                                isPaid: true | false),
+                          );
                         },
                         isThreeLine: true,
                         tileColor: netralCardColor,
