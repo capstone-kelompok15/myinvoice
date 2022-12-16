@@ -63,4 +63,9 @@ class HomeProvider extends ChangeNotifier {
     _currentIndex = index;
     notifyListeners();
   }
+
+  resetIndex() {
+    _currentIndex = 0;
+    notifyListeners();
+  }
 }

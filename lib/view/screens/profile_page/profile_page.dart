@@ -28,50 +28,40 @@ class ProfilePage extends StatelessWidget {
               height: 44,
               color: primaryBackground,
             ),
-            FutureBuilder<Customer>(
-                future: CustomerServices().getCustomer(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(
-                          left: 30, right: 30, top: 12, bottom: 24),
-                      decoration: BoxDecoration(
-                          color: primaryBackground,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(50))),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 35,
-                            backgroundImage: NetworkImage(
-                                snapshot.data!.displayProfilePictureUrl!),
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            snapshot.data!.fullName!,
-                            style: heading2.copyWith(color: Colors.white),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            snapshot.data!.email ?? '',
-                            style: paragraph4.copyWith(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(
+                  left: 30, right: 30, top: 12, bottom: 24),
+              decoration: BoxDecoration(
+                  color: primaryBackground,
+                  borderRadius:
+                      BorderRadius.only(bottomRight: Radius.circular(50))),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 35,
+                    backgroundImage: NetworkImage(
+                        profileHomeView.customer.displayProfilePictureUrl!),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    profileHomeView.customer.fullName!,
+                    style: heading2.copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Text(
+                    profileHomeView.customer.email ?? '',
+                    style: paragraph4.copyWith(color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
               child: Column(

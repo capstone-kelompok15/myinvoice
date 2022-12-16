@@ -13,7 +13,11 @@ import '../../widgets/rounded_button.dart';
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({
     super.key,
+    required this.id,
   });
+
+  final int id;
+
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
@@ -304,12 +308,18 @@ class PaymentScreen extends StatelessWidget {
                     ),
                     RoundedButton(
                         title: 'Confirm Payment',
-                        press: () {
+                        press: () async {
+                          await (invoiceProvider.getInvoiceByid(id));
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const ConfirmPaymentScreen(),
+                              builder: (context) => ConfirmPaymentScreen(
+                                id: id,
+
+                                // invoiceId: invoiceId,
+                                // nameCustomer: nameCustomer,
+                                // totalPayment: totalPayment
+                              ),
                             ),
                           );
                         }),

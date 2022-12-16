@@ -66,7 +66,9 @@ class InvoiceCard extends StatelessWidget {
             Text(
               idrFormat.format(totalPrice),
               style: sectionHead.copyWith(
-                  color: primaryText, fontWeight: FontWeight.w400),
+                  color: primaryText,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14),
             ),
           ],
         ),

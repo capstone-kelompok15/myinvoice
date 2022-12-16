@@ -6,6 +6,7 @@ class CustomTextField extends StatefulWidget {
   final String? title;
   final String? hint;
   final String? icon;
+  final TextInputType? keyboardType;
   final TextEditingController? controller;
   final bool isPassword;
   final String? Function(String?)? validator;
@@ -22,6 +23,7 @@ class CustomTextField extends StatefulWidget {
     this.isRead = false,
     this.icon,
     this.press,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -45,6 +47,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
             height: 8,
           ),
           TextFormField(
+            readOnly: widget.isRead,
+            keyboardType: widget.keyboardType,
             onTap: widget.press,
             validator: widget.validator,
             obscureText: showPassword && widget.isPassword,
