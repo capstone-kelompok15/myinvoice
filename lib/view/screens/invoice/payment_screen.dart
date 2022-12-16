@@ -9,10 +9,11 @@ import 'package:provider/provider.dart';
 
 import '../../widgets/bank_card.dart';
 import '../../widgets/rounded_button.dart';
-import 'invoice_detail_screen.dart';
 
 class PaymentScreen extends StatelessWidget {
-  const PaymentScreen({super.key});
+  const PaymentScreen({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
@@ -62,16 +63,26 @@ class PaymentScreen extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Column(
-                children: const [
-                  ChooseBankCard(namaBank: 'Mandiri', icon: mandiri),
+                children: [
+                  ChooseBankCard(
+                    namaBank: invoiceProvider.payment,
+                    icon: invoiceProvider.icon,
+                    isNA: false,
+                    accountNumber: '',
+                    isClicked: false,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
-                  CardCopiable(title: 'Account Number', number: '4435233423'),
+                  CardCopiable(
+                      title: 'Account Number',
+                      number: invoiceProvider.accountNumber),
                   SizedBox(
                     height: 15,
                   ),
-                  CardCopiable(title: 'Total Amount', number: 'IDR. 2.661.000'),
+                  CardCopiable(
+                      title: 'Total Amount',
+                      number: "IDR. ${invoiceProvider.bill}"),
                   SizedBox(
                     height: 20,
                   ),
@@ -297,7 +308,8 @@ class PaymentScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ConfirmPaymentScreen(),
+                              builder: (context) =>
+                                  const ConfirmPaymentScreen(),
                             ),
                           );
                         }),

@@ -1,47 +1,61 @@
 class Invoice {
-  int? id;
-  String? invoiceNumber;
+  int? invoiceId;
+  int? merchantId;
+  String? merchantName;
   String? customerName;
-  String? customerAddress;
-  double? totalAmount;
-  String? status;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  int? paymentStatusId;
+  String? paymentStatusName;
+  int? paymentTypeId;
+  String? paymentTypeName;
+  int? totalPrice;
+  String? dueAt;
+  String? createdAt;
+  String? updatedAt;
 
-  Invoice({
-    this.id,
-    this.invoiceNumber,
-    this.customerName,
-    this.customerAddress,
-    this.totalAmount,
-    this.status,
-    this.createdAt,
-    this.updatedAt,
-  });
+  Invoice(
+      {this.invoiceId,
+      this.merchantId,
+      this.merchantName,
+      this.customerName,
+      this.paymentStatusId,
+      this.paymentStatusName,
+      this.paymentTypeId,
+      this.paymentTypeName,
+      this.totalPrice,
+      this.dueAt,
+      this.createdAt,
+      this.updatedAt});
 
-  factory Invoice.fromJson(Map<String, dynamic> json) {
-    return Invoice(
-      id: json['id'],
-      invoiceNumber: json['invoiceNumber'],
-      customerName: json['customerName'],
-      customerAddress: json['customerAddress'],
-      totalAmount: json['totalAmount'],
-      status: json['status'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-    );
+  Invoice.fromJson(Map<String, dynamic> json) {
+    invoiceId = json['invoice_id'];
+    merchantId = json['merchant_id'];
+    merchantName = json['merchant_name'];
+    customerName = json['customer_name'];
+
+    paymentStatusId = json['payment_status_id'];
+    paymentStatusName = json['payment_status_name'];
+    paymentTypeId = json['payment_type_id'];
+    paymentTypeName = json['payment_type_name'];
+    totalPrice = json['total_price'];
+    dueAt = json['due_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['invoiceNumber'] = this.invoiceNumber;
-    data['customerName'] = this.customerName;
-    data['customerAddress'] = this.customerAddress;
-    data['totalAmount'] = this.totalAmount;
-    data['status'] = this.status;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final data = Map<String, dynamic>();
+    data['invoice_id'] = this.invoiceId;
+    data['merchant_id'] = this.merchantId;
+    data['merchant_name'] = this.merchantName;
+    data['customer_name'] = this.customerName;
+    data['payment_status_id'] = this.paymentStatusId;
+    data['payment_status_name'] = this.paymentStatusName;
+    data['payment_type_id'] = this.paymentTypeId;
+    data['payment_type_name'] = this.paymentTypeName;
+    data['total_price'] = this.totalPrice;
+    data['due_at'] = this.dueAt;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

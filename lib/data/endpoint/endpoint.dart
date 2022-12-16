@@ -10,5 +10,12 @@ class Endpoint {
   static const getCustomer = "${customer}me";
   static const updateFotoProfileCustomer = "${baseUrl}customers/me/picture";
 
-  static const getInvoice = "${baseUrl}invoices";
+  static const getInvoice = "${baseUrl}invoices/customers?limit=10&offset=0";
+
+  static const getInvoiceById = "${baseUrl}invoices/";
+
+  static const getNotification = "${baseUrl}customers/notifications?page=1&limit=50";
+  static const getNotifCount = "${baseUrl}customers/notifications/unread_count";
+  static const markAsRead = "${baseUrl}customers/notifications/";
+
 }

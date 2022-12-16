@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:myinvoice/models/invoice_detail_model.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:provider/provider.dart';
 
+import '../constant/constant.dart';
 import '../styles/styles.dart';
 
-class ItemDescription extends StatelessWidget {
-  const ItemDescription({
+class ItemDescriptionCard extends StatelessWidget {
+  const ItemDescriptionCard(
+    this.data, {
     Key? key,
   }) : super(key: key);
 
+  final ItemDescription data;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +39,7 @@ class ItemDescription extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "Laptop",
+                      data.product!,
                       style: paragraph4.copyWith(color: blackTextColor),
                     ),
                   ],
@@ -49,7 +55,7 @@ class ItemDescription extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "2 pcs",
+                      data.quantity.toString(),
                       style: paragraph4.copyWith(color: blackTextColor),
                     ),
                   ],
@@ -65,7 +71,7 @@ class ItemDescription extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "5.000.000",
+                      idrFormat.format(data.price),
                       style: paragraph4.copyWith(color: blackTextColor),
                     ),
                   ],
@@ -92,7 +98,7 @@ class ItemDescription extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      "10.000.000",
+                      idrFormat.format(data.price! * data.quantity!),
                       style: subhead2.copyWith(color: primaryBackground),
                     ),
                   ],

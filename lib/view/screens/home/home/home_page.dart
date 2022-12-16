@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/models/customer.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
@@ -9,8 +10,11 @@ import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
+import 'package:myinvoice/viewmodel/notification_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../services/customer_services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,6 +26,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final notifViewModel = Provider.of<NotificationProvider>(context);
     final homeViewModel = Provider.of<HomeProvider>(context);
     final profileViewModel = Provider.of<ProfileProvider>(context);
     final controller = Provider.of<InvoiceProvider>(context);
@@ -58,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                               animationType: BadgeAnimationType.scale,
                               badgeContent: Text(
                                 textScaleFactor: 0.5,
-                                '55',
+                                notifViewModel.unreadCount?.data?.unreadCount.toString() ?? '',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -84,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
@@ -92,10 +97,18 @@ class _HomePageState extends State<HomePage> {
                           style: body3.copyWith(
                               fontWeight: FontWeight.w400, color: Colors.white),
                         ),
-                        Text(
-                          'Clarissa Maharani',
-                          style: body1.copyWith(color: Colors.white),
-                        ),
+                        FutureBuilder<Customer>(
+                            future: CustomerServices().getCustomer(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Text(
+                                  snapshot.data!.fullName!,
+                                  style: body1.copyWith(color: Colors.white),
+                                );
+                              } else {
+                                return Text('....');
+                              }
+                            }),
                       ],
                     ),
                   ),
@@ -113,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                             style: sectionTitle,
                           ),
                           TextButton(
-                              child: Text(
+                              child: const Text(
                                 'Details',
                                 style: TextStyle(
                                     color: textButtonColor,
@@ -162,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                             style: sectionTitle,
                           ),
                           TextButton(
-                              child: Text(
+                              child: const Text(
                                 'See All',
                                 style: TextStyle(
                                     color: textButtonColor,
@@ -180,32 +193,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-
-            // ini kalau menggunakan maping ngak ada masalah
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                children: homeViewModel.recentList
-                    .map((e) => InvoiceCard(recentItem: e))
-                    .toList(),
-              ),
+              child: Text(''),
             ),
-
-// tapi kalau menggunakan listview.builder kyk ada jarak
-
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 30),
-            //   child: ListView.builder(
-            //     shrinkWrap: true,
-            //     physics: NeverScrollableScrollPhysics(),
-            //     itemCount: homeViewModel.recentList.length,
-            //     itemBuilder: (context, index) {
-            //       var data = homeViewModel.recentList[index];
-            //       return InvoiceCard(recentItem: data);
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),

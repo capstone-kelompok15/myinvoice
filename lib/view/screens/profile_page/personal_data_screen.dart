@@ -1,11 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myinvoice/services/customer_services.dart';
-import 'package:myinvoice/services/invoice_service.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
@@ -20,8 +17,8 @@ class PersonalDataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     File file = File('');
     Future<XFile?> getImage() async {
-      ImagePicker _picker = ImagePicker();
-      XFile? selectImage = await _picker.pickImage(
+      ImagePicker picker = ImagePicker();
+      XFile? selectImage = await picker.pickImage(
           source: ImageSource.gallery, imageQuality: 30);
       file = File(selectImage!.path);
       print(file);
@@ -40,22 +37,6 @@ class PersonalDataScreen extends StatelessWidget {
                 radius: 35,
                 backgroundImage: NetworkImage(
                     profileHomeView.customer.displayProfilePictureUrl!),
-              ),
-              SizedBox(
-                height: 6,
-              ),
-              TextButton(
-                onPressed: () async {
-                  await getImage();
-                  await CustomerServices().uploadImage(file);
-                  await profileHomeView.getCustomer();
-                },
-                child: Text(
-                  'Edit Photo',
-                  style: heading5.copyWith(color: primaryMain),
-                ),
-                //  child 'Edit Photo',
-                //   style: heading5.copyWith(color: primaryMain),
               ),
               const SizedBox(
                 height: 6,
@@ -88,14 +69,14 @@ class PersonalDataScreen extends StatelessWidget {
                 title: 'Number Phone',
                 hint: '0849723434',
               ),
-              Container(
+              const SizedBox(
                 height: 110,
                 child: CustomTextField(
                   title: 'Adress',
                   hint: 'Jl mangga no 20',
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 60,
               ),
               RoundedButton(

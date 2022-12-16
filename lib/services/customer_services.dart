@@ -21,7 +21,6 @@ class CustomerServices {
       if (response.statusCode == 401) { 
         AuthProvider().SignOut;
       }
-      print(response.data);
       Customer data = Customer.fromJson(response.data['data']);
       return data;
     } on DioError catch (e) {

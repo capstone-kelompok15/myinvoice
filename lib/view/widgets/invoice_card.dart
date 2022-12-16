@@ -1,22 +1,36 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/models/home_model/bill_model.dart';
+import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
+import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
 class InvoiceCard extends StatelessWidget {
-  final RecentItem recentItem;
   const InvoiceCard({
     Key? key,
-    required this.recentItem,
+    required this.merchant,
+    required this.totalPrice,
+    required this.createAt,
+    required this.status,
+    this.press,
   }) : super(key: key);
+
+  final String merchant;
+  final int totalPrice;
+  final String createAt;
+  final String status;
+  final Function()? press;
 
   @override
   Widget build(BuildContext context) {
-    final modelView = Provider.of<HomeProvider>(context);
+    final homeViewModel = Provider.of<HomeProvider>(context);
+    final invoiceViewModel = Provider.of<InvoiceProvider>(context);
 
     return Card(
       elevation: 4,
@@ -46,11 +60,11 @@ class InvoiceCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              recentItem.merchantName ?? '-',
+              merchant,
               style: sectionHead.copyWith(color: primaryText),
             ),
             Text(
-              idrFormat.format(recentItem.bill),
+              idrFormat.format(totalPrice),
               style: sectionHead.copyWith(
                   color: primaryText, fontWeight: FontWeight.w400),
             ),
@@ -60,36 +74,38 @@ class InvoiceCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              recentItem.date!,
+              formatDateBasic(DateTime.parse(createAt)),
               style: sectionSubHead.copyWith(
                 color: const Color(0xff999999),
               ),
             ),
-            if (recentItem.status == 'Paid') ...[
+            if (status == 'Unpaid') ...[
               Text(
-                recentItem.status!,
-                style: body4.copyWith(
-                  color: greenColor,
-                ),
-              ),
-            ] else if (recentItem.status == 'Unpaid') ...[
-              Text(
-                recentItem.status!,
+                'Unpaid',
                 style: body4.copyWith(
                   color: redColor,
                 ),
               ),
-            ] else if (recentItem.status == 'Pending') ...[
+            ],
+            if (status == 'Paid') ...[
               Text(
-                recentItem.status!,
+                'Paid',
                 style: body4.copyWith(
-                  color: orangeColor,
+                  color: greenColor,
                 ),
               ),
             ],
+            if (status == 'Pending') ...[
+              Text(
+                'Pending',
+                style: body4.copyWith(
+                  color: Colors.orangeAccent,
+                ),
+              ),
+            ]
           ],
         ),
-        onTap: () {},
+        onTap: press,
       ),
     );
   }
