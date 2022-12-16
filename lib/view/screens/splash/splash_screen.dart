@@ -14,6 +14,8 @@ import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/profile_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../services/invoice_service.dart';
@@ -29,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   checkToken() async {
     String? token = await Pref.getToken();
     if (token != null) {
+      await Provider.of<ProfileProvider>(context, listen: false).getCustomer();
       Navigator.push(
           context,
           CupertinoPageRoute(

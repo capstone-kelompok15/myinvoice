@@ -32,6 +32,9 @@ class _InvoicePageState extends State<InvoicePage> {
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
     final homeViewModel = Provider.of<HomeProvider>(context);
+    var isLoading = Center(
+      child: CircularProgressIndicator(),
+    );
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -193,7 +196,7 @@ class _InvoicePageState extends State<InvoicePage> {
                                       (e) => InvoiceCard(
                                           merchant: e.merchantName!,
                                           totalPrice: e.totalPrice!,
-                                          createAt: e.createdAt!,
+                                          createAt: e.updatedAt!,
                                           status: e.paymentStatusName ?? '',
                                           press: () async {
                                             Navigator.push(context,
@@ -222,7 +225,7 @@ class _InvoicePageState extends State<InvoicePage> {
                                       (e) => InvoiceCard(
                                           merchant: e.merchantName!,
                                           totalPrice: e.totalPrice!,
-                                          createAt: e.createdAt!,
+                                          createAt: e.updatedAt!,
                                           status: e.paymentStatusName ?? '',
                                           press: () async {
                                             Navigator.push(context,
@@ -337,5 +340,14 @@ class InvoiceCard1 extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class EmptyScrenn extends StatelessWidget {
+  const EmptyScrenn({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: SvgPicture.asset('assets/icons/Frame 565.svg'));
   }
 }

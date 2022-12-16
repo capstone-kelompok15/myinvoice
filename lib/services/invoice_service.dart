@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
@@ -102,5 +103,47 @@ class InvoiceServices {
     } on DioError catch (e) {
       throw Exception(e);
     }
+  }
+
+  Future<void> confirmPaymentByid(int id) async {
+    try {
+      final String? token = await Pref.getToken();
+      var headers = {
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      var response = await Dio().put(
+        'https://api.staging.my-invoice.me/api/v1/invoices/$id/confirm',
+        options: Options(headers: headers),
+      );
+
+      print(response.data);
+      print(response.statusCode);
+    } on DioError catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future uploadImage(File file, int id) async {
+    String? token = await Pref.getToken();
+
+    FormData formData = FormData.fromMap({
+      'payment': await MultipartFile.fromFile(file.path, filename: "image.jpg")
+    });
+
+    final response = await Dio().patch(
+      'https://api.staging.my-invoice.me/api/v1/invoices/$id/payments/upload',
+      data: formData,
+      options: Options(
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          'Authorization': 'Bearer $token',
+        },
+      ),
+    );
+
+    print(response.data);
   }
 }

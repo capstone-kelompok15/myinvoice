@@ -30,14 +30,12 @@ class InvoiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Invoice> _allInvoice = [];
+  InvoiceDetail invoiceDetail = InvoiceDetail();
 
-  List<Invoice> get allInvoice => _allInvoice;
-
-  Future<void> getAllinvoices(int isPaid) async {
+  Future<void> getInvoiceByid(int id) async {
     try {
-      var inv = await InvoiceServices().getAllInvoice(isPaid);
-      _allInvoice = inv;
+      var inv = await InvoiceServices().getInvoiceById(id);
+      invoiceDetail = inv;
       notifyListeners();
 
       print('sukses');

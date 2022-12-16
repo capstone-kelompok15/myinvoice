@@ -18,11 +18,16 @@ class CustomerServices {
                 'accept': 'application/json',
                 'Authorization': 'Bearer $token',
               }));
-      if (response.statusCode == 401) { 
+      if (response.statusCode == 401) {
         AuthProvider().SignOut;
       }
-      Customer data = Customer.fromJson(response.data['data']);
-      return data;
+
+      if (response.statusCode == 200) {
+        Customer data = Customer.fromJson(response.data['data']);
+        return data;
+      } else {
+        throw Exception('Data Gagal diambil');
+      }
     } on DioError catch (e) {
       throw Exception(e);
     }
