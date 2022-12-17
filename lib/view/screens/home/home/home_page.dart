@@ -35,11 +35,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final notifViewModel = Provider.of<NotificationProvider>(context);
     final homeViewModel = Provider.of<HomeProvider>(context);
     final reportViewModel = Provider.of<HomeProvider>(context);
-    final profileViewModel = Provider.of<ProfileProvider>(context);
-    final controller = Provider.of<InvoiceProvider>(context);
+    final profileProvider = Provider.of<ProfileProvider>(context);
     const textButtonColor = Color(0xff131089);
     return Scaffold(
       body: ListView(
@@ -138,18 +136,10 @@ class _HomePageState extends State<HomePage> {
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white),
                           ),
-                          FutureBuilder<Customer>(
-                              future: CustomerServices().getCustomer(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text(
-                                    snapshot.data!.fullName!,
-                                    style: body1.copyWith(color: Colors.white),
-                                  );
-                                } else {
-                                  return Text('....');
-                                }
-                              }),
+                          Text(
+                            profileProvider.customer.fullName!,
+                            style: body1.copyWith(color: Colors.white),
+                          ),
                         ],
                       ),
                     ),
