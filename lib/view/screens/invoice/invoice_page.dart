@@ -31,10 +31,7 @@ class _InvoicePageState extends State<InvoicePage> {
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
-    final homeViewModel = Provider.of<HomeProvider>(context);
-    var isLoading = Center(
-      child: CircularProgressIndicator(),
-    );
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -170,6 +167,8 @@ class _InvoicePageState extends State<InvoicePage> {
                                                 status:
                                                     e.paymentStatusName ?? '',
                                                 press: () async {
+                                                  invoiceProvider
+                                                      .resetPayment();
                                                   Navigator.push(context,
                                                       MaterialPageRoute(
                                                     builder: (context) {

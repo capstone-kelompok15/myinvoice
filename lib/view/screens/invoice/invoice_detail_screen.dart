@@ -399,7 +399,9 @@ class PayNowCard extends StatelessWidget {
           const Spacer(),
           ElevatedButton(
               style: TextButton.styleFrom(
-                backgroundColor: const Color(0xFFCDCDCD),
+                backgroundColor: invoicePro.payment == 'Choose'
+                    ? const Color(0xFFCDCDCD)
+                    : primaryMain,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -407,15 +409,20 @@ class PayNowCard extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 41.5, vertical: 15),
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PaymentScreen(),
-                    ));
+                if (invoicePro.payment != 'Choose') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PaymentScreen(),
+                      ));
+                }
               },
               child: Text(
                 'Pay Now',
-                style: heading4.copyWith(color: blackTextColor),
+                style: heading4.copyWith(
+                    color: invoicePro.payment == 'Choose'
+                        ? blackTextColor
+                        : Colors.white),
               ))
         ],
       ),

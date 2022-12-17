@@ -49,10 +49,10 @@ class InvoiceProvider extends ChangeNotifier {
 
   InvoiceDetail get invoiceDetail => _invoiceDetail;
 
-  String nameImage = 'Invioce.jpg';
+  String nameImage = '';
 
   resetnameImage() {
-    nameImage = 'Invoice.jpg';
+    nameImage = '';
     notifyListeners();
   }
 
@@ -69,6 +69,11 @@ class InvoiceProvider extends ChangeNotifier {
     this.payment = payment;
     this.accountNumber = accountNumber;
     this.icon = icon;
+    notifyListeners();
+  }
+
+  resetPayment() {
+    payment = 'Choose';
     notifyListeners();
   }
 
