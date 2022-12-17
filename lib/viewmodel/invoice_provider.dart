@@ -49,17 +49,12 @@ class InvoiceProvider extends ChangeNotifier {
 
   InvoiceDetail get invoiceDetail => _invoiceDetail;
 
-  // Future<void> getInvoiceByid(int id) async {
-  //   try {
-  //     var inv = await InvoiceServices().getInvoiceById(id);
-  //     invoiceDetail = inv;
-  //     notifyListeners();
+  String nameImage = 'Invioce.jpg';
 
-  //     print('sukses');
-  //   } catch (e) {
-  //     throw Exception(e);
-  //   }
-  // }
+  resetnameImage() {
+    nameImage = 'Invoice.jpg';
+    notifyListeners();
+  }
 
   setInvoiceData(InvoiceDetail invoiceDetail) {
     _invoiceDetail = invoiceDetail;

@@ -25,7 +25,6 @@ class InvoiceDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
-    bool isSelect = false;
     return Scaffold(
       appBar: MethodHelper.buildAppBar(
         context,
@@ -409,14 +408,10 @@ class PayNowCard extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PaymentScreen(
-
-                        // invoiceId: ,
-                        ),
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentScreen(),
+                    ));
               },
               child: Text(
                 'Pay Now',
