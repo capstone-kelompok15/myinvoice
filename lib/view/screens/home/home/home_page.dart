@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/models/customer.dart';
+import 'package:myinvoice/models/notification/unread_count.dart';
 import 'package:myinvoice/services/notification_service.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
@@ -68,54 +69,6 @@ class _HomePageState extends State<HomePage> {
                                 "My Invoice",
                                 style: title.copyWith(color: Colors.white),
                               ),
-                              notifViewModel.unreadCount?.data?.unreadCount !=
-                                      null
-                                  ? Badge(
-                                      toAnimate: true,
-                                      animationType: BadgeAnimationType.scale,
-                                      badgeContent: Text(
-                                        textScaleFactor: 0.5,
-                                        notifViewModel
-                                            .unreadCount!.data!.unreadCount
-                                            .toString(),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      badgeColor: redColor,
-                                      position:
-                                          BadgePosition.topEnd(top: 2, end: 8),
-                                      child: IconButton(
-                                        icon: SvgPicture.asset(iconNotifFilled,
-                                            width: 24),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            CupertinoPageRoute(
-                                              builder: (context) {
-                                                return const NotificationScreen();
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  : IconButton(
-                                      icon: SvgPicture.asset(iconNotifFilled,
-                                          width: 24),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                            builder: (context) {
-                                              return const NotificationScreen();
-                                            },
-                                          ),
-                                        );
-                                      },
-                                    ),
                               // FutureBuilder(
                               //   future: notifViewModel.getUnreadCount(),
                               //   builder: (context, snapshot) {
