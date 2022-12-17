@@ -75,23 +75,23 @@ class InvoiceServices {
 
 // function untuk mendapatkan list bank si merchant
 
-    Future<List<BankModel>> getAllBank(int id) async {
-      try {
-        final String? token = await Pref.getToken();
-        var headers = {
-          'accept': 'application/json',
-        };
+  Future<List<BankModel>> getAllBank(int id) async {
+    try {
+      final String? token = await Pref.getToken();
+      var headers = {
+        'accept': 'application/json',
+      };
 
-        var response = await Dio().get(
-          'https://api.staging.my-invoice.me/api/v1/merchants/$id/banks',
-          options: Options(headers: headers),
-        );
+      var response = await Dio().get(
+        'https://api.staging.my-invoice.me/api/v1/merchants/$id/banks',
+        options: Options(headers: headers),
+      );
 
-        // print(response.data);
+      // print(response.data);
 
-        if (response.statusCode == 200) {
-          var data = response.data['data'];
-          List<BankModel> bankModel = [];
+      if (response.statusCode == 200) {
+        var data = response.data['data'];
+        List<BankModel> bankModel = [];
 
         for (var item in data) {
           bankModel.add(BankModel.fromJson(item));

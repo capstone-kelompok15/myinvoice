@@ -24,6 +24,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initState() {
     Provider.of<NotificationProvider>(context, listen: false)
         .getAllNotification();
+
     super.initState();
   }
 
@@ -163,12 +164,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           setState(() {
                             dataViewModel[index].isRead = true;
                           });
-                          InvoiceServices()
-                              .getInvoiceById(dataViewModel[index].invoiceId!);
-                          CupertinoPageRoute(
-                            builder: (context) => InvoiceDetailScreen(
-                                dataViewModel[index].invoiceId!,
-                                isPaid: true | false),
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => InvoiceDetailScreen(
+                                  dataViewModel[index].invoiceId!,
+                                  isPaid: true),
+                            ),
                           );
                         },
                         isThreeLine: true,

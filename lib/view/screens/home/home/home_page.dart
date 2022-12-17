@@ -69,60 +69,64 @@ class _HomePageState extends State<HomePage> {
                                 "My Invoice",
                                 style: title.copyWith(color: Colors.white),
                               ),
-                              // FutureBuilder(
-                              //   future: notifViewModel.getUnreadCount(),
-                              //   builder: (context, snapshot) {
-                              //     if (snapshot.hasData) {
-                              //       return Badge(
-                              //         toAnimate: true,
-                              //         animationType: BadgeAnimationType.scale,
-                              //         badgeContent: Text(
-                              //           textScaleFactor: 0.5,
-                              //           notifViewModel
-                              //               .unreadCount!.data!.unreadCount
-                              //               .toString(),
-                              //           style: TextStyle(
-                              //             color: Colors.white,
-                              //             fontWeight: FontWeight.bold,
-                              //           ),
-                              //         ),
-                              //         badgeColor: redColor,
-                              //         position:
-                              //             BadgePosition.topEnd(top: 2, end: 8),
-                              //         child: IconButton(
-                              //           icon: SvgPicture.asset(iconNotifFilled,
-                              //               width: 24),
-                              //           onPressed: () {
-                              //             Navigator.push(
-                              //               context,
-                              //               CupertinoPageRoute(
-                              //                 builder: (context) {
-                              //                   return const NotificationScreen();
-                              //                 },
-                              //               ),
-                              //             );
-                              //           },
-                              //           color: Colors.white,
-                              //         ),
-                              //       );
-                              //     } else {
-                              //       return IconButton(
-                              //         icon: SvgPicture.asset(iconNotifFilled,
-                              //             width: 24),
-                              //         onPressed: () {
-                              //           Navigator.push(
-                              //             context,
-                              //             CupertinoPageRoute(
-                              //               builder: (context) {
-                              //                 return const NotificationScreen();
-                              //               },
-                              //             ),
-                              //           );
-                              //         },
-                              //       );
-                              //     }
-                              //   },
-                              // )
+                              FutureBuilder<UnreadNotifCount>(
+                                future:
+                                    NotificationServices().fetchNotifCount(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Badge(
+                                      showBadge:
+                                          snapshot.data!.data!.unreadCount! > 0
+                                              ? true
+                                              : false,
+                                      toAnimate: true,
+                                      animationType: BadgeAnimationType.scale,
+                                      badgeContent: Text(
+                                        textScaleFactor: 0.5,
+                                        snapshot.data!.data!.unreadCount!
+                                            .toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      badgeColor: redColor,
+                                      position:
+                                          BadgePosition.topEnd(top: 2, end: 8),
+                                      child: IconButton(
+                                        icon: SvgPicture.asset(iconNotifFilled,
+                                            width: 24),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              builder: (context) {
+                                                return const NotificationScreen();
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        color: Colors.white,
+                                      ),
+                                    );
+                                  } else {
+                                    return IconButton(
+                                      icon: SvgPicture.asset(iconNotifFilled,
+                                          width: 24),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) {
+                                              return const NotificationScreen();
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                },
+                              )
                             ],
                           ),
                           const SizedBox(

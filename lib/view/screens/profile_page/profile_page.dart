@@ -43,13 +43,14 @@ class ProfilePage extends StatelessWidget {
                     backgroundColor: Colors.white,
                     radius: 35,
                     backgroundImage: NetworkImage(
-                        profileHomeView.customer.displayProfilePictureUrl!),
+                        profileHomeView.customer.displayProfilePictureUrl ??
+                            ''),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
                   Text(
-                    profileHomeView.customer.fullName!,
+                    profileHomeView.customer.fullName ?? '',
                     style: heading2.copyWith(color: Colors.white),
                   ),
                   const SizedBox(
