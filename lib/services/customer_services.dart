@@ -7,6 +7,7 @@ import 'package:myinvoice/models/customer.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 
 class CustomerServices {
+  // function get data customer
   Future<Customer> getCustomer() async {
     try {
       print('asd');

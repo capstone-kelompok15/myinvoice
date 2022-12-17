@@ -206,7 +206,9 @@ class _InvoicePageState extends State<InvoicePage> {
                                                   Navigator.push(context,
                                                       MaterialPageRoute(
                                                     builder: (context) {
-                                                      return StatusPembayaranScreen();
+                                                      return InvoiceDetailScreen(
+                                                          isPaid: false,
+                                                          e.invoiceId!);
                                                     },
                                                   ));
                                                 }),

@@ -27,7 +27,6 @@ class ConfirmPaymentScreen extends StatefulWidget {
 }
 
 File file = File('');
-// bool isLoading = false;
 
 class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
   @override
@@ -40,7 +39,6 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
     final InvoiceProvider invoiceProvider =
         Provider.of<InvoiceProvider>(context);
     InvoiceDetail invoiceDetail = invoiceProvider.invoiceDetail;
-    String nameImage = 'Invioce.jpg';
 
     Future getImage() async {
       ImagePicker picker = ImagePicker();
@@ -49,7 +47,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
 
       setState(() {
         file = File(selectImage!.path);
-        nameImage = selectImage.name;
+        invoiceProvider.nameImage = selectImage.name;
       });
       print(file);
     }
@@ -62,115 +60,119 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
         TextEditingController(text: invoiceDetail.customerName);
     TextEditingController totalC =
         TextEditingController(text: 'IDR. ${invoiceDetail.totalPrice}');
-    TextEditingController imageC = TextEditingController(text: nameImage);
+    final _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       appBar: MethodHelper.buildAppBar(context, 'Confirm Payment'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 24,
-              ),
-              CustomTextField(
-                isRead: true,
-                title: 'Date Invoice',
-                icon: calender,
-                controller: dateC,
-              ),
-              CustomTextField(
-                isRead: true,
-                controller: invoicedC,
-                title: 'Nomor Invoice',
-                icon: invoice1,
-              ),
-              CustomTextField(
-                title: 'Name Customer',
-                icon: potrait,
-                isRead: true,
-                controller: nameC,
-              ),
-              CustomTextField(
-                title: 'Total Payment',
-                icon: money,
-                controller: totalC,
-                isRead: true,
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-              Text(
-                'Upload Evidance of Transfer',
-                style: heading5.copyWith(color: blackTextColor),
-              ),
-              SizedBox(
-                height: 55,
-                child: Row(
-                  children: [
-                    Container(
-                      height: double.infinity,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: primaryBorder,
-                        borderRadius: BorderRadius.circular(8),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 24,
+                ),
+                CustomTextField(
+                  isRead: true,
+                  title: 'Date Invoice',
+                  icon: calender,
+                  controller: dateC,
+                ),
+                CustomTextField(
+                  isRead: true,
+                  controller: invoicedC,
+                  title: 'Nomor Invoice',
+                  icon: invoice1,
+                ),
+                CustomTextField(
+                  title: 'Name Customer',
+                  icon: potrait,
+                  isRead: true,
+                  controller: nameC,
+                ),
+                CustomTextField(
+                  title: 'Total Payment',
+                  icon: money,
+                  controller: totalC,
+                  isRead: true,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  'Upload Evidance of Transfer',
+                  style: heading5.copyWith(color: blackTextColor),
+                ),
+                SizedBox(
+                  height: 55,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: primaryBorder,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: SvgPicture.asset(
+                          clip,
+                          width: 24,
+                          height: 24,
+                          fit: BoxFit.scaleDown,
+                        ),
                       ),
-                      child: SvgPicture.asset(
-                        clip,
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.scaleDown,
+                      const SizedBox(
+                        width: 4,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        // controller: imageC,
-                        readOnly: true,
-                        onTap: () async {
-                          await getImage();
-                        },
-                        decoration: InputDecoration(
-                          hintText: nameImage,
-                          suffix: SvgPicture.asset(cross),
-                          fillColor: const Color(0xffcdcdcd),
-                          filled: true,
-                          hintStyle:
-                              paragraph4.copyWith(color: netralDisableColor),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(8),
+                      Expanded(
+                        child: TextFormField(
+                          readOnly: true,
+                          onTap: () async {
+                            await getImage();
+                          },
+                          decoration: InputDecoration(
+                            hintText: invoiceProvider.nameImage,
+                            suffix: SvgPicture.asset(cross),
+                            fillColor: const Color(0xffcdcdcd),
+                            filled: true,
+                            hintStyle:
+                                paragraph4.copyWith(color: netralDisableColor),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 60,
-              ),
-              RoundedButton(
-                title: 'Confirm',
-                isLoading: invoiceProvider.isloading,
-                press: () async {
-                  invoiceProvider.onPress();
-                  await InvoiceServices()
-                      .confirmPaymentByid(invoiceDetail.invoiceId!, file);
+                const SizedBox(
+                  height: 60,
+                ),
+                RoundedButton(
+                  title: 'Confirm',
+                  isLoading: invoiceProvider.isloading,
+                  press: () async {
+                    invoiceProvider.onPress();
+                    await InvoiceServices()
+                        .confirmPaymentByid(invoiceDetail.invoiceId!, file);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const StatusPembayaranScreen(),
-                    ),
-                  );
-                  invoiceProvider.onPress();
-                },
-              ),
-            ],
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const StatusPembayaranScreen(),
+                      ),
+                    );
+                    invoiceProvider.onPress();
+                    await invoiceProvider.resetnameImage();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
