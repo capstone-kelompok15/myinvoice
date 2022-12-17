@@ -10,6 +10,8 @@ import 'package:myinvoice/view/widgets/rounded_button.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../services/invoice_service.dart';
+
 class PersonalDataScreen extends StatelessWidget {
   const PersonalDataScreen({super.key});
 
@@ -18,8 +20,8 @@ class PersonalDataScreen extends StatelessWidget {
     File file = File('');
     Future<XFile?> getImage() async {
       ImagePicker picker = ImagePicker();
-      XFile? selectImage = await picker.pickImage(
-          source: ImageSource.gallery, imageQuality: 30);
+      XFile? selectImage =
+          await picker.pickImage(source: ImageSource.gallery, imageQuality: 30);
       file = File(selectImage!.path);
       print(file);
       return XFile(selectImage.path);
@@ -51,8 +53,6 @@ class PersonalDataScreen extends StatelessWidget {
                   'Edit Photo',
                   style: heading5.copyWith(color: primaryMain),
                 ),
-                //  child 'Edit Photo',
-                //   style: heading5.copyWith(color: primaryMain),
               ),
               const SizedBox(
                 height: 20,
@@ -80,10 +80,11 @@ class PersonalDataScreen extends StatelessWidget {
                 height: 60,
               ),
               RoundedButton(
-                  title: 'Save',
-                  press: () {
-                    // InvoiceServices().getInvoice();
-                  })
+                title: 'Save',
+                press: () {
+                  // await CustomerServices().getCustomer();
+                },
+              )
             ],
           ),
         ),

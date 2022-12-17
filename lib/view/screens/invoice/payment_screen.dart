@@ -7,6 +7,7 @@ import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/invoice_detail_model.dart';
 import '../../widgets/bank_card.dart';
 import '../../widgets/rounded_button.dart';
 
@@ -14,6 +15,7 @@ class PaymentScreen extends StatelessWidget {
   const PaymentScreen({
     super.key,
   });
+
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
@@ -308,8 +310,12 @@ class PaymentScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const ConfirmPaymentScreen(),
+                              builder: (context) => ConfirmPaymentScreen(
+
+                                  // invoiceId: invoiceId,
+                                  // nameCustomer: nameCustomer,
+                                  // totalPayment: totalPayment
+                                  ),
                             ),
                           );
                         }),

@@ -12,7 +12,22 @@ class InvoiceProvider extends ChangeNotifier {
 
   int bill = 0;
 
+  bool isloading = false;
+
+// function supaya muncul circular pada saat nekan rounded button di confirm payment
+  onPress() {
+    isloading = !isloading;
+    notifyListeners();
+  }
+
+  // ...
+
   PageController pageController = PageController();
+
+  resetIndex() {
+    currendIndex = 0;
+    notifyListeners();
+  }
 
   void changePage(int currendIndex) {
     this.currendIndex = currendIndex;
@@ -30,20 +45,19 @@ class InvoiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Invoice> _allInvoice = [];
+  InvoiceDetail _invoiceDetail = InvoiceDetail();
 
-  List<Invoice> get allInvoice => _allInvoice;
+  InvoiceDetail get invoiceDetail => _invoiceDetail;
 
-  Future<void> getAllinvoices(int isPaid) async {
-    try {
-      var inv = await InvoiceServices().getAllInvoice(isPaid);
-      _allInvoice = inv;
-      notifyListeners();
+  String nameImage = 'Invioce.jpg';
 
-      print('sukses');
-    } catch (e) {
-      throw Exception(e);
-    }
+  resetnameImage() {
+    nameImage = 'Invoice.jpg';
+    notifyListeners();
+  }
+
+  setInvoiceData(InvoiceDetail invoiceDetail) {
+    _invoiceDetail = invoiceDetail;
   }
 
   String payment = 'Choose';

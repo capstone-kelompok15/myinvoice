@@ -158,11 +158,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     } else {
                       return ListTile(
                         onTap: () {
-                          // notifViewModel
-                          //     .markAsRead(dataViewModel[index].id!.toString());
-                          // setState(() {
-                          //   dataViewModel[index].isRead = true;
-                          // });
+                          notifViewModel
+                              .markAsRead(dataViewModel[index].id!.toString());
+                          setState(() {
+                            dataViewModel[index].isRead = true;
+                          });
                           InvoiceServices()
                               .getInvoiceById(dataViewModel[index].invoiceId!);
                           CupertinoPageRoute(

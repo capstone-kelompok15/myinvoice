@@ -25,7 +25,6 @@ class InvoiceDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
-    bool isSelect = false;
     return Scaffold(
       appBar: MethodHelper.buildAppBar(
         context,
@@ -37,6 +36,7 @@ class InvoiceDetailScreen extends StatelessWidget {
           if (snapshot.hasData) {
             InvoiceDetail data = snapshot.data!;
             invoiceProvider.getSubTotal(data.totalPrice ?? 0);
+            invoiceProvider.setInvoiceData(data);
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -355,7 +355,9 @@ class InvoiceDetailScreen extends StatelessWidget {
         child: RoundedButton(title: 'Download', press: () {}),
       );
     } else {
-      return PayNowCard();
+      return PayNowCard(
+        id: id,
+      );
     }
   }
 }
@@ -363,7 +365,10 @@ class InvoiceDetailScreen extends StatelessWidget {
 class PayNowCard extends StatelessWidget {
   const PayNowCard({
     Key? key,
+    required this.id,
   }) : super(key: key);
+
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -403,11 +408,10 @@ class PayNowCard extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PaymentScreen(),
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentScreen(),
+                    ));
               },
               child: Text(
                 'Pay Now',

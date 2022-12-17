@@ -65,7 +65,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   hint: "example@gmail.com",
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Can\'t be empty';
+                      return 'Email can\'t be empty';
                     }
                     if (text.length < 4) {
                       return 'Too short';
@@ -85,7 +85,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   hint: "********",
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Can\'t be empty';
+                      return 'Password can\'t be empty';
                     }
 
                     if (text.length < 8) {

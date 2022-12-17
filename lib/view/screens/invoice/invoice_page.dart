@@ -32,6 +32,9 @@ class _InvoicePageState extends State<InvoicePage> {
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
     final homeViewModel = Provider.of<HomeProvider>(context);
+    var isLoading = Center(
+      child: CircularProgressIndicator(),
+    );
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -156,27 +159,29 @@ class _InvoicePageState extends State<InvoicePage> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(
-                            child: Column(
-                                children: snapshot.data!
-                                    .map(
-                                      (e) => InvoiceCard(
-                                          merchant: e.merchantName!,
-                                          totalPrice: e.totalPrice!,
-                                          createAt: e.createdAt!,
-                                          status: e.paymentStatusName ?? '',
-                                          press: () async {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                              builder: (context) {
-                                                return InvoiceDetailScreen(
-                                                    isPaid: false,
-                                                    e.invoiceId!);
-                                              },
-                                            ));
-                                          }),
-                                    )
-                                    .toList()),
-                          );
+                              child: Column(
+                                  children: snapshot.data!.isNotEmpty
+                                      ? snapshot.data!
+                                          .map(
+                                            (e) => InvoiceCard(
+                                                merchant: e.merchantName!,
+                                                totalPrice: e.totalPrice!,
+                                                createAt: e.createdAt!,
+                                                status:
+                                                    e.paymentStatusName ?? '',
+                                                press: () async {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return InvoiceDetailScreen(
+                                                          isPaid: false,
+                                                          e.invoiceId!);
+                                                    },
+                                                  ));
+                                                }),
+                                          )
+                                          .toList()
+                                      : [EmptyScrenn()]));
                         } else {
                           return Center(child: CircularProgressIndicator());
                         }
@@ -187,25 +192,27 @@ class _InvoicePageState extends State<InvoicePage> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(
-                            child: Column(
-                                children: snapshot.data!
-                                    .map(
-                                      (e) => InvoiceCard(
-                                          merchant: e.merchantName!,
-                                          totalPrice: e.totalPrice!,
-                                          createAt: e.createdAt!,
-                                          status: e.paymentStatusName ?? '',
-                                          press: () async {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                              builder: (context) {
-                                                return StatusPembayaranScreen();
-                                              },
-                                            ));
-                                          }),
-                                    )
-                                    .toList()),
-                          );
+                              child: Column(
+                                  children: snapshot.data!.isNotEmpty
+                                      ? snapshot.data!
+                                          .map(
+                                            (e) => InvoiceCard(
+                                                merchant: e.merchantName!,
+                                                totalPrice: e.totalPrice!,
+                                                createAt: e.createdAt!,
+                                                status:
+                                                    e.paymentStatusName ?? '',
+                                                press: () async {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return StatusPembayaranScreen();
+                                                    },
+                                                  ));
+                                                }),
+                                          )
+                                          .toList()
+                                      : [EmptyScrenn()]));
                         } else {
                           return Center(child: CircularProgressIndicator());
                         }
@@ -216,26 +223,29 @@ class _InvoicePageState extends State<InvoicePage> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(
-                            child: Column(
-                                children: snapshot.data!
-                                    .map(
-                                      (e) => InvoiceCard(
-                                          merchant: e.merchantName!,
-                                          totalPrice: e.totalPrice!,
-                                          createAt: e.createdAt!,
-                                          status: e.paymentStatusName ?? '',
-                                          press: () async {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                              builder: (context) {
-                                                return InvoiceDetailScreen(
-                                                    isPaid: true, e.invoiceId!);
-                                              },
-                                            ));
-                                          }),
-                                    )
-                                    .toList()),
-                          );
+                              child: Column(
+                                  children: snapshot.data!.isNotEmpty
+                                      ? snapshot.data!
+                                          .map(
+                                            (e) => InvoiceCard(
+                                                merchant: e.merchantName!,
+                                                totalPrice: e.totalPrice!,
+                                                createAt: e.createdAt!,
+                                                status:
+                                                    e.paymentStatusName ?? '',
+                                                press: () async {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return InvoiceDetailScreen(
+                                                          isPaid: true,
+                                                          e.invoiceId!);
+                                                    },
+                                                  ));
+                                                }),
+                                          )
+                                          .toList()
+                                      : [EmptyScrenn()]));
                         } else {
                           return Center(child: CircularProgressIndicator());
                         }
@@ -337,5 +347,14 @@ class InvoiceCard1 extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class EmptyScrenn extends StatelessWidget {
+  const EmptyScrenn({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: SvgPicture.asset('assets/icons/Frame 565.svg'));
   }
 }
