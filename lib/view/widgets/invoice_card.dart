@@ -29,9 +29,6 @@ class InvoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeProvider>(context);
-    final invoiceViewModel = Provider.of<InvoiceProvider>(context);
-
     return Card(
       elevation: 4,
       shadowColor: Colors.black.withOpacity(0.5),
