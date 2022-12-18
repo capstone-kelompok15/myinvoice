@@ -12,7 +12,7 @@ Color get pressed => const Color(0xff0F0D72);
 // Status Color
 Color get redColor => const Color(0xffD62D33);
 Color get greenColor => const Color(0xff329059);
-Color get orangeColor => const Color.fromARGB(0, 245, 126, 21);
+Color get orangeColor => const Color(0xffF57D15);
 
 // Netral Color
 Color get netralCardColor => const Color(0xffF7F7F7);
@@ -29,8 +29,8 @@ Color get backgroundCard => const Color(0xffBAC0CA);
 
 TextStyle get title =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 30);
-TextStyle get heading0 =>
-    const TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Color(0Xff173468) );
+TextStyle get heading0 => const TextStyle(
+    fontWeight: FontWeight.bold, fontSize: 24, color: Color(0Xff173468));
 TextStyle get heading1 =>
     const TextStyle(fontWeight: FontWeight.bold, fontSize: 24);
 TextStyle get heading2 =>

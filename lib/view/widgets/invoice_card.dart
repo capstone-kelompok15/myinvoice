@@ -101,10 +101,18 @@ class InvoiceCard extends StatelessWidget {
               Text(
                 'Pending',
                 style: body4.copyWith(
-                  color: Colors.orangeAccent,
+                  color: orangeColor,
                 ),
               ),
-            ]
+            ],
+            if (status == 'Failed') ...[
+              Text(
+                'Failed',
+                style: body4.copyWith(
+                  color: redColor,
+                ),
+              ),
+            ],
           ],
         ),
         onTap: press,

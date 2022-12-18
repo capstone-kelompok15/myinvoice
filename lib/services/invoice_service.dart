@@ -30,7 +30,9 @@ class InvoiceServices {
 
       var response = await Dio().get(
         path,
-        options: Options(headers: headers),
+        options: Options(
+          headers: headers,
+        ),
       );
 
       if (response.statusCode == 200) {
@@ -39,8 +41,7 @@ class InvoiceServices {
         List<Invoice> invoices = [];
 
         for (var item in data) {
-          if (item['payment_status_id'] != 4)
-            invoices.add(Invoice.fromJson(item));
+          invoices.add(Invoice.fromJson(item));
         }
 
         return invoices;
@@ -147,33 +148,9 @@ class InvoiceServices {
 
       print('success 002');
 
-      // print(response.data);
       print(responseMultiPart.data);
-      // print(response.statusCode);
     } on DioError catch (e) {
       throw Exception(e);
     }
   }
-
-  // Future uploadImage(File file, int id) async {
-  //   String? token = await Pref.getToken();
-
-  //   FormData formData = FormData.fromMap({
-  //     'payment': await MultipartFile.fromFile(file.path, filename: "image.jpg")
-  //   });
-
-  //   final response = await Dio().patch(
-  //     'https://api.staging.my-invoice.me/api/v1/invoices/$id/payments/upload',
-  //     data: formData,
-  //     options: Options(
-  //       headers: {
-  //         'accept': 'application/json',
-  //         'Content-Type': 'multipart/form-data',
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //     ),
-  //   );
-
-  //   print(response.data);
-  // }
 }

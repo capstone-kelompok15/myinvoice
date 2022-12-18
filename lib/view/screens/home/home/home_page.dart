@@ -251,22 +251,30 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: FutureBuilder<List<Invoice>>(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: FutureBuilder<List<Invoice>>(
                     future: InvoiceServices().getAllInvoice(),
                     builder: (context, snapshot) {
-                      return SingleChildScrollView(
-                        child: Column(
-                            children: snapshot.data!
-                                .map((e) => InvoiceCard(
-                                    merchant: e.merchantName!,
-                                    totalPrice: e.totalPrice!,
-                                    createAt: e.updatedAt!,
-                                    status: e.paymentStatusName!))
-                                .toList()),
-                      );
-                    },
-                  )),
+                      if (snapshot.hasData) {
+                        return SingleChildScrollView(
+                          child: Column(
+                              children: snapshot.data!
+                                  .map(
+                                    (e) => InvoiceCard(
+                                        merchant: e.merchantName!,
+                                        totalPrice: e.totalPrice!,
+                                        createAt: e.updatedAt!,
+                                        status: e.paymentStatusName!),
+                                  )
+                                  .toList()),
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }),
+              ),
             ],
           ),
         ],
