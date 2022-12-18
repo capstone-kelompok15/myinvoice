@@ -28,7 +28,7 @@ class NotificationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  markAsRead(String id) async {
+  markAsRead(int id) async {
     final response = await NotificationServices().markAsRead(id);
     _notification = response;
     notifyListeners();

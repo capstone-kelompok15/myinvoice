@@ -43,7 +43,7 @@ class NotificationServices {
       throw Exception(e);
     }
   }
-  Future<NotificationData> markAsRead(String id) async {
+  Future<NotificationData> markAsRead(int id) async {
     try {
 
       final String? token = await Pref.getToken();
