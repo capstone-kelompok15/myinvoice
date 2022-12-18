@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/models/customer.dart';
 import 'package:myinvoice/models/notification/unread_count.dart';
+import 'package:myinvoice/services/home_service.dart';
 import 'package:myinvoice/services/notification_service.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/notification/notification_screen.dart';
@@ -184,10 +185,21 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Flexible(
                               flex: 1,
-                              child: HomeSummary(
-                                bill:
-                                    reportViewModel.homeReport?.data?.totalPaid,
-                                status: 'Total Paid',
+                              child: FutureBuilder(
+                                future: HomeService().getReport(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return HomeSummary(
+                                      bill: snapshot.data!.data!.totalPaid,
+                                      status: 'Total Paid',
+                                    );
+                                  } else {
+                                    return HomeSummary(
+                                      bill: 0,
+                                      status: 'Total Paid',
+                                    );
+                                  }
+                                },
                               ),
                             ),
                             SizedBox(
@@ -195,10 +207,21 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Flexible(
                               flex: 1,
-                              child: HomeSummary(
-                                bill: reportViewModel
-                                    .homeReport?.data?.totalUnpaid,
-                                status: 'Total Unpaid',
+                              child: FutureBuilder(
+                                future: HomeService().getReport(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return HomeSummary(
+                                      bill: snapshot.data!.data!.totalUnpaid,
+                                      status: 'Total Unpaid',
+                                    );
+                                  } else {
+                                    return HomeSummary(
+                                      bill: 0,
+                                      status: 'Total Unpaid',
+                                    );
+                                  }
+                                },
                               ),
                             ),
                           ],
