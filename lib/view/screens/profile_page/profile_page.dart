@@ -9,6 +9,7 @@ import 'package:myinvoice/view/screens/profile_page/help_center_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/personal_data_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/privacy_policy_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -77,13 +78,16 @@ class ProfilePage extends StatelessWidget {
                     height: 10,
                   ),
                   _buildCardSetting(
-                      'assets/icons/fi-rr-user (1).svg',
-                      'Personal Data',
-                      () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PersonalDataScreen(),
-                          ))),
+                      'assets/icons/fi-rr-user (1).svg', 'Personal Data', () {
+                    final fullName = TextEditingController(
+                        text: profileHomeView.customer.fullName);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PersonalDataScreen(fullName: fullName),
+                        ));
+                  }),
                   const SizedBox(
                     height: 16,
                   ),
@@ -131,6 +135,8 @@ class ProfilePage extends StatelessWidget {
   }
 
   Future<void> _dialogBuilder(BuildContext context) {
+    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -163,6 +169,7 @@ class ProfilePage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => const SignInScreen(),
                     ));
+                homeProvider.resetIndex();
               },
             ),
           ],

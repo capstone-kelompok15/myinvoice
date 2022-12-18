@@ -152,7 +152,7 @@ class _InvoicePageState extends State<InvoicePage> {
                   },
                   children: [
                     FutureBuilder<List<Invoice>>(
-                      future: InvoiceServices().getAllInvoice(1),
+                      future: InvoiceServices().getAllInvoice(isPaid: 1),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(
@@ -187,7 +187,7 @@ class _InvoicePageState extends State<InvoicePage> {
                       },
                     ),
                     FutureBuilder<List<Invoice>>(
-                      future: InvoiceServices().getAllInvoice(2),
+                      future: InvoiceServices().getAllInvoice(isPaid: 2),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(
@@ -218,7 +218,7 @@ class _InvoicePageState extends State<InvoicePage> {
                       },
                     ),
                     FutureBuilder<List<Invoice>>(
-                      future: InvoiceServices().getAllInvoice(3),
+                      future: InvoiceServices().getAllInvoice(isPaid: 3),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(

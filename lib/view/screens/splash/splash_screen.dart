@@ -32,18 +32,19 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = await Pref.getToken();
     if (token != null) {
       await Provider.of<ProfileProvider>(context, listen: false).getCustomer();
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
           context,
           CupertinoPageRoute(
-            builder: (context) => const HomeScreen(),
-          ));
+            builder: (context) => HomeScreen(),
+          ),
+          (route) => false);
     } else {
-      // ignore: use_build_context_synchronously
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
           context,
           CupertinoPageRoute(
             builder: (context) => SignInScreen(),
-          ));
+          ),
+          (route) => false);
     }
   }
 

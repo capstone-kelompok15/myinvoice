@@ -1,19 +1,28 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myinvoice/services/customer_services.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
+import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../services/invoice_service.dart';
+import '../../constant/constant.dart';
 
 class PersonalDataScreen extends StatelessWidget {
-  const PersonalDataScreen({super.key});
+  PersonalDataScreen({super.key, required this.fullName});
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController fullName;
+
+  final TextEditingController phoneC = TextEditingController();
+  final TextEditingController adressC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +37,7 @@ class PersonalDataScreen extends StatelessWidget {
     }
 
     final profileHomeView = Provider.of<ProfileProvider>(context);
+
     return Scaffold(
       appBar: MethodHelper.buildAppBar(context, 'Personal Data'),
       body: Padding(
@@ -57,33 +67,106 @@ class PersonalDataScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const CustomTextField(
-                title: 'Full Name',
-                hint: 'Clarissa Maharani',
-              ),
-              const CustomTextField(
-                title: 'Email',
-                hint: 'ClarissaMaharani@gmail.com',
-              ),
-              const CustomTextField(
-                title: 'Number Phone',
-                hint: '0849723434',
-              ),
-              const SizedBox(
-                height: 110,
-                child: CustomTextField(
-                  title: 'Adress',
-                  hint: 'Jl mangga no 20',
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextField(
+                        controller: fullName,
+                        title: 'Full Name',
+                        hint: 'Enter your name',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Field is required.';
+                          } else {
+                            return null;
+                          }
+                        }),
+                    Text(
+                      'Email Adress',
+                      style: body3,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      child: TextFormField(
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          hintText: profileHomeView.customer.email,
+                          fillColor: const Color(0xffcdcdcd),
+                          filled: true,
+                          hintStyle: paragraph4.copyWith(
+                              fontSize: 14, color: netralDisableColor),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    CustomTextField(
+                      controller: phoneC,
+                      keyboardType: TextInputType.number,
+                      title: ' Phone Number',
+                      hint: '0849723434',
+                    ),
+                    Text(
+                      'Adress',
+                      style: body3,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      height: 110,
+                      child: TextFormField(
+                        controller: adressC,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Field is required.';
+                          } else {
+                            return null;
+                          }
+                        },
+                        maxLines: 4,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your address',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    RoundedButton(
+                      title: 'Save',
+                      press: () async {
+                        if (_formKey.currentState!.validate()) {
+                          await CustomerServices().updateProfileCustomer(
+                              fullName.text, adressC.text);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Update Profile Success!',
+                              ),
+                            ),
+                          );
+                          await profileHomeView.getCustomer();
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 90,
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                height: 60,
-              ),
-              RoundedButton(
-                title: 'Save',
-                press: () {
-                  // await CustomerServices().getCustomer();
-                },
               )
             ],
           ),

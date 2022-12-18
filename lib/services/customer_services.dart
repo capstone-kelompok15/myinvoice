@@ -56,4 +56,26 @@ class CustomerServices {
 
     print(response.data);
   }
+
+  Future updateProfileCustomer(String fullName, String adress) async {
+    try {
+      String? token = await Pref.getToken();
+      var headers = {
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      };
+
+      var response = await Dio().put(
+          'https://api.staging.my-invoice.me/api/v1/customers/me',
+          data: {'full_name': fullName, 'address': adress},
+          options: Options(headers: headers));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+      }
+    } on DioError catch (e) {
+      throw Exception(e);
+    }
+  }
 }

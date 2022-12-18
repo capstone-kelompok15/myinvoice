@@ -21,7 +21,7 @@ class ChooseBankCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         if (!isNA || !isClicked) {
           invoiceProvider.choosePayment(

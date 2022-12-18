@@ -12,7 +12,7 @@ import '../data/pref.dart';
 
 class InvoiceServices {
   // function get all invoice
-  Future<List<Invoice>> getAllInvoice(int isPaid) async {
+  Future<List<Invoice>> getAllInvoice({int isPaid = -1}) async {
     try {
       final String? token = await Pref.getToken();
       var headers = {
@@ -20,12 +20,18 @@ class InvoiceServices {
         'Authorization': 'Bearer $token',
       };
 
+      String path;
+
+      if (isPaid == -1) {
+        path = Endpoint.getRecentBill;
+      } else {
+        path = "${Endpoint.getInvoice}&payment_status_id=$isPaid";
+      }
+
       var response = await Dio().get(
-        "${Endpoint.getInvoice}&payment_status_id=$isPaid",
+        path,
         options: Options(headers: headers),
       );
-
-      // print(response.data);
 
       if (response.statusCode == 200) {
         var data = response.data['data']['invoices'];
@@ -33,7 +39,8 @@ class InvoiceServices {
         List<Invoice> invoices = [];
 
         for (var item in data) {
-          invoices.add(Invoice.fromJson(item));
+          if (item['payment_status_id'] != 4)
+            invoices.add(Invoice.fromJson(item));
         }
 
         return invoices;
