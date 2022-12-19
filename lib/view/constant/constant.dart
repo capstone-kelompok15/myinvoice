@@ -82,3 +82,7 @@ NumberFormat idrFormat = NumberFormat.currency(
 formatDateBasic(DateTime dateTime) {
   return DateFormat('MMM dd, yyyy').format(dateTime);
 }
+
+formatDateNotif(DateTime dateTime) {
+  return DateFormat('dd MMM yyyy, HH:mm').format(dateTime);
+}

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/customer.dart';
-import 'package:myinvoice/services/customer_services.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/help_center_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/personal_data_screen.dart';
 import 'package:myinvoice/view/screens/profile_page/privacy_policy_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
+import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -28,50 +27,41 @@ class ProfilePage extends StatelessWidget {
               height: 44,
               color: primaryBackground,
             ),
-            FutureBuilder<Customer>(
-                future: CustomerServices().getCustomer(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(
-                          left: 30, right: 30, top: 12, bottom: 24),
-                      decoration: BoxDecoration(
-                          color: primaryBackground,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(50))),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 35,
-                            backgroundImage: NetworkImage(
-                                snapshot.data!.displayProfilePictureUrl!),
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            snapshot.data!.fullName!,
-                            style: heading2.copyWith(color: Colors.white),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            snapshot.data!.email ?? '',
-                            style: paragraph4.copyWith(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(
+                  left: 30, right: 30, top: 12, bottom: 24),
+              decoration: BoxDecoration(
+                  color: primaryBackground,
+                  borderRadius:
+                      BorderRadius.only(bottomRight: Radius.circular(50))),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 35,
+                    backgroundImage: NetworkImage(
+                        profileHomeView.customer.displayProfilePictureUrl ??
+                            ''),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    profileHomeView.customer.fullName ?? '',
+                    style: heading2.copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Text(
+                    profileHomeView.customer.email ?? '',
+                    style: paragraph4.copyWith(color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
               child: Column(
@@ -86,13 +76,16 @@ class ProfilePage extends StatelessWidget {
                     height: 10,
                   ),
                   _buildCardSetting(
-                      'assets/icons/fi-rr-user (1).svg',
-                      'Personal Data',
-                      () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PersonalDataScreen(),
-                          ))),
+                      'assets/icons/fi-rr-user (1).svg', 'Personal Data', () {
+                    final fullName = TextEditingController(
+                        text: profileHomeView.customer.fullName);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PersonalDataScreen(fullName: fullName),
+                        ));
+                  }),
                   const SizedBox(
                     height: 16,
                   ),
@@ -140,6 +133,8 @@ class ProfilePage extends StatelessWidget {
   }
 
   Future<void> _dialogBuilder(BuildContext context) {
+    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -172,6 +167,7 @@ class ProfilePage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => const SignInScreen(),
                     ));
+                homeProvider.resetIndex();
               },
             ),
           ],

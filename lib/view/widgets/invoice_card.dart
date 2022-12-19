@@ -29,9 +29,6 @@ class InvoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeProvider>(context);
-    final invoiceViewModel = Provider.of<InvoiceProvider>(context);
-
     return Card(
       elevation: 4,
       shadowColor: Colors.black.withOpacity(0.5),
@@ -66,7 +63,9 @@ class InvoiceCard extends StatelessWidget {
             Text(
               idrFormat.format(totalPrice),
               style: sectionHead.copyWith(
-                  color: primaryText, fontWeight: FontWeight.w400),
+                  color: primaryText,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14),
             ),
           ],
         ),
@@ -99,10 +98,18 @@ class InvoiceCard extends StatelessWidget {
               Text(
                 'Pending',
                 style: body4.copyWith(
-                  color: Colors.orangeAccent,
+                  color: orangeColor,
                 ),
               ),
-            ]
+            ],
+            if (status == 'Failed') ...[
+              Text(
+                'Failed',
+                style: body4.copyWith(
+                  color: redColor,
+                ),
+              ),
+            ],
           ],
         ),
         onTap: press,

@@ -12,10 +12,13 @@ class Endpoint {
 
   static const getInvoice = "${baseUrl}invoices/customers?limit=10&offset=0";
 
+  static const getRecentBill = "${baseUrl}invoices/customers?limit=5&offset=0";
+
   static const getInvoiceById = "${baseUrl}invoices/";
 
-  static const getNotification = "${baseUrl}customers/notifications?page=1&limit=50";
+  static const getSummary = "${baseUrl}customers/summaries";
+
+  static const getNotification = "${baseUrl}customers/notifications?page=1&limit=99";
   static const getNotifCount = "${baseUrl}customers/notifications/unread_count";
   static const markAsRead = "${baseUrl}customers/notifications/";
-
 }

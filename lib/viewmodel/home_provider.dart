@@ -1,66 +1,30 @@
 import 'package:flutter/widgets.dart';
 import 'package:myinvoice/models/home_model/bill_model.dart';
+import 'package:myinvoice/models/home_model/report.dart';
+import 'package:myinvoice/services/home_service.dart';
+import 'package:myinvoice/services/invoice_service.dart';
 
 class HomeProvider extends ChangeNotifier {
-  List<RecentItem> _recentList = [
-    RecentItem(
-      merchantName: 'Amazon',
-      date: 'Nov 30, 2022',
-      bill: 500000,
-      status: 'Paid',
-    ),
-    RecentItem(
-      merchantName: 'Amazon',
-      date: 'Nov 30, 2022',
-      bill: 500000,
-      status: 'Paid',
-    ),
-    RecentItem(
-      merchantName: 'Amazon',
-      date: 'Nov 30, 2022',
-      bill: 500000,
-      status: 'Unpaid',
-    ),
-    RecentItem(
-      merchantName: 'Amazon',
-      date: 'Nov 30, 2022',
-      bill: 500000,
-      status: 'Pending',
-    ),
-  ];
+  HomeReport? _homeReport;
 
-  List<RecentItem> _dataPaid = [];
-  List<RecentItem> _dataUnpaid = [];
-  List<RecentItem> _dataPending = [];
+  HomeReport? get homeReport => _homeReport;
 
-  List<RecentItem> get dataPaid => _dataPaid;
-  List<RecentItem> get dataUnpaid => _dataUnpaid;
-  List<RecentItem> get dataPending => _dataPending;
-
-// function untuk mengfilter invoice paid,pending dan unpaid untuk sementara karna masih data dummy
-  filterInvoice() {
-    _dataPaid = [];
-    _dataUnpaid = [];
-    _dataPending = [];
-    for (var item in _recentList) {
-      if (item.status == 'Paid') {
-        _dataPaid.add(item);
-      } else if (item.status == 'Unpaid') {
-        _dataUnpaid.add(item);
-      } else if (item.status == 'Pending') {
-        _dataPending.add(item);
-      }
-    }
+  getHomeReport() async {
+    final response = await HomeService().getReport();
+    _homeReport = response;
     notifyListeners();
   }
-
-  List<RecentItem> get recentList => _recentList;
 
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
 
   void ontap(int index) {
     _currentIndex = index;
+    notifyListeners();
+  }
+
+  resetIndex() {
+    _currentIndex = 0;
     notifyListeners();
   }
 }

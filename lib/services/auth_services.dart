@@ -1,14 +1,28 @@
-
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/models/auth/auth_response.dart';
+
+import '../viewmodel/auth_provider.dart';
+
+// final dio = Dio();
+// void response() {
+//   dio.interceptors.add(AuthInterceptor());
+// }
+
+// class AuthInterceptor extends Interceptor {
+//   void response(Response response, RequestInterceptorHandler handler) {
+//     if (response.statusCode == 401) {
+//       AuthProvider().SignOut;
+//     }
+//   }
+// }
 
 class AuthService {
   static Future<SignInResponse> signIn(String email, String password) async {
     try {
       print(Endpoint.login);
       final res = await Dio().post(Endpoint.login,
-          data: {"email": email, "password": password, "device_id": "321832"});
+          data: {"email": email, "password": password, "device_id": "436257"});
       print(res.statusCode);
       print(res.data);
 
@@ -85,7 +99,7 @@ class AuthService {
       }
     }
   }
-  
+
   static Future<bool?> resetPassword(String email) async {
     try {
       final res = await Dio().post(Endpoint.resetPassword, data: {

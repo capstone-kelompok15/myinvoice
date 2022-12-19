@@ -7,6 +7,7 @@ import 'package:myinvoice/models/customer.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 
 class CustomerServices {
+  // function get data customer
   Future<Customer> getCustomer() async {
     try {
       print('asd');
@@ -18,11 +19,16 @@ class CustomerServices {
                 'accept': 'application/json',
                 'Authorization': 'Bearer $token',
               }));
-      if (response.statusCode == 401) { 
+      if (response.statusCode == 401) {
         AuthProvider().SignOut;
       }
-      Customer data = Customer.fromJson(response.data['data']);
-      return data;
+
+      if (response.statusCode == 200) {
+        Customer data = Customer.fromJson(response.data['data']);
+        return data;
+      } else {
+        throw Exception('Data Gagal diambil');
+      }
     } on DioError catch (e) {
       throw Exception(e);
     }
@@ -49,5 +55,27 @@ class CustomerServices {
     );
 
     print(response.data);
+  }
+
+  Future updateProfileCustomer(String fullName, String adress) async {
+    try {
+      String? token = await Pref.getToken();
+      var headers = {
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      };
+
+      var response = await Dio().put(
+          'https://api.staging.my-invoice.me/api/v1/customers/me',
+          data: {'full_name': fullName, 'address': adress},
+          options: Options(headers: headers));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+      }
+    } on DioError catch (e) {
+      throw Exception(e);
+    }
   }
 }

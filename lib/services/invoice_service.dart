@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/models/bank_model.dart';
+import 'package:myinvoice/models/home_model/report.dart';
 import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/models/invoice_detail_model.dart';
 
@@ -10,7 +12,7 @@ import '../data/pref.dart';
 
 class InvoiceServices {
   // function get all invoice
-  Future<List<Invoice>> getAllInvoice(int isPaid) async {
+  Future<List<Invoice>> getAllInvoice({int isPaid = -1}) async {
     try {
       final String? token = await Pref.getToken();
       var headers = {
@@ -18,12 +20,20 @@ class InvoiceServices {
         'Authorization': 'Bearer $token',
       };
 
-      var response = await Dio().get(
-        "${Endpoint.getInvoice}&payment_status_id=$isPaid",
-        options: Options(headers: headers),
-      );
+      String path;
 
-      // print(response.data);
+      if (isPaid == -1) {
+        path = Endpoint.getRecentBill;
+      } else {
+        path = "${Endpoint.getInvoice}&payment_status_id=$isPaid";
+      }
+
+      var response = await Dio().get(
+        path,
+        options: Options(
+          headers: headers,
+        ),
+      );
 
       if (response.statusCode == 200) {
         var data = response.data['data']['invoices'];
@@ -99,6 +109,46 @@ class InvoiceServices {
       } else {
         throw Exception('Data Gagal Diambil');
       }
+    } on DioError catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> confirmPaymentByid(int id, File file) async {
+    try {
+      final String? token = await Pref.getToken();
+      var headers = {
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      var response = await Dio().put(
+        'https://api.staging.my-invoice.me/api/v1/invoices/$id/confirm',
+        options: Options(headers: headers),
+      );
+
+      print('success 001');
+
+      FormData formData = FormData.fromMap({
+        'payment':
+            await MultipartFile.fromFile(file.path, filename: "image.jpg")
+      });
+
+      final responseMultiPart = await Dio().patch(
+        'https://api.staging.my-invoice.me/api/v1/invoices/$id/payments/upload',
+        data: formData,
+        options: Options(
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      print('success 002');
+
+      print(responseMultiPart.data);
     } on DioError catch (e) {
       throw Exception(e);
     }
