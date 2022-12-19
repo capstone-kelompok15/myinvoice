@@ -2,8 +2,21 @@ import 'package:dio/dio.dart';
 import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/models/home_model/report.dart';
 
+import '../viewmodel/auth_provider.dart';
+
 class HomeService {
+    static final dio = Dio();
+  static Future<void> signOut() async {
+    AuthProvider().signOut;
+  }
   Future<HomeReport> getReport() async {
+        dio.interceptors.add(InterceptorsWrapper(
+      onError: (DioError error, handler) { 
+        if (error.response!.statusCode! == 401) {
+          AuthProvider().signOut;
+        }
+        return handler.next(error);},
+    ));
     try {
       final String? token = await Pref.getToken();
       var headers = {
