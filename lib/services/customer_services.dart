@@ -7,8 +7,18 @@ import 'package:myinvoice/models/customer.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 
 class CustomerServices {
-  // function get data customer
+   static final dio = Dio();
+  static Future<void> signOut() async {
+    AuthProvider().signOut;
+  }
   Future<Customer> getCustomer() async {
+      dio.interceptors.add(InterceptorsWrapper(
+      onError: (DioError error, handler) { 
+        if (error.response!.statusCode! == 401) {
+          AuthProvider().signOut;
+        }
+        return handler.next(error);},
+    ));
     try {
       print('asd');
       String? token = await Pref.getToken();
