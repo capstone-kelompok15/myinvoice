@@ -26,7 +26,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initState() {
     Provider.of<NotificationProvider>(context, listen: false)
         .getAllNotification();
-
+    Provider.of<NotificationProvider>(context, listen: false).getUnreadCount();
     super.initState();
   }
 
@@ -47,6 +47,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               InkWell(
                 onTap: () {
                   Navigator.pop(context);
+                  notifViewModel.getUnreadCount();
                 },
                 child: Icon(
                   Icons.arrow_back_ios,
