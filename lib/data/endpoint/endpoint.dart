@@ -10,7 +10,7 @@ class Endpoint {
   static const getCustomer = "${customer}me";
   static const updateFotoProfileCustomer = "${baseUrl}customers/me/picture";
 
-  static const getInvoice = "${baseUrl}invoices/customers?limit=10&offset=0";
+  static const getInvoice = "${baseUrl}invoices/customers?limit=8&offset=0";
 
   static const getRecentBill = "${baseUrl}invoices/customers?limit=5&offset=0";
 

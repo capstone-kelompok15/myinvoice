@@ -1,6 +1,11 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/data/endpoint/endpoint.dart';
+import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/models/home_model/bill_model.dart';
 import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/view/constant/constant.dart';
@@ -23,10 +28,54 @@ class InvoicePage extends StatefulWidget {
 }
 
 class _InvoicePageState extends State<InvoicePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  // final List<Invoice> _allInvoice = [];
+  // ScrollController _scrollController = ScrollController();
+  // int _offset = 0;
+
+  // Future<void> getAllInvoice() async {
+  //   try {
+  //     final String? token = await Pref.getToken();
+  //     var headers = {
+  //       'accept': 'application/json',
+  //       'Authorization': 'Bearer $token',
+  //     };
+
+  //     var response = await Dio().get(
+  //       "https://api.staging.my-invoice.me/api/v1/invoices/customers",
+  //       queryParameters: {
+  //         "limit": 8,
+  //         "offset": _offset,
+  //       },
+  //       options: Options(
+  //         headers: headers,
+  //       ),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       var data = response.data['data']['invoices'];
+
+  //       setState(() {
+  //         _allInvoice.addAll(data);
+  //         _offset += 8;
+  //       });
+  //     } else {
+  //       throw Exception('Data Gagal Diambil');
+  //     }
+  //   } on DioError catch (e) {
+  //     throw Exception(e);
+  //   }
+  // }
+
+  // @override
+  // void initState() {
+  //   _scrollController.addListener(() {
+  //     if (_scrollController.position.pixels ==
+  //         _scrollController.position.maxScrollExtent) {
+  //       getAllInvoice();
+  //     }
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
