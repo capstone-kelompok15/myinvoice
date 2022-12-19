@@ -276,17 +276,19 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return SingleChildScrollView(
-                          child: Column(
-                              children: snapshot.data!
-                                  .map(
-                                    (e) => InvoiceCard(
-                                        merchant: e.merchantName!,
-                                        totalPrice: e.totalPrice!,
-                                        createAt: e.updatedAt!,
-                                        status: e.paymentStatusName!),
-                                  )
-                                  .toList()),
-                        );
+                            child: Column(
+                                children: snapshot.data!.isNotEmpty
+                                    ? snapshot.data!
+                                        .map(
+                                          (e) => InvoiceCard(
+                                            merchant: e.merchantName!,
+                                            totalPrice: e.totalPrice!,
+                                            createAt: e.createdAt!,
+                                            status: e.paymentStatusName ?? '',
+                                          ),
+                                        )
+                                        .toList()
+                                    : [SizedBox()]));
                       } else {
                         return Center(
                           child: CircularProgressIndicator(),
