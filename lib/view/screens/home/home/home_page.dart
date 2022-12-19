@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +31,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Timer? timer;
+  int counter = 0;
+
   @override
   void initState() {
-    Provider.of<HomeProvider>(context, listen: false).getHomeReport();
-    Provider.of<NotificationProvider>(context, listen: false).getUnreadCount();
     super.initState();
+    timer = Timer.periodic(Duration(seconds: 1), (timer) => getNotifs());
+  }
+
+  void getNotifs() {
+    setState(() {
+      Provider.of<NotificationProvider>(context, listen: false)
+          .getUnreadCount();
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -64,12 +81,8 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(
-                                "My Invoice",
-                                style: title.copyWith(color: Colors.white),
-                              ),
                               FutureBuilder<UnreadNotifCount>(
                                 future:
                                     NotificationServices().fetchNotifCount(),
@@ -111,10 +124,8 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     );
                                   } else {
-                                    return IconButton(
-                                      icon: SvgPicture.asset(iconNotifFilled,
-                                          width: 24),
-                                      onPressed: () {
+                                    return InkWell(
+                                      onTap: () {
                                         Navigator.push(
                                           context,
                                           CupertinoPageRoute(
@@ -124,11 +135,19 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                       },
+                                      child: SvgPicture.asset(iconNotifFilled,
+                                          width: 24),
+                                      // icon: SvgPicture.asset(iconNotifFilled,
+                                      //     width: 24),
                                     );
                                   }
                                 },
-                              )
+                              ),
                             ],
+                          ),
+                          Text(
+                            "My Invoice",
+                            style: title.copyWith(color: Colors.white),
                           ),
                           const SizedBox(
                             height: 10,

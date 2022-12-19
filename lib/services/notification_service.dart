@@ -13,12 +13,13 @@ class NotificationServices {
 
   Future<NotificationData> fetchAllNotification() async {
     try {
-
       final String? token = await Pref.getToken();
-      
-      final Response response = await dio.get('${Endpoint.getNotification}', options: Options(headers: {
-        'accept': 'application/json',
-        'Authorization': 'Bearer $token',}));
+
+      final Response response = await dio.get('${Endpoint.getNotification}',
+          options: Options(headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          }));
 
       NotificationData notification = NotificationData.fromJson(response.data);
 
@@ -27,14 +28,16 @@ class NotificationServices {
       throw Exception(e);
     }
   }
+
   Future<UnreadNotifCount> fetchNotifCount() async {
     try {
-
       final String? token = await Pref.getToken();
-      
-      final Response response = await dio.get('${Endpoint.getNotifCount}', options: Options(headers: {
-        'accept': 'application/json',
-        'Authorization': 'Bearer $token',}));
+
+      final Response response = await dio.get('${Endpoint.getNotifCount}',
+          options: Options(headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          }));
 
       UnreadNotifCount unreadCount = UnreadNotifCount.fromJson(response.data);
 
@@ -43,14 +46,16 @@ class NotificationServices {
       throw Exception(e);
     }
   }
+
   Future<NotificationData> markAsRead(int id) async {
     try {
-
       final String? token = await Pref.getToken();
-      
-      final Response response = await dio.put('${Endpoint.markAsRead}$id', options: Options(headers: {
-        'accept': 'application/json',
-        'Authorization': 'Bearer $token',}));
+
+      final Response response = await dio.put('${Endpoint.markAsRead}$id',
+          options: Options(headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          }));
 
       NotificationData isRead = NotificationData.fromJson(response.data);
 
