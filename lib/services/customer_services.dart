@@ -20,7 +20,7 @@ class CustomerServices {
                 'Authorization': 'Bearer $token',
               }));
       if (response.statusCode == 401) {
-        AuthProvider().SignOut;
+        AuthProvider().signOut;
       }
 
       if (response.statusCode == 200) {
