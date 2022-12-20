@@ -47,23 +47,32 @@ class HomeScreen extends StatelessWidget {
                             ? iconHomeFilled
                             : iconHome,
                         height: 26),
-                    // activeIcon: SvgPicture.asset(iconHomeFilled, width: 26),
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
-                      icon: SvgPicture.asset(iconInvoice, width: 26),
-                      activeIcon:
-                          SvgPicture.asset(iconInvoiceFilled, width: 26),
-                      label: "Invoice"),
+                    icon: SvgPicture.asset(
+                        homeViewModel.currentIndex == 1
+                            ? iconInvoiceFilled
+                            : iconInvoice,
+                        height: 26),
+                    label: 'Invoice',
+                  ),
                   BottomNavigationBarItem(
-                      icon: SvgPicture.asset(iconReport, width: 26),
-                      activeIcon: SvgPicture.asset(iconReportFilled, width: 26),
-                      label: "Report"),
+                    icon: SvgPicture.asset(
+                        homeViewModel.currentIndex == 2
+                            ? iconReportFilled
+                            : iconReport,
+                        height: 26),
+                    label: 'Report',
+                  ),
                   BottomNavigationBarItem(
-                      icon: SvgPicture.asset(iconProfile, width: 26),
-                      activeIcon:
-                          SvgPicture.asset(iconProfileFilled, width: 26),
-                      label: "Profile"),
+                    icon: SvgPicture.asset(
+                        homeViewModel.currentIndex == 3
+                            ? iconProfileFilled
+                            : iconProfile,
+                        height: 26),
+                    label: 'Profile',
+                  ),
                 ]),
           ),
         ),

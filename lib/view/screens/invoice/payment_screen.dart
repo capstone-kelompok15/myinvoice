@@ -306,7 +306,8 @@ class PaymentScreen extends StatelessWidget {
                     ),
                     RoundedButton(
                         title: 'Confirm Payment',
-                        press: () {
+                        press: () async {
+                          await invoiceProvider.resetnameImage();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
