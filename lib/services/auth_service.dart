@@ -3,8 +3,6 @@ import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/models/auth/auth_model.dart';
 import '../viewmodel/auth_provider.dart';
 
-import '../viewmodel/auth_provider.dart';
-
 // final dio = Dio();
 // void response() {
 //   dio.interceptors.add(AuthInterceptor());
