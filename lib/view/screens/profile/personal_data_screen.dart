@@ -1,19 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myinvoice/services/customer_service.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../services/invoice_service.dart';
-import '../../constant/constant.dart';
 
 class PersonalDataScreen extends StatelessWidget {
   PersonalDataScreen({super.key, required this.fullName});

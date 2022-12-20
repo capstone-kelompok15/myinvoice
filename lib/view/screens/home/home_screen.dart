@@ -9,7 +9,7 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../profile_page/profile_screen.dart';
+import '../profile/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

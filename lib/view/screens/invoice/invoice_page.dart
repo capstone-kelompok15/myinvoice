@@ -11,7 +11,7 @@ import 'package:myinvoice/models/invoice/invoice_model.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/screens/invoice/payment_status_screen.dart';
-import 'package:myinvoice/view/screens/profile_page/profile_screen.dart';
+import 'package:myinvoice/view/screens/profile/profile_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
