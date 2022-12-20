@@ -1,4 +1,3 @@
-
 class RecentItem {
   final String? merchantName;
   final String? date;
