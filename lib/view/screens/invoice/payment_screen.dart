@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/confirm_payment_screen.dart';
@@ -84,7 +85,7 @@ class PaymentScreen extends StatelessWidget {
                   ),
                   CardCopiable(
                       title: 'Total Amount',
-                      number: "IDR. ${invoiceProvider.bill}"),
+                      number: idrFormat.format(invoiceProvider.bill)),
                   SizedBox(
                     height: 20,
                   ),
@@ -393,9 +394,19 @@ class CardCopiable extends StatelessWidget {
               style: heading4.copyWith(color: blackTextColor),
             ),
             const Spacer(),
-            Text(
-              'Copy',
-              style: heading7.copyWith(color: primaryMain),
+            GestureDetector(
+              onTap: () async {
+                await Clipboard.setData(ClipboardData(text: number));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Copied'),
+                  ),
+                );
+              },
+              child: Text(
+                'Copy',
+                style: heading7.copyWith(color: primaryMain),
+              ),
             ),
             const SizedBox(
               width: 5,

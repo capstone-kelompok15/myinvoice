@@ -438,7 +438,9 @@ class PayNowCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                invoicePro.bill == 0 ? '...' : 'IDR. ${invoicePro.bill}',
+                invoicePro.bill == 0
+                    ? '...'
+                    : idrFormat.format(invoicePro.bill),
                 style: body4.copyWith(color: Colors.black),
               ),
             ],
