@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myinvoice/models/bank/bank_model.dart';
 import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
-import 'package:myinvoice/services/invoice_service.dart';
+import 'package:myinvoice/services/invoice_services.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/payment_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';

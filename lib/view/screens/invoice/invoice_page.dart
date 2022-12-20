@@ -18,7 +18,7 @@ import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../services/invoice_service.dart';
+import '../../../services/invoice_services.dart';
 
 class InvoicePage extends StatefulWidget {
   const InvoicePage({super.key});

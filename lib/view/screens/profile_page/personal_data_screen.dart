@@ -12,7 +12,7 @@ import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../services/invoice_service.dart';
+import '../../../services/invoice_services.dart';
 import '../../constant/constant.dart';
 
 class PersonalDataScreen extends StatelessWidget {

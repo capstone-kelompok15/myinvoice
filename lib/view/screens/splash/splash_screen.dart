@@ -18,7 +18,7 @@ import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../services/invoice_service.dart';
+import '../../../services/invoice_services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
