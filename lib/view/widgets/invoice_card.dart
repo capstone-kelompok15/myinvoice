@@ -1,15 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:myinvoice/models/home/bill_model.dart';
-import 'package:myinvoice/models/invoice/invoice_model.dart';
 import 'package:myinvoice/view/constant/constant.dart';
-import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/viewmodel/home_provider.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
-import 'package:provider/provider.dart';
 
 class InvoiceCard extends StatelessWidget {
   const InvoiceCard({
