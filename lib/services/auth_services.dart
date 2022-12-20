@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/models/auth/auth_response.dart';
+import '../viewmodel/auth_provider.dart';
 
 import '../viewmodel/auth_provider.dart';
 
@@ -18,7 +19,20 @@ import '../viewmodel/auth_provider.dart';
 // }
 
 class AuthService {
+  static final dio = Dio();
+  static Future<void> signOut() async {
+    AuthProvider().signOut;
+  }
+
   static Future<SignInResponse> signIn(String email, String password) async {
+    dio.interceptors.add(InterceptorsWrapper(
+      onError: (DioError error, handler) {
+        if (error.response!.statusCode! == 401) {
+          AuthProvider().signOut;
+        }
+        return handler.next(error);
+      },
+    ));
     try {
       print(Endpoint.login);
       final res = await Dio().post(Endpoint.login,

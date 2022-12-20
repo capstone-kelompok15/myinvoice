@@ -91,7 +91,11 @@ class AuthProvider extends ChangeNotifier {
     final result = await AuthService.resetPassword(email);
     return result ?? false;
   }
-    Future SignOut(BuildContext context) async {
+
+//create function signout and clear token
+  Future<void> signOut(BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
     await Pref.removeToken();
     Navigator.pushAndRemoveUntil(
         context,
@@ -99,6 +103,7 @@ class AuthProvider extends ChangeNotifier {
           builder: (context) => const SignInScreen(),
         ),
         (route) => false);
+    isLoading = false;
+    notifyListeners();
   }
 }
-
