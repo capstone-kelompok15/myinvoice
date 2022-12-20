@@ -4,7 +4,6 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myinvoice/models/customer/customer_model.dart';
 import 'package:myinvoice/models/notification/unread_count.dart';
 import 'package:myinvoice/services/home_service.dart';
 import 'package:myinvoice/services/invoice_service.dart';
@@ -15,13 +14,11 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/notification_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../models/invoice/invoice_model.dart';
-import '../../../../services/customer_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
