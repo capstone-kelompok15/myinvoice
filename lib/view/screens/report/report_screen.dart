@@ -13,7 +13,7 @@ import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import '../../../models/invoice/invoice_model.dart';
-import '../../../services/invoice_services.dart';
+import '../../../services/invoice_service.dart';
 import '../../widgets/invoice_card.dart';
 import 'components/filter_inital_page.dart';
 import 'components/filter_rangetime_page.dart';

@@ -5,8 +5,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myinvoice/services/invoice_services.dart';
-import 'package:myinvoice/view/screens/invoice/status_pembayaran_screen.dart';
+import 'package:myinvoice/services/invoice_service.dart';
+import 'package:myinvoice/view/screens/invoice/payment_status_screen.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 

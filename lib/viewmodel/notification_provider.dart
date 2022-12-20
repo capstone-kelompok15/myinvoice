@@ -3,8 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
 import 'package:myinvoice/models/notification/notification_model.dart';
 import 'package:myinvoice/models/notification/unread_count.dart';
-import 'package:myinvoice/services/invoice_services.dart';
-import 'package:myinvoice/services/notification_services.dart';
+import 'package:myinvoice/services/invoice_service.dart';
+import 'package:myinvoice/services/notification_service.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 
 class NotificationProvider extends ChangeNotifier {
