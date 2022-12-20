@@ -12,7 +12,7 @@ class Endpoint {
 
   static const getInvoice = "${baseUrl}invoices/customers?limit=8&offset=0";
 
-  static const getRecentBill = "${baseUrl}invoices/customers?limit=5&offset=0";
+  static const getRecentBill = "${baseUrl}invoices/customers?limit=8&offset=0";
 
   static const getInvoiceById = "${baseUrl}invoices/";
 

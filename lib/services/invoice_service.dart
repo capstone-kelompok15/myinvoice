@@ -13,7 +13,10 @@ import '../data/pref.dart';
 
 class InvoiceServices {
   // function get all invoice
-  Future<List<Invoice>> getAllInvoice({int isPaid = -1}) async {
+  Future<List<Invoice>> getAllInvoice(
+    int limit, {
+    int isPaid = -1,
+  }) async {
     try {
       final String? token = await Pref.getToken();
       var headers = {
@@ -24,9 +27,11 @@ class InvoiceServices {
       String path;
 
       if (isPaid == -1) {
-        path = Endpoint.getRecentBill;
+        path =
+            "https://api.staging.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0";
       } else {
-        path = "${Endpoint.getInvoice}&payment_status_id=$isPaid";
+        path =
+            "https://api.staging.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0&payment_status_id=$isPaid";
       }
 
       var response = await Dio().get(

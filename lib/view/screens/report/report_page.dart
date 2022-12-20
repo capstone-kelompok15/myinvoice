@@ -183,7 +183,7 @@ class _ReportPageState extends State<ReportPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: FutureBuilder<List<Invoice>>(
-                      future: InvoiceServices().getAllInvoice(),
+                      future: InvoiceServices().getAllInvoice(5),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(

@@ -27,55 +27,36 @@ class InvoicePage extends StatefulWidget {
   State<InvoicePage> createState() => _InvoicePageState();
 }
 
+ScrollController _scrollController = ScrollController();
+
 class _InvoicePageState extends State<InvoicePage> {
-  // final List<Invoice> _allInvoice = [];
-  // ScrollController _scrollController = ScrollController();
-  // int _offset = 0;
+  int limit = 7;
+  addLimit() {
+    setState(() {
+      limit += 7;
+    });
+    print('=========== $limit');
+  }
 
-  // Future<void> getAllInvoice() async {
-  //   try {
-  //     final String? token = await Pref.getToken();
-  //     var headers = {
-  //       'accept': 'application/json',
-  //       'Authorization': 'Bearer $token',
-  //     };
+  @override
+  void initState() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        addLimit();
+      }
+      print(' $limit');
+    });
+    super.initState();
+  }
 
-  //     var response = await Dio().get(
-  //       "https://api.staging.my-invoice.me/api/v1/invoices/customers",
-  //       queryParameters: {
-  //         "limit": 8,
-  //         "offset": _offset,
-  //       },
-  //       options: Options(
-  //         headers: headers,
-  //       ),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       var data = response.data['data']['invoices'];
-
-  //       setState(() {
-  //         _allInvoice.addAll(data);
-  //         _offset += 8;
-  //       });
-  //     } else {
-  //       throw Exception('Data Gagal Diambil');
-  //     }
-  //   } on DioError catch (e) {
-  //     throw Exception(e);
-  //   }
-  // }
-
-  // @override
-  // void initState() {
-  //   _scrollController.addListener(() {
-  //     if (_scrollController.position.pixels ==
-  //         _scrollController.position.maxScrollExtent) {
-  //       getAllInvoice();
-  //     }
-  //   });
-  //   super.initState();
-  // }
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    addLimit;
+    limit = 7;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,10 +182,11 @@ class _InvoicePageState extends State<InvoicePage> {
                   },
                   children: [
                     FutureBuilder<List<Invoice>>(
-                      future: InvoiceServices().getAllInvoice(isPaid: 1),
+                      future: InvoiceServices().getAllInvoice(limit, isPaid: 1),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(
+                              controller: _scrollController,
                               child: Column(
                                   children: snapshot.data!.isNotEmpty
                                       ? snapshot.data!
@@ -236,7 +218,7 @@ class _InvoicePageState extends State<InvoicePage> {
                       },
                     ),
                     FutureBuilder<List<Invoice>>(
-                      future: InvoiceServices().getAllInvoice(isPaid: 2),
+                      future: InvoiceServices().getAllInvoice(limit, isPaid: 2),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(
@@ -267,7 +249,7 @@ class _InvoicePageState extends State<InvoicePage> {
                       },
                     ),
                     FutureBuilder<List<Invoice>>(
-                      future: InvoiceServices().getAllInvoice(isPaid: 3),
+                      future: InvoiceServices().getAllInvoice(limit, isPaid: 3),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SingleChildScrollView(
