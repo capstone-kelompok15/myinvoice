@@ -10,6 +10,7 @@ import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../models/invoice/invoice_model.dart';
+import '../../../services/home_service.dart';
 import '../../../services/invoice_service.dart';
 import '../../widgets/invoice_card.dart';
 import 'components/filter_inital_page.dart';
@@ -273,10 +274,18 @@ class _ReportPageState extends State<ReportPage> {
                 style: heading2.copyWith(
                     fontWeight: FontWeight.normal, fontSize: 18),
               ),
-              Text(
-                "IDR 4.445.000",
-                style: heading2,
-              ),
+              FutureBuilder(
+                  future: HomeService().getReport(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        idrFormat.format(snapshot.data!.data!.totalPaid),
+                        style: heading2,
+                      );
+                    } else {
+                      return Text('0');
+                    }
+                  })
             ],
           )
         ],
