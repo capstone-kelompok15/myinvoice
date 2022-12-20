@@ -1,20 +1,12 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myinvoice/data/endpoint/endpoint.dart';
-import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/home_model/bill_model.dart';
-import 'package:myinvoice/models/invoice.dart';
+import 'package:myinvoice/models/invoice/invoice_model.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_detail_screen.dart';
-import 'package:myinvoice/view/screens/invoice/status_pembayaran_screen.dart';
-import 'package:myinvoice/view/screens/profile_page/profile_page.dart';
+import 'package:myinvoice/view/screens/invoice/payment_status_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
-import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
