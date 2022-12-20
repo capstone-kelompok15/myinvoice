@@ -4,8 +4,6 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myinvoice/models/customer.dart';
-import 'package:myinvoice/models/invoice.dart';
 import 'package:myinvoice/models/notification/unread_count.dart';
 import 'package:myinvoice/services/home_service.dart';
 import 'package:myinvoice/services/invoice_service.dart';
@@ -16,13 +14,11 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/home_summary.dart';
 import 'package:myinvoice/view/widgets/invoice_card.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
-import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/notification_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../models/invoice.dart';
-import '../../../../services/customer_services.dart';
+import '../../../../models/invoice/invoice_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,11 +28,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Timer? timer;
+  int counter = 0;
+
   @override
   void initState() {
-    Provider.of<NotificationProvider>(context, listen: false).getUnreadCount();
-    Provider.of<HomeProvider>(context, listen: false).getHomeReport();
     super.initState();
+    timer = Timer.periodic(Duration(seconds: 1), (timer) => getNotifs());
+  }
+
+  void getNotifs() {
+    setState(() {
+      Provider.of<NotificationProvider>(context, listen: false)
+          .getUnreadCount();
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -74,49 +85,40 @@ class _HomePageState extends State<HomePage> {
                                     NotificationServices().fetchNotifCount(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    return Stack(
-                                      children: [
-                                        IconButton(
-                                          icon: SvgPicture.asset(
-                                              iconNotifFilled,
-                                              width: 24),
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              CupertinoPageRoute(
-                                                builder: (context) {
-                                                  return const NotificationScreen();
-                                                },
-                                              ),
-                                            );
-                                          },
+                                    return Badge(
+                                      showBadge:
+                                          snapshot.data!.data!.unreadCount! > 0
+                                              ? true
+                                              : false,
+                                      toAnimate: true,
+                                      animationType: BadgeAnimationType.scale,
+                                      badgeContent: Text(
+                                        textScaleFactor: 0.5,
+                                        snapshot.data!.data!.unreadCount!
+                                            .toString(),
+                                        style: TextStyle(
                                           color: Colors.white,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        Positioned(
-                                          left: 25,
-                                          top: 5,
-                                          child: Badge(
-                                            showBadge: snapshot.data!.data!
-                                                        .unreadCount! >
-                                                    0
-                                                ? true
-                                                : false,
-                                            toAnimate: true,
-                                            animationType:
-                                                BadgeAnimationType.scale,
-                                            badgeContent: Text(
-                                              textScaleFactor: 0.5,
-                                              snapshot.data!.data!.unreadCount!
-                                                  .toString(),
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                      ),
+                                      badgeColor: redColor,
+                                      position:
+                                          BadgePosition.topEnd(top: 2, end: 8),
+                                      child: IconButton(
+                                        icon: SvgPicture.asset(iconNotifFilled,
+                                            width: 24),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              builder: (context) {
+                                                return const NotificationScreen();
+                                              },
                                             ),
-                                            badgeColor: redColor,
-                                          ),
-                                        ),
-                                      ],
+                                          );
+                                        },
+                                        color: Colors.white,
+                                      ),
                                     );
                                   } else {
                                     return InkWell(
@@ -267,7 +269,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: FutureBuilder<List<Invoice>>(
-                    future: InvoiceServices().getAllInvoice(),
+                    future: InvoiceServices().getAllInvoice(5),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return SingleChildScrollView(

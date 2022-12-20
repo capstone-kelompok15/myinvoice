@@ -1,15 +1,16 @@
+import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
-import 'package:myinvoice/view/screens/home/home/home_page.dart';
+import 'package:myinvoice/view/screens/home/home_page/home_page.dart';
 import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
-import 'package:myinvoice/view/screens/report/report_page.dart';
+import 'package:myinvoice/view/screens/report/report_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../profile_page/profile_page.dart';
+import '../profile/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -36,6 +37,7 @@ class HomeScreen extends StatelessWidget {
                 unselectedFontSize: 12,
                 selectedFontSize: 12,
                 elevation: 0,
+                selectedLabelStyle: body4,
                 currentIndex: homeViewModel.currentIndex,
                 onTap: (value) {
                   homeViewModel.ontap(value);
@@ -47,23 +49,32 @@ class HomeScreen extends StatelessWidget {
                             ? iconHomeFilled
                             : iconHome,
                         height: 26),
-                    // activeIcon: SvgPicture.asset(iconHomeFilled, width: 26),
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
-                      icon: SvgPicture.asset(iconInvoice, width: 26),
-                      activeIcon:
-                          SvgPicture.asset(iconInvoiceFilled, width: 26),
-                      label: "Invoice"),
+                    icon: SvgPicture.asset(
+                        homeViewModel.currentIndex == 1
+                            ? iconInvoiceFilled
+                            : iconInvoice,
+                        height: 26),
+                    label: 'Invoice',
+                  ),
                   BottomNavigationBarItem(
-                      icon: SvgPicture.asset(iconReport, width: 26),
-                      activeIcon: SvgPicture.asset(iconReportFilled, width: 26),
-                      label: "Report"),
+                    icon: SvgPicture.asset(
+                        homeViewModel.currentIndex == 2
+                            ? iconReportFilled
+                            : iconReport,
+                        height: 26),
+                    label: 'Report',
+                  ),
                   BottomNavigationBarItem(
-                      icon: SvgPicture.asset(iconProfile, width: 26),
-                      activeIcon:
-                          SvgPicture.asset(iconProfileFilled, width: 26),
-                      label: "Profile"),
+                    icon: SvgPicture.asset(
+                        homeViewModel.currentIndex == 3
+                            ? iconProfileFilled
+                            : iconProfile,
+                        height: 26),
+                    label: 'Profile',
+                  ),
                 ]),
           ),
         ),

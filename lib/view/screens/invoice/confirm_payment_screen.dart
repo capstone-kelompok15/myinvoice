@@ -1,16 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myinvoice/services/invoice_service.dart';
-import 'package:myinvoice/view/screens/invoice/status_pembayaran_screen.dart';
+import 'package:myinvoice/view/screens/invoice/payment_status_screen.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/invoice_detail_model.dart';
+import '../../../models/invoice_detail/invoice_detail_model.dart';
 import '../../constant/constant.dart';
 import '../../styles/styles.dart';
 import '../../widgets/custom_textfield.dart';
@@ -115,18 +113,23 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 20),
-                      decoration: BoxDecoration(
-                        color: primaryBorder,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: SvgPicture.asset(
-                        clip,
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.scaleDown,
+                    InkWell(
+                      onTap: () async {
+                        await getImage();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 20),
+                        decoration: BoxDecoration(
+                          color: primaryBorder,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: SvgPicture.asset(
+                          clip,
+                          width: 24,
+                          height: 24,
+                          fit: BoxFit.scaleDown,
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -143,12 +146,18 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                           }
                         },
                         readOnly: true,
-                        onTap: () async {
-                          await getImage();
-                        },
                         decoration: InputDecoration(
                           hintText: 'Invoice.jpg',
-                          suffix: SvgPicture.asset(cross),
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                invoiceProvider.resetnameImage();
+                              },
+                              child: SvgPicture.asset(
+                                cross,
+                                width: 16,
+                                height: 16,
+                                fit: BoxFit.scaleDown,
+                              )),
                           fillColor: const Color(0xffcdcdcd),
                           filled: true,
                           hintStyle:

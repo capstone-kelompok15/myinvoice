@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/confirm_payment_screen.dart';
@@ -6,8 +7,6 @@ import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
-
-import '../../../models/invoice_detail_model.dart';
 import '../../widgets/bank_card.dart';
 import '../../widgets/rounded_button.dart';
 
@@ -84,7 +83,7 @@ class PaymentScreen extends StatelessWidget {
                   ),
                   CardCopiable(
                       title: 'Total Amount',
-                      number: "IDR. ${invoiceProvider.bill}"),
+                      number: idrFormat.format(invoiceProvider.bill)),
                   SizedBox(
                     height: 20,
                   ),
@@ -306,7 +305,8 @@ class PaymentScreen extends StatelessWidget {
                     ),
                     RoundedButton(
                         title: 'Confirm Payment',
-                        press: () {
+                        press: () async {
+                          await invoiceProvider.resetnameImage();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -392,9 +392,19 @@ class CardCopiable extends StatelessWidget {
               style: heading4.copyWith(color: blackTextColor),
             ),
             const Spacer(),
-            Text(
-              'Copy',
-              style: heading7.copyWith(color: primaryMain),
+            GestureDetector(
+              onTap: () async {
+                await Clipboard.setData(ClipboardData(text: number));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Copied'),
+                  ),
+                );
+              },
+              child: Text(
+                'Copy',
+                style: heading7.copyWith(color: primaryMain),
+              ),
             ),
             const SizedBox(
               width: 5,

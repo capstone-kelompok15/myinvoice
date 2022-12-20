@@ -3,17 +3,20 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
-import 'package:myinvoice/models/bank_model.dart';
-import 'package:myinvoice/models/home_model/report.dart';
-import 'package:myinvoice/models/invoice.dart';
-import 'package:myinvoice/models/invoice_detail_model.dart';
+import 'package:myinvoice/models/bank/bank_model.dart';
+import 'package:myinvoice/models/home/report.dart';
+import 'package:myinvoice/models/invoice/invoice_model.dart';
+import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../data/pref.dart';
 
 class InvoiceServices {
   // function get all invoice
-  Future<List<Invoice>> getAllInvoice({int isPaid = -1}) async {
+  Future<List<Invoice>> getAllInvoice(
+    int limit, {
+    int isPaid = -1,
+  }) async {
     try {
       final String? token = await Pref.getToken();
       var headers = {
@@ -24,9 +27,11 @@ class InvoiceServices {
       String path;
 
       if (isPaid == -1) {
-        path = Endpoint.getRecentBill;
+        path =
+            "https://api.staging.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0";
       } else {
-        path = "${Endpoint.getInvoice}&payment_status_id=$isPaid";
+        path =
+            "https://api.staging.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0&payment_status_id=$isPaid";
       }
 
       var response = await Dio().get(

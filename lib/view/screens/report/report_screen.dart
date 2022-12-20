@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myinvoice/view/constant/constant.dart';
-import 'package:myinvoice/view/screens/invoice/invoice_page.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import 'package:myinvoice/view/widgets/rounded_button.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
-
+import '../../../models/invoice/invoice_model.dart';
+import '../../../services/home_service.dart';
+import '../../../services/invoice_service.dart';
+import '../../widgets/invoice_card.dart';
 import 'components/filter_inital_page.dart';
 import 'components/filter_rangetime_page.dart';
 import 'components/filter_typebiils_page.dart';
@@ -34,6 +35,7 @@ class _ReportPageState extends State<ReportPage> {
   Widget build(BuildContext context) {
     final invoiceProvider = Provider.of<InvoiceProvider>(context);
     final homeViewModel = Provider.of<HomeProvider>(context);
+    const textButtonColor = Color(0xff131089);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -150,33 +152,56 @@ class _ReportPageState extends State<ReportPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "Recent Bills",
-                            style: heading2,
+                            style: sectionTitle,
                           ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Text("See All",
+                          TextButton(
+                              child: const Text(
+                                'See All',
                                 style: TextStyle(
-                                    color: primaryBackground, fontSize: 18)),
-                          ),
+                                    color: textButtonColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              onPressed: () {
+                                homeViewModel.ontap(1);
+                              }),
                         ],
                       ),
                     ],
                   ),
                 ),
-                ListView(
-                  primary: false,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: FutureBuilder<List<Invoice>>(
+                      future: InvoiceServices().getAllInvoice(5),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return SingleChildScrollView(
+                            child: Column(
+                                children: snapshot.data!
+                                    .map(
+                                      (e) => InvoiceCard(
+                                          merchant: e.merchantName!,
+                                          totalPrice: e.totalPrice!,
+                                          createAt: e.updatedAt!,
+                                          status: e.paymentStatusName!),
+                                    )
+                                    .toList()),
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
                 ),
                 const SizedBox(
                   height: 20,
@@ -249,10 +274,18 @@ class _ReportPageState extends State<ReportPage> {
                 style: heading2.copyWith(
                     fontWeight: FontWeight.normal, fontSize: 18),
               ),
-              Text(
-                "IDR 4.445.000",
-                style: heading2,
-              ),
+              FutureBuilder(
+                  future: HomeService().getReport(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        idrFormat.format(snapshot.data!.data!.totalPaid),
+                        style: heading2,
+                      );
+                    } else {
+                      return Text('0');
+                    }
+                  })
             ],
           )
         ],

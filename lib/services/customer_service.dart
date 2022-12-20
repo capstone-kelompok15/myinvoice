@@ -3,12 +3,24 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/customer.dart';
+import 'package:myinvoice/models/customer/customer_model.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 
 class CustomerServices {
-  // function get data customer
+  static final dio = Dio();
+  static Future<void> signOut() async {
+    AuthProvider().signOut;
+  }
+
   Future<Customer> getCustomer() async {
+    dio.interceptors.add(InterceptorsWrapper(
+      onError: (DioError error, handler) {
+        if (error.response!.statusCode! == 401) {
+          AuthProvider().signOut;
+        }
+        return handler.next(error);
+      },
+    ));
     try {
       print('asd');
       String? token = await Pref.getToken();
@@ -20,7 +32,7 @@ class CustomerServices {
                 'Authorization': 'Bearer $token',
               }));
       if (response.statusCode == 401) {
-        AuthProvider().SignOut;
+        AuthProvider().signOut;
       }
 
       if (response.statusCode == 200) {
