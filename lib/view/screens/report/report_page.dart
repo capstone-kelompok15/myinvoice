@@ -12,7 +12,7 @@ import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:myinvoice/viewmodel/report_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:myinvoice/view/styles/styles.dart';
-import '../../../models/invoice.dart';
+import '../../../models/invoice/invoice_model.dart';
 import '../../../services/invoice_service.dart';
 import '../../widgets/invoice_card.dart';
 import 'components/filter_inital_page.dart';
@@ -151,61 +151,60 @@ class _ReportPageState extends State<ReportPage> {
                 ),
                 _summaryTx(),
                 Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Recent Bills",
-                              style: sectionTitle,
-                            ),
-                            TextButton(
-                                child: const Text(
-                                  'See All',
-                                  style: TextStyle(
-                                      color: textButtonColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                onPressed: () {
-                                  homeViewModel.ontap(1);
-                                }),
-                          ],
-                        ),
-                      ],
-                    ),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Recent Bills",
+                            style: sectionTitle,
+                          ),
+                          TextButton(
+                              child: const Text(
+                                'See All',
+                                style: TextStyle(
+                                    color: textButtonColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              onPressed: () {
+                                homeViewModel.ontap(1);
+                              }),
+                        ],
+                      ),
+                    ],
                   ),
+                ),
                 const SizedBox(
                   height: 12,
                 ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: FutureBuilder<List<Invoice>>(
-                    future: InvoiceServices().getAllInvoice(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return SingleChildScrollView(
-                          child: Column(
-                              children: snapshot.data!
-                                  .map(
-                                    (e) => InvoiceCard(
-                                        merchant: e.merchantName!,
-                                        totalPrice: e.totalPrice!,
-                                        createAt: e.updatedAt!,
-                                        status: e.paymentStatusName!),
-                                  )
-                                  .toList()),
-                        );
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    }),
-              ),
-
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: FutureBuilder<List<Invoice>>(
+                      future: InvoiceServices().getAllInvoice(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return SingleChildScrollView(
+                            child: Column(
+                                children: snapshot.data!
+                                    .map(
+                                      (e) => InvoiceCard(
+                                          merchant: e.merchantName!,
+                                          totalPrice: e.totalPrice!,
+                                          createAt: e.updatedAt!,
+                                          status: e.paymentStatusName!),
+                                    )
+                                    .toList()),
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
+                ),
                 const SizedBox(
                   height: 20,
                 )

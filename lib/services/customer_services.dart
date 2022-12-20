@@ -3,21 +3,23 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/customer.dart';
+import 'package:myinvoice/models/customer/customer_model.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 
 class CustomerServices {
-   static final dio = Dio();
+  static final dio = Dio();
   static Future<void> signOut() async {
     AuthProvider().signOut;
   }
+
   Future<Customer> getCustomer() async {
-      dio.interceptors.add(InterceptorsWrapper(
-      onError: (DioError error, handler) { 
+    dio.interceptors.add(InterceptorsWrapper(
+      onError: (DioError error, handler) {
         if (error.response!.statusCode! == 401) {
           AuthProvider().signOut;
         }
-        return handler.next(error);},
+        return handler.next(error);
+      },
     ));
     try {
       print('asd');

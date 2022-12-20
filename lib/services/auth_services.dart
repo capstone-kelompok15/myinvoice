@@ -1,10 +1,22 @@
-import 'dart:html';
-
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
-import 'package:myinvoice/models/auth/auth_response.dart';
+import 'package:myinvoice/models/auth/auth_model.dart';
 import '../viewmodel/auth_provider.dart';
 
+import '../viewmodel/auth_provider.dart';
+
+// final dio = Dio();
+// void response() {
+//   dio.interceptors.add(AuthInterceptor());
+// }
+
+// class AuthInterceptor extends Interceptor {
+//   void response(Response response, RequestInterceptorHandler handler) {
+//     if (response.statusCode == 401) {
+//       AuthProvider().SignOut;
+//     }
+//   }
+// }
 
 class AuthService {
   static final dio = Dio();
@@ -14,11 +26,12 @@ class AuthService {
 
   static Future<SignInResponse> signIn(String email, String password) async {
     dio.interceptors.add(InterceptorsWrapper(
-      onError: (DioError error, handler) { 
+      onError: (DioError error, handler) {
         if (error.response!.statusCode! == 401) {
           AuthProvider().signOut;
         }
-        return handler.next(error);},
+        return handler.next(error);
+      },
     ));
     try {
       print(Endpoint.login);

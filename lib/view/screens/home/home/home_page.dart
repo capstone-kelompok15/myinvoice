@@ -4,7 +4,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myinvoice/models/customer.dart';
+import 'package:myinvoice/models/customer/customer_model.dart';
 import 'package:myinvoice/models/notification/unread_count.dart';
 import 'package:myinvoice/services/home_service.dart';
 import 'package:myinvoice/services/invoice_service.dart';
@@ -20,7 +20,7 @@ import 'package:myinvoice/viewmodel/notification_provider.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../models/invoice.dart';
+import '../../../../models/invoice/invoice_model.dart';
 import '../../../../services/customer_services.dart';
 
 class HomePage extends StatefulWidget {
@@ -276,17 +276,19 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return SingleChildScrollView(
-                          child: Column(
-                              children: snapshot.data!
-                                  .map(
-                                    (e) => InvoiceCard(
-                                        merchant: e.merchantName!,
-                                        totalPrice: e.totalPrice!,
-                                        createAt: e.updatedAt!,
-                                        status: e.paymentStatusName!),
-                                  )
-                                  .toList()),
-                        );
+                            child: Column(
+                                children: snapshot.data!.isNotEmpty
+                                    ? snapshot.data!
+                                        .map(
+                                          (e) => InvoiceCard(
+                                            merchant: e.merchantName!,
+                                            totalPrice: e.totalPrice!,
+                                            createAt: e.createdAt!,
+                                            status: e.paymentStatusName ?? '',
+                                          ),
+                                        )
+                                        .toList()
+                                    : [SizedBox()]));
                       } else {
                         return Center(
                           child: CircularProgressIndicator(),

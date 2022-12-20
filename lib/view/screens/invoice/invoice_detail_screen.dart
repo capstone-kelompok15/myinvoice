@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myinvoice/models/bank_model.dart';
-import 'package:myinvoice/models/invoice_detail_model.dart';
+import 'package:lottie/lottie.dart';
+import 'package:myinvoice/models/bank/bank_model.dart';
+import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
 import 'package:myinvoice/services/invoice_service.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/screens/invoice/payment_screen.dart';
@@ -47,7 +48,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Name Store",
+                          "Store Name",
                           style: body3.copyWith(color: blackTextColor),
                         ),
                         const SizedBox(
@@ -81,7 +82,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          'Name User',
+                          'Full Name',
                           style: body3.copyWith(color: blackTextColor),
                         ),
                         const SizedBox(
@@ -143,7 +144,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                'Method Payment',
+                                'Payment Method',
                                 style: subhead2.copyWith(color: blackTextColor),
                               ),
                               const Spacer(),
@@ -256,7 +257,7 @@ class InvoiceDetailScreen extends StatelessWidget {
           }
         },
       ),
-      bottomNavigationBar: buildBottom(isPaid),
+      bottomNavigationBar: buildBottom(isPaid, context),
       extendBody: true,
     );
   }
@@ -344,7 +345,9 @@ class InvoiceDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget buildBottom(bool isPaid) {
+  Widget buildBottom(bool isPaid, BuildContext context) {
+    final invoiceProvider =
+        Provider.of<InvoiceProvider>(context, listen: false);
     if (isPaid) {
       return Container(
         color: Colors.white,
@@ -352,7 +355,51 @@ class InvoiceDetailScreen extends StatelessWidget {
           horizontal: 30.0,
           vertical: 14,
         ),
-        child: RoundedButton(title: 'Download', press: () {}),
+        child: RoundedButton(
+            title: 'Download',
+            isLoading: invoiceProvider.isloading,
+            press: () async {
+              invoiceProvider.onPress();
+              if (await InvoiceServices().downloadInvoice(id)) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: SizedBox(
+                        width: 270,
+                        height: 150,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 12,
+                            ),
+                            SvgPicture.asset('assets/icons/fi-sr-checkbox.svg'),
+                            Text(
+                              'Download Invoice Succes',
+                              style:
+                                  heading3.copyWith(color: primaryBackground),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              textAlign: TextAlign.center,
+                              'The invoice has been successfully saved on your device',
+                              style: paragraph4.copyWith(
+                                  color: netralDisableColor),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              invoiceProvider.onPress();
+            }),
       );
     } else {
       return PayNowCard(
@@ -391,7 +438,9 @@ class PayNowCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                invoicePro.bill == 0 ? '...' : 'IDR. ${invoicePro.bill}',
+                invoicePro.bill == 0
+                    ? '...'
+                    : idrFormat.format(invoicePro.bill),
                 style: body4.copyWith(color: Colors.black),
               ),
             ],

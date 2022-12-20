@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:myinvoice/models/bank_model.dart';
-import 'package:myinvoice/models/invoice_detail_model.dart';
+import 'package:myinvoice/models/bank/bank_model.dart';
+import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
 import 'package:myinvoice/services/invoice_service.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 
-import '../models/invoice.dart';
+import '../models/invoice/invoice_model.dart';
 
 class InvoiceProvider extends ChangeNotifier {
   // page controller untuk unpaid ama paid

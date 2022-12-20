@@ -3,10 +3,11 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
-import 'package:myinvoice/models/bank_model.dart';
-import 'package:myinvoice/models/home_model/report.dart';
-import 'package:myinvoice/models/invoice.dart';
-import 'package:myinvoice/models/invoice_detail_model.dart';
+import 'package:myinvoice/models/bank/bank_model.dart';
+import 'package:myinvoice/models/home/report.dart';
+import 'package:myinvoice/models/invoice/invoice_model.dart';
+import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../data/pref.dart';
 
@@ -151,6 +152,41 @@ class InvoiceServices {
       print(responseMultiPart.data);
     } on DioError catch (e) {
       throw Exception(e);
+    }
+  }
+
+  //function untuk download invoice
+
+  Future<bool> downloadInvoice(int id) async {
+    try {
+      final appDocDir = (await getExternalStorageDirectories(
+        type: StorageDirectory.documents,
+      ))!
+          .first;
+      String appDocPath = "${appDocDir.path}/$id-invoice.pdf";
+
+      final String? token = await Pref.getToken();
+      var headers = {
+        'accept': 'application/pdf',
+        'Authorization': 'Bearer $token',
+      };
+
+      print(appDocPath);
+
+      var response = await Dio().download(
+        'https://api.staging.my-invoice.me/api/v1/invoices/$id/download',
+        appDocPath,
+        options: Options(headers: headers),
+        onReceiveProgress: (received, total) {
+          print((received / total * 100).toStringAsFixed(0) + "%");
+        },
+      );
+
+      print('Succes');
+
+      return true;
+    } on DioError catch (e) {
+      return false;
     }
   }
 }
