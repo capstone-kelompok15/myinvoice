@@ -6,11 +6,6 @@ import 'package:myinvoice/view/screens/auth/reset_password_screen.dart';
 import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
-
-
-
-
-
 class ConfirmResetPasswordScreen extends StatelessWidget {
   ConfirmResetPasswordScreen({super.key});
   final _formKey = GlobalKey<FormState>();

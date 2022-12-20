@@ -6,7 +6,6 @@ import 'package:myinvoice/view/screens/auth/signin_screen.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/view/widgets/circular_loading.dart';
 import 'package:myinvoice/view/widgets/custom_textfield.dart';
-import 'package:myinvoice/view/widgets/success_dialog.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 import 'package:provider/provider.dart';
 
