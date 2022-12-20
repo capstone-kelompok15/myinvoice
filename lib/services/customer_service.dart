@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/customer.dart';
+import 'package:myinvoice/models/customer/customer_model.dart';
 import 'package:myinvoice/viewmodel/auth_provider.dart';
 
 class CustomerServices {

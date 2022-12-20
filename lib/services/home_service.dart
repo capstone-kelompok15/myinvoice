@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/pref.dart';
-import 'package:myinvoice/models/home_model/report.dart';
+import 'package:myinvoice/models/home/report.dart';
 
 import '../viewmodel/auth_provider.dart';
 

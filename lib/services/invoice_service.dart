@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
-import 'package:myinvoice/models/bank_model.dart';
-import 'package:myinvoice/models/home_model/report.dart';
-import 'package:myinvoice/models/invoice.dart';
-import 'package:myinvoice/models/invoice_detail_model.dart';
+import 'package:myinvoice/models/bank/bank_model.dart';
+import 'package:myinvoice/models/home/report.dart';
+import 'package:myinvoice/models/invoice/invoice_model.dart';
+import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../data/pref.dart';
