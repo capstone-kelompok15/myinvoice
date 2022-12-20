@@ -4,10 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/services/auth_service.dart';
-import 'package:myinvoice/services/invoice_service.dart';
 import 'package:myinvoice/view/screens/auth/otp_screen.dart';
 import 'package:myinvoice/view/screens/auth/signin_screen.dart';
-import 'package:myinvoice/view/screens/auth/signup_screen.dart';
 import 'package:myinvoice/view/screens/auth/success_signup_screen.dart';
 import 'package:myinvoice/view/screens/home/home_screen.dart';
 import 'package:myinvoice/view/widgets/signin_dialog.dart';
@@ -15,8 +13,6 @@ import 'package:myinvoice/view/widgets/signup_dialog.dart';
 import 'package:myinvoice/view/widgets/success_dialog.dart';
 import 'package:myinvoice/viewmodel/profile_provider.dart';
 import 'package:provider/provider.dart';
-
-import '../view/widgets/custom_textfield.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -62,9 +58,9 @@ class AuthProvider extends ChangeNotifier {
             builder: (context) => const OtpScreen(),
           ));
     } else {
-     signupDialog(context, email);
+      signupDialog(context, email);
     }
-    
+
     isLoading = false;
     notifyListeners();
   }
@@ -92,7 +88,6 @@ class AuthProvider extends ChangeNotifier {
     return result ?? false;
   }
 
-//create function signout and clear token
   Future<void> signOut(BuildContext context) async {
     isLoading = true;
     notifyListeners();
