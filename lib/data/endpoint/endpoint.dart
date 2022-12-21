@@ -21,5 +21,5 @@ class Endpoint {
   static const markAsRead = "${baseUrl}customers/notifications/";
 
   static const report =
-      "${baseUrl}invoices/reports?payment_status=1&date_filter=1%20Week";
+      "${baseUrl}invoices/reports?payment_status=3&date_filter=1%20Week";
 }

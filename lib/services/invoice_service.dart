@@ -127,7 +127,7 @@ class InvoiceServices {
       };
 
       var response = await Dio().put(
-        '${Endpoint.invoice}invoices/$id/confirm',
+        '${Endpoint.invoice}$id/confirm',
         options: Options(headers: headers),
       );
 
