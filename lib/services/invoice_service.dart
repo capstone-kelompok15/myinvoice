@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/models/bank/bank_model.dart';
 import 'package:myinvoice/models/invoice/invoice_model.dart';
 import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
@@ -25,11 +26,10 @@ class InvoiceServices {
       String path;
 
       if (isPaid == -1) {
-        path =
-            "https://api.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0";
+        path = "${Endpoint.invoice}customers?limit=$limit&offset=0";
       } else {
         path =
-            "https://api.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0&payment_status_id=$isPaid";
+            "${Endpoint.invoice}customers?limit=$limit&offset=0&payment_status_id=$isPaid";
       }
 
       var response = await Dio().get(
@@ -67,7 +67,7 @@ class InvoiceServices {
       };
 
       var response = await Dio().get(
-        'https://api.my-invoice.me/api/v1/invoices/$id/customers',
+        '${Endpoint.invoice}$id/customers',
         options: Options(headers: headers),
       );
 
@@ -95,7 +95,7 @@ class InvoiceServices {
       };
 
       var response = await Dio().get(
-        'https://api.my-invoice.me/api/v1/merchants/$id/banks',
+        '${Endpoint.baseUrl}merchants/$id/banks',
         options: Options(headers: headers),
       );
 
@@ -127,7 +127,7 @@ class InvoiceServices {
       };
 
       var response = await Dio().put(
-        'https://api.my-invoice.me/api/v1/invoices/$id/confirm',
+        '${Endpoint.invoice}invoices/$id/confirm',
         options: Options(headers: headers),
       );
 
@@ -139,7 +139,7 @@ class InvoiceServices {
       });
 
       final responseMultiPart = await Dio().patch(
-        'https://api.my-invoice.me/api/v1/invoices/$id/payments/upload',
+        '${Endpoint.invoice}$id/payments/upload',
         data: formData,
         options: Options(
           headers: {
@@ -177,7 +177,7 @@ class InvoiceServices {
       print(appDocPath);
 
       var response = await Dio().download(
-        'https://api.my-invoice.me/api/v1/invoices/$id/download',
+        '${Endpoint.invoice}$id/download',
         appDocPath,
         options: Options(headers: headers),
         onReceiveProgress: (received, total) {
