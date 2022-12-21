@@ -27,7 +27,7 @@ class HomeService {
       };
 
       final Response response = await Dio().get(
-        'https://api.staging.my-invoice.me/api/v1/customers/summaries',
+        'https://api.my-invoice.me/api/v1/customers/summaries',
         options: Options(headers: headers),
       );
 

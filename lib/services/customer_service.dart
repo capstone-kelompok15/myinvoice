@@ -26,7 +26,7 @@ class CustomerServices {
       String? token = await Pref.getToken();
 
       var response = await Dio()
-          .get('https://api.staging.my-invoice.me/api/v1/customers/me',
+          .get('https://api.my-invoice.me/api/v1/customers/me',
               options: Options(headers: {
                 'accept': 'application/json',
                 'Authorization': 'Bearer $token',
@@ -39,7 +39,7 @@ class CustomerServices {
         Customer data = Customer.fromJson(response.data['data']);
         return data;
       } else {
-        throw Exception('Data Gagal diambil');
+        throw Exception('Failed to fetch data');
       }
     } on DioError catch (e) {
       throw Exception(e);
@@ -79,7 +79,7 @@ class CustomerServices {
       };
 
       var response = await Dio().put(
-          'https://api.staging.my-invoice.me/api/v1/customers/me',
+          'https://api.my-invoice.me/api/v1/customers/me',
           data: {'full_name': fullName, 'address': adress},
           options: Options(headers: headers));
 
