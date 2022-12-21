@@ -3,6 +3,7 @@ import 'package:f_line_chart/line_chart_point_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myinvoice/services/report_service.dart';
 import 'package:myinvoice/view/constant/constant.dart';
 import 'package:myinvoice/view/styles/styles.dart';
 import 'package:myinvoice/viewmodel/home_provider.dart';
@@ -260,9 +261,21 @@ class _ReportPageState extends State<ReportPage> {
                 "Your Transaction",
                 style: heading2,
               ),
-              Text(
-                "33",
-                style: heading2,
+              FutureBuilder(
+                future: ReportServices().getReport(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(
+                      idrFormat.format(snapshot.data!.transactionQuantity),
+                      style: heading2,
+                    );
+                  } else {
+                    return Text(
+                      '-',
+                      style: heading2,
+                    );
+                  }
+                },
               )
             ],
           ),
@@ -275,17 +288,21 @@ class _ReportPageState extends State<ReportPage> {
                     fontWeight: FontWeight.normal, fontSize: 18),
               ),
               FutureBuilder(
-                  future: HomeService().getReport(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Text(
-                        idrFormat.format(snapshot.data!.data!.totalPaid),
-                        style: heading2,
-                      );
-                    } else {
-                      return Text('0');
-                    }
-                  })
+                future: ReportServices().getReport(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(
+                      idrFormat.format(snapshot.data!.transactionTotal),
+                      style: heading2,
+                    );
+                  } else {
+                    return Text(
+                      'IDR -',
+                      style: heading2,
+                    );
+                  }
+                },
+              )
             ],
           )
         ],

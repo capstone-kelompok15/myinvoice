@@ -19,4 +19,7 @@ class Endpoint {
       "${baseUrl}customers/notifications?page=1&limit=99";
   static const getNotifCount = "${baseUrl}customers/notifications/unread_count";
   static const markAsRead = "${baseUrl}customers/notifications/";
+
+  static const report =
+      "${baseUrl}invoices/reports?payment_status=1&date_filter=1%20Week";
 }
