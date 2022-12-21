@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/models/bank/bank_model.dart';
-import 'package:myinvoice/models/home/report.dart';
 import 'package:myinvoice/models/invoice/invoice_model.dart';
 import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
 import 'package:path_provider/path_provider.dart';
@@ -28,10 +26,10 @@ class InvoiceServices {
 
       if (isPaid == -1) {
         path =
-            "https://api.staging.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0";
+            "https://api.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0";
       } else {
         path =
-            "https://api.staging.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0&payment_status_id=$isPaid";
+            "https://api.my-invoice.me/api/v1/invoices/customers?limit=$limit&offset=0&payment_status_id=$isPaid";
       }
 
       var response = await Dio().get(
@@ -52,7 +50,7 @@ class InvoiceServices {
 
         return invoices;
       } else {
-        throw Exception('Data Gagal Diambil');
+        throw Exception('Failed to fetch data');
       }
     } on DioError catch (e) {
       throw Exception(e);
@@ -69,7 +67,7 @@ class InvoiceServices {
       };
 
       var response = await Dio().get(
-        'https://api.staging.my-invoice.me/api/v1/invoices/$id/customers',
+        'https://api.my-invoice.me/api/v1/invoices/$id/customers',
         options: Options(headers: headers),
       );
 
@@ -80,7 +78,7 @@ class InvoiceServices {
         // print('succes=.>>>> ' + invoiceDetail);
         return invoiceDetail;
       } else {
-        throw Exception('Data Gagal Diambil');
+        throw Exception('Failed to fetch data');
       }
     } on DioError catch (e) {
       throw Exception(e);
@@ -97,7 +95,7 @@ class InvoiceServices {
       };
 
       var response = await Dio().get(
-        'https://api.staging.my-invoice.me/api/v1/merchants/$id/banks',
+        'https://api.my-invoice.me/api/v1/merchants/$id/banks',
         options: Options(headers: headers),
       );
 
@@ -113,7 +111,7 @@ class InvoiceServices {
         print('susces');
         return bankModel;
       } else {
-        throw Exception('Data Gagal Diambil');
+        throw Exception('Failed to fetch data');
       }
     } on DioError catch (e) {
       throw Exception(e);
@@ -129,7 +127,7 @@ class InvoiceServices {
       };
 
       var response = await Dio().put(
-        'https://api.staging.my-invoice.me/api/v1/invoices/$id/confirm',
+        'https://api.my-invoice.me/api/v1/invoices/$id/confirm',
         options: Options(headers: headers),
       );
 
@@ -141,7 +139,7 @@ class InvoiceServices {
       });
 
       final responseMultiPart = await Dio().patch(
-        'https://api.staging.my-invoice.me/api/v1/invoices/$id/payments/upload',
+        'https://api.my-invoice.me/api/v1/invoices/$id/payments/upload',
         data: formData,
         options: Options(
           headers: {
@@ -179,7 +177,7 @@ class InvoiceServices {
       print(appDocPath);
 
       var response = await Dio().download(
-        'https://api.staging.my-invoice.me/api/v1/invoices/$id/download',
+        'https://api.my-invoice.me/api/v1/invoices/$id/download',
         appDocPath,
         options: Options(headers: headers),
         onReceiveProgress: (received, total) {
