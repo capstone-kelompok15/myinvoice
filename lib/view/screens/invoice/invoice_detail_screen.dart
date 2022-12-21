@@ -377,7 +377,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                             ),
                             SvgPicture.asset('assets/icons/fi-sr-checkbox.svg'),
                             Text(
-                              'Download Invoice Succes',
+                              'Download Invoice Success',
                               style:
                                   heading3.copyWith(color: primaryBackground),
                             ),

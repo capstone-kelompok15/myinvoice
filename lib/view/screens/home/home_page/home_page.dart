@@ -28,28 +28,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Timer? timer;
-  int counter = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 1), (timer) => getNotifs());
-  }
-
-  void getNotifs() {
-    setState(() {
-      Provider.of<NotificationProvider>(context, listen: false)
-          .getUnreadCount();
-    });
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeProvider>(context);
@@ -78,8 +56,12 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Text(
+                                "My Invoice",
+                                style: title.copyWith(color: Colors.white),
+                              ),
                               FutureBuilder<UnreadNotifCount>(
                                 future:
                                     NotificationServices().fetchNotifCount(),
@@ -142,10 +124,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                          Text(
-                            "My Invoice",
-                            style: title.copyWith(color: Colors.white),
-                          ),
                           const SizedBox(
                             height: 10,
                           ),
@@ -156,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white),
                           ),
                           Text(
-                            profileProvider.customer.fullName!,
+                            profileProvider.customer.fullName ?? '',
                             style: body1.copyWith(color: Colors.white),
                           ),
                         ],
