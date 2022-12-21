@@ -15,7 +15,7 @@ class Endpoint {
   static const getRecentBill = "${baseUrl}invoices/customers?limit=8&offset=0";
 
   static const getInvoiceById = "${baseUrl}invoices/";
-
+  static const getCustomerProfile = "${baseUrl}customers/me";
   static const getSummary = "${baseUrl}customers/summaries";
 
   static const getNotification =

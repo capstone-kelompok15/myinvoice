@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/data/pref.dart';
 import 'package:myinvoice/models/home/report.dart';
 
@@ -27,7 +28,7 @@ class HomeService {
       };
 
       final Response response = await Dio().get(
-        'https://api.my-invoice.me/api/v1/customers/summaries',
+      Endpoint.getSummary,
         options: Options(headers: headers),
       );
 

@@ -26,7 +26,7 @@ class CustomerServices {
       String? token = await Pref.getToken();
 
       var response = await Dio()
-          .get('https://api.my-invoice.me/api/v1/customers/me',
+          .get(Endpoint.getCustomerProfile,
               options: Options(headers: {
                 'accept': 'application/json',
                 'Authorization': 'Bearer $token',
@@ -79,7 +79,7 @@ class CustomerServices {
       };
 
       var response = await Dio().put(
-          'https://api.my-invoice.me/api/v1/customers/me',
+          Endpoint.getCustomerProfile,
           data: {'full_name': fullName, 'address': adress},
           options: Options(headers: headers));
 
