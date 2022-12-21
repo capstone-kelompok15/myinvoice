@@ -1,5 +1,5 @@
 class Endpoint {
-  static const baseUrl = "https://api.staging.my-invoice.me/api/v1/";
+  static const baseUrl = "https://api.my-invoice.me/api/v1/";
   static const auth = "${baseUrl}auth/";
   static const customer = "${baseUrl}customers/";
 
