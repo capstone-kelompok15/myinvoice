@@ -266,7 +266,7 @@ class _ReportPageState extends State<ReportPage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Text(
-                      idrFormat.format(snapshot.data!.transactionQuantity),
+                      snapshot.data!.transactionQuantity.toString(),
                       style: heading2,
                     );
                   } else {
