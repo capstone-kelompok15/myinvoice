@@ -1,7 +1,6 @@
 class UnreadNotifCount {
   Null? error;
   Data? data;
-
   UnreadNotifCount({this.error, this.data});
 
   UnreadNotifCount.fromJson(Map<String, dynamic> json) {

@@ -10,6 +10,7 @@ import 'package:myinvoice/view/widgets/method_helper.dart';
 import 'package:myinvoice/view/widgets/rounded_button.dart';
 import 'package:myinvoice/viewmodel/invoice_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/bank_card.dart';
 import '../../widgets/item_desciption.dart';
@@ -359,44 +360,46 @@ class InvoiceDetailScreen extends StatelessWidget {
             isLoading: invoiceProvider.isloading,
             press: () async {
               invoiceProvider.onPress();
-              if (await InvoiceServices().downloadInvoice(id)) {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: SizedBox(
-                        width: 270,
-                        height: 150,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 12,
-                            ),
-                            SvgPicture.asset('assets/icons/fi-sr-checkbox.svg'),
-                            Text(
-                              'Download Invoice Success',
-                              style:
-                                  heading3.copyWith(color: primaryBackground),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              textAlign: TextAlign.center,
-                              'The invoice has been successfully saved on your device',
-                              style: paragraph4.copyWith(
-                                  color: netralDisableColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              }
+              await launchUrl(Uri.parse(
+                  'https://api.my-invoice.me/api/v1/invoices/1/download'));
+              // if (await InvoiceServices().downloadInvoice(id)) {
+              //   showDialog(
+              //     context: context,
+              //     builder: (context) {
+              //       return Dialog(
+              //         shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(12),
+              //         ),
+              //         child: SizedBox(
+              //           width: 270,
+              //           height: 150,
+              //           child: Column(
+              //             children: [
+              //               SizedBox(
+              //                 height: 12,
+              //               ),
+              //               SvgPicture.asset('assets/icons/fi-sr-checkbox.svg'),
+              //               Text(
+              //                 'Download Invoice Success',
+              //                 style:
+              //                     heading3.copyWith(color: primaryBackground),
+              //               ),
+              //               SizedBox(
+              //                 height: 5,
+              //               ),
+              //               Text(
+              //                 textAlign: TextAlign.center,
+              //                 'The invoice has been successfully saved on your device',
+              //                 style: paragraph4.copyWith(
+              //                     color: netralDisableColor),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //   );
+              // }
               invoiceProvider.onPress();
             }),
       );
@@ -445,33 +448,39 @@ class PayNowCard extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          ElevatedButton(
-              style: TextButton.styleFrom(
-                backgroundColor: invoicePro.payment == 'Choose'
-                    ? const Color(0xFFCDCDCD)
-                    : primaryMain,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 41.5, vertical: 15),
-              ),
-              onPressed: () {
-                if (invoicePro.payment != 'Choose') {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PaymentScreen(),
-                      ));
-                }
-              },
-              child: Text(
-                'Pay Now',
-                style: heading4.copyWith(
-                    color: invoicePro.payment == 'Choose'
-                        ? blackTextColor
-                        : Colors.white),
-              ))
+          invoicePro.payment == 'Choose'
+              ? Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 41.5, vertical: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: const Color(0xFFCDCDCD),
+                  ),
+                  child: Text(
+                    'Pay Now',
+                    style: heading4.copyWith(color: blackTextColor),
+                  ),
+                )
+              : ElevatedButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: primaryMain,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 41.5, vertical: 15),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PaymentScreen(),
+                        ));
+                  },
+                  child: Text(
+                    'Pay Now',
+                    style: heading4.copyWith(color: Colors.white),
+                  ))
         ],
       ),
     );

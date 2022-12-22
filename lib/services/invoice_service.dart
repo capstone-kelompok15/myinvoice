@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:html' as html;
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:myinvoice/data/endpoint/endpoint.dart';
@@ -7,6 +9,7 @@ import 'package:myinvoice/models/bank/bank_model.dart';
 import 'package:myinvoice/models/invoice/invoice_model.dart';
 import 'package:myinvoice/models/invoice_detail/invoice_detail_model.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../data/pref.dart';
 
@@ -75,7 +78,6 @@ class InvoiceServices {
         var data = response.data['data'];
 
         InvoiceDetail invoiceDetail = InvoiceDetail.fromJson(data);
-        // print('succes=.>>>> ' + invoiceDetail);
         return invoiceDetail;
       } else {
         throw Exception('Failed to fetch data');
@@ -158,7 +160,28 @@ class InvoiceServices {
     }
   }
 
-  //function untuk download invoice
+  // function untuk download invoice
+
+  Future<bool> downloadInvoiceKakAde(int id) async {
+    try {
+      final String? token = await Pref.getToken();
+      var headers = {
+        'accept': 'application/pdf',
+        'Authorization': 'Bearer $token',
+      };
+
+      var response = await Dio().getUri(
+        Uri.parse('https://api.my-invoice.me/api/v1/invoices/1/download'),
+        options: Options(headers: headers),
+      );
+
+      await launchUrl(response.realUri);
+
+      return true;
+    } on DioError catch (e) {
+      return false;
+    }
+  }
 
   Future<bool> downloadInvoice(int id) async {
     try {
@@ -172,6 +195,7 @@ class InvoiceServices {
       var headers = {
         'accept': 'application/pdf',
         'Authorization': 'Bearer $token',
+        'Content-Disposition': 'attachment;filename="my_file.pdf"',
       };
 
       print(appDocPath);
@@ -179,7 +203,7 @@ class InvoiceServices {
       var response = await Dio().download(
         '${Endpoint.invoice}$id/download',
         appDocPath,
-        options: Options(headers: headers),
+        options: Options(headers: headers, responseType: ResponseType.bytes),
         onReceiveProgress: (received, total) {
           print((received / total * 100).toStringAsFixed(0) + "%");
         },
@@ -192,4 +216,38 @@ class InvoiceServices {
       return false;
     }
   }
+
+  // Future<void> downloadPDF() async {
+  //   Dio dio = Dio();
+
+  //   try {
+  //     final String? token = await Pref.getToken();
+
+  //     var response = await dio.get(
+  //       'https://api.my-invoice.me/api/v1/invoices/1/download',
+  //       options: Options(
+  //         responseType: ResponseType.bytes,
+  //         headers: {
+  //           'accept': 'application/pdf',
+  //           'Authorization': 'Bearer $token',
+  //           'Content-Disposition': 'attachment; filename=file.pdf',
+  //         },
+  //       ),
+  //     );
+  //     final Uint8List bytes = response.data;
+
+  //     final String filename = 'file.pdf';
+  //     final String mimeType = 'application/pdf';
+  //     final Blob blob = Blob([bytes], mimeType);
+  //     final Anchor = document.createElement('a') as Anchor;
+
+  //     anchor.href = Url.createObjectUrl(blob);
+  //     anchor.download = filename;
+  //     anchor.click();
+
+  //     Url.revokeObjectUrl(anchor.href);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 }

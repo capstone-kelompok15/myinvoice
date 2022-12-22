@@ -3,19 +3,6 @@ import 'package:myinvoice/data/endpoint/endpoint.dart';
 import 'package:myinvoice/models/auth/auth_model.dart';
 import '../viewmodel/auth_provider.dart';
 
-// final dio = Dio();
-// void response() {
-//   dio.interceptors.add(AuthInterceptor());
-// }
-
-// class AuthInterceptor extends Interceptor {
-//   void response(Response response, RequestInterceptorHandler handler) {
-//     if (response.statusCode == 401) {
-//       AuthProvider().SignOut;
-//     }
-//   }
-// }
-
 class AuthService {
   static final dio = Dio();
   static Future<void> signOut() async {
